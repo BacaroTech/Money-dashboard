@@ -1,10 +1,11 @@
-<div id="mydashboard" class="grid grid-cols-12 gap-4">
-    <div class="col-span-2">
-        <app-menu></app-menu>
+<section>
+    <div id="mydashboard" class="grid grid-cols-12 gap-0">
+        <div class="col-span-2 fixed">
+            <app-menu></app-menu>
+        </div>
+        <div class="col-span-10 sticky left-60">
+            <app-home></app-home>
+        </div>
     </div>
-    <!-- ... -->
-    <div class="col-span-10">
-        <app-home></app-home>
-    </div>
-</div>
+</section>
 
