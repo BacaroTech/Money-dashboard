@@ -1,0 +1,27 @@
+<section class="mt-5">
+    <h2 class="text-3xl mb-5">Queste sono tutte le spese del mese attuale</h2>
+    <table class="border-collapse border border-slate-400">
+        <thead>
+            <tr>
+                <th *ngFor="let title of titles" 
+                class="border border-slate-300 capitalize">{{title}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of datas" class="capitalize">
+                <td 
+                    class="border border-slate-300 px-16">{{data.date}}
+                </td>
+                <td 
+                    class="border border-slate-300 px-16">{{data.nature}}
+                </td>
+                <td 
+                    class="border border-slate-300 px-16">{{data.category}}
+                </td>
+                <td 
+                    class="border border-slate-300 px-16">{{data.import}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

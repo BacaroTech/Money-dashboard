@@ -8,6 +8,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { Error404Component } from './components/error404/error404.component';
 import { ToDarkComponent } from './components/to-dark/to-dark.component';
 import { HomeComponent } from './components/home/home.component';
+import { CashFlowComponent } from './components/cash-flow/cash-flow.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { HomeComponent } from './components/home/home.component';
     MenuComponent,
     Error404Component,
     ToDarkComponent,
-    HomeComponent
+    HomeComponent,
+    CashFlowComponent
   ],
   imports: [
     BrowserModule,
