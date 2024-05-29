@@ -1,0 +1,25 @@
+<section id="home" class="h-screen">
+    <form [formGroup]="bioSection" class="">
+        <label>
+            Data movimento:
+            <input type="text" [formControl]="bioSection.controls.date">
+        </label>
+        <br />
+        <label>
+            Natura
+            <input type="text" [formControl]="bioSection.controls.nature">
+        </label>
+        <br />
+        <label>
+            Categoria:
+            <input type="text" [formControl]="bioSection.controls.category">
+        </label>
+        <br />
+        <label>
+            Importo:
+            <input type="text" [formControl]="bioSection.controls.import">
+        </label>
+        <br />
+        <button type="submit">Submit Application</button>
+    </form>
+</section>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -6,14 +6,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  menus: Array<{"name": string, "url": string, "active": boolean }> = [
-    {"name":"Dashboard", "url":"dashboard", "active":true},
-    {"name":"Page2", "url":"Page2", "active":false}
+  @Input()
+  active: string = "";
+
+  menus: Array<{ "name": string, "url": string, "active": boolean }> = [
+    { "name": "Dashboard", "url": "/dashboard", "active": true },
+    { "name": "Aggiungi flusso", "url": "/addFlow", "active": false }
   ]
 
   constructor() { }
 
   ngOnInit(): void {
+    this.menus.forEach(voice => {
+      if (voice.url == this.active) {
+        voice.active = true;
+      } else {
+        voice.active = false;
+      }
+    })
   }
 
 }

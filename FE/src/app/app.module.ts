@@ -9,7 +9,9 @@ import { Error404Component } from './components/error404/error404.component';
 import { ToDarkComponent } from './components/to-dark/to-dark.component';
 import { HomeComponent } from './components/home/home.component';
 import { CashFlowComponent } from './components/cash-flow/cash-flow.component';
-
+import { AddFlowComponent } from './components/add-flow/add-flow.component';
+import { FormFlowComponent } from './components/form-flow/form-flow.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,11 +21,16 @@ import { CashFlowComponent } from './components/cash-flow/cash-flow.component';
     Error404Component,
     ToDarkComponent,
     HomeComponent,
-    CashFlowComponent
+    CashFlowComponent,
+    AddFlowComponent,
+    FormFlowComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

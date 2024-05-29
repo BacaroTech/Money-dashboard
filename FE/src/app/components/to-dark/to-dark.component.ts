@@ -13,7 +13,6 @@ export class ToDarkComponent implements OnInit {
   }
 
   switchMode(): void {
-    console.log(document.getElementById("toggleMode")?.classList)
     if(document.getElementById("toggleMode")?.classList.contains("bg-gray-200")){
       document.getElementById("mydashboard")?.classList.add("dark");
       document.getElementById("home")?.classList.add("dark");
