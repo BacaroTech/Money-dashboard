@@ -20,4 +20,8 @@ export class FormFlowComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngSubmit(): void{
+    console.log(this.bioSection.value)
+  }
+
 }

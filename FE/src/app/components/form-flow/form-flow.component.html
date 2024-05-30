@@ -1,25 +1,56 @@
 <section id="home" class="h-screen">
-    <form [formGroup]="bioSection" class="">
-        <label>
-            Data movimento:
-            <input type="text" [formControl]="bioSection.controls.date">
-        </label>
-        <br />
-        <label>
-            Natura
-            <input type="text" [formControl]="bioSection.controls.nature">
-        </label>
-        <br />
-        <label>
-            Categoria:
-            <input type="text" [formControl]="bioSection.controls.category">
-        </label>
-        <br />
-        <label>
-            Importo:
-            <input type="text" [formControl]="bioSection.controls.import">
-        </label>
-        <br />
-        <button type="submit">Submit Application</button>
+    <h1 class="text-5xl">Inserisci nuovo flusso</h1>
+    <h2 class="text-3xl pt-2">Da questa schermata puoi inserire sia uscite che entrate</h2>
+    
+    <form class="bg-white rounded py-8 mb-4" [formGroup]="this.bioSection" (ngSubmit)="this.ngSubmit()">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
+                Data movimento
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                formControlName="date" id="date" type="date">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="nature">
+                Natura
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                formControlName="nature" id="nature" type="text" placeholder="Inserisci la natura">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
+                Categoria
+            </label>
+            <div class="relative" id="category">
+                <select
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="grid-state">
+                    <option>Entrata</option>
+                    <option>Uscita</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="import">
+                Importo
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                formControlName="import" id="import" type="number" min="0" placeholder="0">
+        </div>
+        <div class="flex items-center justify-between">
+            <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+                Inserisci flusso
+            </button>
+        </div>
     </form>
 </section>
