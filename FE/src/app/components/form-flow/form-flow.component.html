@@ -1,5 +1,5 @@
 <section id="home" class="h-screen">
-    <h1 class="text-5xl">Inserisci nuovo flusso</h1>
+    <h1 class="text-5xl pt-6">Inserisci nuovo flusso</h1>
     <h2 class="text-3xl pt-2">Da questa schermata puoi inserire sia uscite che entrate</h2>
     
     <form class="bg-white rounded py-8 mb-4" [formGroup]="this.bioSection" (ngSubmit)="this.ngSubmit()">
@@ -8,7 +8,7 @@
                 Data movimento
             </label>
             <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 formControlName="date" id="date" type="date">
         </div>
         <div class="mb-4">
@@ -16,7 +16,7 @@
                 Natura
             </label>
             <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 formControlName="nature" id="nature" type="text" placeholder="Inserisci la natura">
         </div>
         <div class="mb-4">
@@ -25,16 +25,11 @@
             </label>
             <div class="relative" id="category">
                 <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="grid-state">
                     <option>Entrata</option>
                     <option>Uscita</option>
                 </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                </div>
             </div>
         </div>
         <div class="mb-4">
@@ -42,7 +37,7 @@
                 Importo
             </label>
             <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 formControlName="import" id="import" type="number" min="0" placeholder="0">
         </div>
         <div class="flex items-center justify-between">

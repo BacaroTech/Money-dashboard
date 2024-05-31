@@ -19,10 +19,10 @@ export class HomeComponent implements OnInit {
     new Chart(ctx as ChartItem, {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
         datasets: [{
           label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          data: [12, 19, 3, 5, 2],
           borderWidth: 1
         }]
       },
@@ -38,10 +38,10 @@ export class HomeComponent implements OnInit {
     new Chart(ctx2 as ChartItem, {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
         datasets: [{
           label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          data: [12, 19, 3, 5, 2],
           borderWidth: 1
         }]
       },

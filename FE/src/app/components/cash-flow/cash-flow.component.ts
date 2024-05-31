@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { cashFlow } from 'src/app/model/cashFlow';
 
 @Component({
@@ -17,9 +18,16 @@ export class CashFlowComponent implements OnInit {
     "Data", "Natura", "Categoria", "Importo"
   ] 
 
+  dateSection = new FormGroup({
+    date: new FormControl<Date>(new Date()),
+  });
+
   datas: cashFlow[] = [
     {date: "01-01-2020", nature: "entrata", category: "stipendio", import: "1000$"},
     {date: "03-01-2020", nature: "uscita", category: "casa e bollette", import: "300$"},
   ]
 
+  ngSubmit(): void{
+    console.log(this.dateSection.value)
+  }
 }

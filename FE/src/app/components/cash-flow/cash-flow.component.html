@@ -1,25 +1,34 @@
 <section class="mt-5">
-    <h2 class="text-3xl mb-5">Queste sono tutte le spese del mese attuale</h2>
+    <h2 class="text-3xl mb-5">Queste sono tutte le spese del mese</h2>
+    <form class="bg-white rounded mb-4" [formGroup]="this.dateSection" (ngSubmit)="this.ngSubmit()">
+        <div class="mb-4">
+            <input
+                class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline space-x-10"
+                formControlName="date" id="date" type="date">
+            <div class="mt-5">
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit">
+                    Cerca
+                </button>
+            </div>
+        </div>
+    </form>
     <table class="border-collapse border border-slate-400">
         <thead>
             <tr>
-                <th *ngFor="let title of titles" 
-                class="border border-slate-300 capitalize">{{title}}</th>
+                <th *ngFor="let title of titles" class="border border-slate-300 capitalize">{{title}}</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let data of datas" class="capitalize">
-                <td 
-                    class="border border-slate-300 px-16">{{data.date}}
+                <td class="border border-slate-300 px-40">{{data.date}}
                 </td>
-                <td 
-                    class="border border-slate-300 px-16">{{data.nature}}
+                <td class="border border-slate-300 px-40">{{data.nature}}
                 </td>
-                <td 
-                    class="border border-slate-300 px-16">{{data.category}}
+                <td class="border border-slate-300 px-40">{{data.category}}
                 </td>
-                <td 
-                    class="border border-slate-300 px-16">{{data.import}}
+                <td class="border border-slate-300 px-40">{{data.import}}
                 </td>
             </tr>
         </tbody>
