@@ -1,10 +1,10 @@
-<section id="home" class="h-screen">
-    <h1 class="text-5xl pt-6">Inserisci nuovo flusso</h1>
-    <h2 class="text-3xl pt-2">Da questa schermata puoi inserire sia uscite che entrate</h2>
+<section id="home" class="h-screen ">
+    <h1 class="text-5xl pt-6 dark:text-white">Inserisci nuovo flusso</h1>
+    <h2 class="text-3xl pt-2 dark:text-white">Da questa schermata puoi inserire sia uscite che entrate</h2>
     
-    <form class="bg-white rounded py-8 mb-4" [formGroup]="this.bioSection" (ngSubmit)="this.ngSubmit()">
+    <form class="bg-white rounded py-8 mb-4 dark:bg-gray-900" [formGroup]="this.bioSection" (ngSubmit)="this.ngSubmit()">
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
+            <label class="block text-gray-700 text-sm font-bold mb-2 dark:text-white" for="date">
                 Data movimento
             </label>
             <input
@@ -12,7 +12,7 @@
                 formControlName="date" id="date" type="date">
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="nature">
+            <label class="block text-gray-700 text-sm font-bold mb-2 dark:text-white" for="nature">
                 Natura
             </label>
             <input
@@ -20,12 +20,12 @@
                 formControlName="nature" id="nature" type="text" placeholder="Inserisci la natura">
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
+            <label class="block text-gray-700 text-sm font-bold mb-2 dark:text-white" for="category">
                 Categoria
             </label>
             <div class="relative" id="category">
                 <select
-                    class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white"
                     id="grid-state">
                     <option>Entrata</option>
                     <option>Uscita</option>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="import">
+            <label class="block text-gray-700 text-sm font-bold mb-2 dark:text-white" for="import">
                 Importo
             </label>
             <input

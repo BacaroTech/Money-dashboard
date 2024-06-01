@@ -1,12 +1,12 @@
 <div class="border-r-2">
     <nav class="bg-white border-gray-200 dark:bg-gray-900 h-screen">
         <div class="max-w-screen-xl p-5">
-            <a class="space-x-3 rtl:space-x-reverse" [routerLink]="'/dashboard'">
+            <a class="space-x-3 rtl:space-x-reverse" (click)="setHome()" [routerLink]="'/dashboard'">
                 <span class="text-2xl font-semibold whitespace-nowrap dark:text-white ">Money <br>Manager</span>
             </a>
             <div class="w-full " id="">
                 <ul class="font-medium flex flex-col mt-4 rtl:space-x-reverse">
-                    <li *ngFor="let menu of menus" class="mr-5">
+                    <li *ngFor="let menu of menus" class="mr-5" (click)="goActive(menu.url)">
                         <p *ngIf="menu.active" [routerLink]="[menu.url]" 
                         class="block py-2 px-3 text-white bg-blue-700 rounded-xl my-3 dark:text-white cursor-pointer" aria-current="page">{{menu.name}}</p>
                         <p *ngIf="!menu.active" [routerLink]="[menu.url]" 

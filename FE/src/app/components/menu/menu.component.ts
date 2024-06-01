@@ -6,8 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  @Input()
-  active: string = "";
 
   menus: Array<{ "name": string, "url": string, "active": boolean }> = [
     { "name": "Home", "url": "/dashboard", "active": true },
@@ -16,9 +14,21 @@ export class MenuComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  goActive(url: string){
     this.menus.forEach(voice => {
-      if (voice.url == this.active) {
+      if (voice.url == url) {
+        voice.active = true;
+      } else {
+        voice.active = false;
+      }
+    })
+  }
+
+  setHome(){
+    this.menus.forEach(voice => {
+      if (voice.url == '/dashboard') {
         voice.active = true;
       } else {
         voice.active = false;
