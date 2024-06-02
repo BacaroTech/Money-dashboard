@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -9,14 +11,38 @@ export class MenuComponent implements OnInit {
 
   menus: Array<{ "name": string, "url": string, "active": boolean }> = [
     { "name": "Home", "url": "/dashboard", "active": true },
-    { "name": "Aggiungi flusso", "url": "/addFlow", "active": false }
+    { "name": "Aggiungi flusso", "url": "/addFlow", "active": false },
+    { "name": "Revisione", "url": "/review", "active": false }
   ]
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log();
 
-  goActive(url: string){
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => this.route),
+      map(route => {
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
+        return route;
+      }),
+      map(route => route.url)
+    ).subscribe((e: any) => this.setActive('/' + e._value[0].path))
+  }
+
+  goActive(url: string) {
+    console.log(this.router.routerState.snapshot.url)
+    this.setActive(url);
+  }
+
+  setHome() {
+    this.setActive('/dashboard');
+  }
+
+  private setActive(url: string) {
     this.menus.forEach(voice => {
       if (voice.url == url) {
         voice.active = true;
@@ -25,15 +51,5 @@ export class MenuComponent implements OnInit {
       }
     })
   }
-
-  setHome(){
-    this.menus.forEach(voice => {
-      if (voice.url == '/dashboard') {
-        voice.active = true;
-      } else {
-        voice.active = false;
-      }
-    })
-  }
-
+  
 }
