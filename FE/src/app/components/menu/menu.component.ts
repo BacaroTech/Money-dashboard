@@ -18,8 +18,6 @@ export class MenuComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    console.log();
-
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.route),
@@ -34,7 +32,6 @@ export class MenuComponent implements OnInit {
   }
 
   goActive(url: string) {
-    console.log(this.router.routerState.snapshot.url)
     this.setActive(url);
   }
 
@@ -51,5 +48,5 @@ export class MenuComponent implements OnInit {
       }
     })
   }
-  
+
 }
