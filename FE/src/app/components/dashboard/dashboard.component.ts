@@ -1,5 +1,7 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { BarController, BarElement, CategoryScale, Chart, ChartItem, Decimation, Filler, Legend, LinearScale, Title, Tooltip, registerables } from 'chart.js';
+import { BarController, BarElement, CategoryScale, Chart, 
+  ChartItem, Decimation, Filler, Legend, LineController, LineElement,
+  LinearScale, PointElement, Title, Tooltip, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,25 +14,25 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('dynamicElement') element!: ElementRef;
 
   constructor() {
-    Chart.register(BarElement, BarController, CategoryScale, Decimation, Filler, Legend, Title, Tooltip, LinearScale);
+    Chart.register(
+      BarElement, LinearScale, LineController, PointElement, LineElement, BarController, CategoryScale, 
+      Decimation, Filler, Legend, Title, Tooltip, LinearScale
+    );
   }
 
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    const ctx = this.element.nativeElement.id;
+    const ctx = (this.element.nativeElement.id) as ChartItem;
     switch(this.element.nativeElement.id){
       case 'conti': 
-        console.log('conti');
-        this.buildChart(ctx as ChartItem);
+        this.buildChart(ctx, 'bar');
         break;
       case 'patrimonio': 
-        console.log('patrimonio');
-        this.buildChart(ctx as ChartItem);
+        this.buildChart(ctx, 'bar');
         break;
       case 'rapporto': 
-        console.log('rapporto');
-        this.buildChart(ctx as ChartItem);
+        this.buildChart(ctx, 'line');
         break;
       default:
         console.error('questo grafico non è presente');
@@ -38,9 +40,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private buildChart(ctx: ChartItem){
+  private buildChart(ctx: ChartItem, typeChar: any){
     new Chart(ctx, {
-      type: 'bar',
+      type: typeChar,
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
         datasets: [{
@@ -50,11 +52,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }]
       },
       options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
+        responsive: true,
+        scales: {}
       }
     });
   }

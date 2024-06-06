@@ -1,16 +1,16 @@
-<section class="home h-screen dark:bg-gray-900 pt-6">
-    <div class="pb-6">
+<section class="home h-full dark:bg-gray-900 py-6">
+    <div class="mb-6">
         <h1 class="text-5xl dark:text-white">Bentornato Giorgio</h1>
         <h2 class="text-3xl pt-2 dark:text-white">Dai un occhiata ai tuoi grafici</h2>
     </div>
     
-    <div id="mydashboard" class="grid grid-cols-10">
-        <div class="col-span-5">
+    <div id="mydashboard" class="">
+        <div class="mt-2">
             <h3 class="text-2xl dark:text-white">Andamento del tuo patrimonio</h3>
             <p class="text-lg mb-5 dark:text-white">I risultati sono relativi agli utimi 5 mesi</p>
             <app-dashboard [type]="'patrimonio'"></app-dashboard>
         </div>
-        <div class="col-span-5">
+        <div class="mt-2">
             <h3 class="text-2xl dark:text-white">Rapporto entrate e uscite</h3>
             <p class="text-lg mb-5 dark:text-white">I risultati sono relativi agli utimi 5 mesi</p>
             <app-dashboard [type]="'rapporto'"></app-dashboard>

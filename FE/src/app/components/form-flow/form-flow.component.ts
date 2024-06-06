@@ -9,7 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class FormFlowComponent implements OnInit {
 
   bioSection = new FormGroup({
-    date: new FormControl<Date>(new Date()),
+    date: new FormControl<String>((new Date()).toISOString().substring(0,10)),
     nature: new FormControl<string>(''),
     category: new FormControl<string>(''),
     import: new FormControl<string>('')

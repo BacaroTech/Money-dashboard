@@ -19,7 +19,7 @@ export class CashFlowComponent implements OnInit {
   ] 
 
   dateSection = new FormGroup({
-    date: new FormControl<Date>(new Date()),
+    date: new FormControl<String>((new Date()).toISOString().substring(0,10))
   });
 
   datas: cashFlow[] = [
