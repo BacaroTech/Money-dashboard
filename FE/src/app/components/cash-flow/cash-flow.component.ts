@@ -28,6 +28,6 @@ export class CashFlowComponent implements OnInit {
   ]
 
   ngSubmit(): void{
-    console.log(this.dateSection.value)
+    console.log(this.dateSection.value);
   }
 }

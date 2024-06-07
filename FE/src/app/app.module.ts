@@ -13,6 +13,7 @@ import { AddFlowComponent } from './components/add-flow/add-flow.component';
 import { FormFlowComponent } from './components/form-flow/form-flow.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CashReviewComponent } from './components/cash-review/cash-review.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CashReviewComponent } from './components/cash-review/cash-review.compon
     CashFlowComponent,
     AddFlowComponent,
     FormFlowComponent,
-    CashReviewComponent
+    CashReviewComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

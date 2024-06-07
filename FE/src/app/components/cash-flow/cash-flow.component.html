@@ -14,7 +14,9 @@
             </div>
         </div>
     </form>
-    <table class="border-collapse border border-slate-400">
+
+
+    <table class="border-collapse border border-slate-400" *ngIf="this.datas && this.datas.length > 0">
         <thead>
             <tr>
                 <th *ngFor="let title of titles" class="border border-slate-300 capitalize dark:text-white">{{title}}</th>
@@ -33,4 +35,7 @@
             </tr>
         </tbody>
     </table>
+    <div *ngIf="!this.datas || this.datas.length == 0">
+        <p>Non sono presenti dati nel database di questo periodo</p>
+    </div>
 </section>

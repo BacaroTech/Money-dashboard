@@ -8,6 +8,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class FormFlowComponent implements OnInit {
 
+  insert: "succed"| "fail" | "todo" = "todo";
+
   bioSection = new FormGroup({
     date: new FormControl<String>((new Date()).toISOString().substring(0,10)),
     nature: new FormControl<string>(''),
@@ -18,10 +20,12 @@ export class FormFlowComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.insert = "todo";
   }
 
   ngSubmit(): void{
     console.log(this.bioSection.value)
+    this.insert = "fail";
   }
 
 }

@@ -8,9 +8,9 @@
                 <ul class="font-medium flex flex-col mt-4 rtl:space-x-reverse">
                     <li *ngFor="let menu of menus" class="mr-5" (click)="goActive(menu.url)">
                         <p *ngIf="menu.active" [routerLink]="[menu.url]" 
-                        class="block py-2 px-3 text-white bg-blue-700 rounded-xl my-3 dark:text-white cursor-pointer" aria-current="page">{{menu.name}}</p>
+                        class="block py-2 px-3 my-2 text-white bg-blue-700 rounded-xl dark:text-white cursor-pointer" aria-current="page">{{menu.name}}</p>
                         <p *ngIf="!menu.active" [routerLink]="[menu.url]" 
-                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:text-black hover:rounded-xl cursor-pointer">{{menu.name}}</p>
+                        class="block py-2 px-3 my-2 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:text-black hover:rounded-xl cursor-pointer">{{menu.name}}</p>
                     </li>
                 </ul>
             </div>

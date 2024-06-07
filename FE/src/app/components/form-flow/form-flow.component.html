@@ -48,4 +48,6 @@
             </button>
         </div>
     </form>
+    <app-modal *ngIf="this.insert == 'succed'" title="Flusso aggiunto" text="Il flusso è stato inserito correttamente" redirect="/dashboard"></app-modal>
+    <app-modal *ngIf="this.insert == 'fail'" title="Flusso non aggiunto" text="Si è verificato un errore" redirect="/dashboard"></app-modal>
 </section>
