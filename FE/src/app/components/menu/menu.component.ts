@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
   menus: Array<{ "name": string, "url": string, "active": boolean }> = [
     { "name": "Home", "url": "/dashboard", "active": true },
     { "name": "Aggiungi flusso", "url": "/addFlow", "active": false },
+    { "name": "Fine mese", "url": "/end", "active": false },
     { "name": "Revisione", "url": "/review", "active": false }
   ]
 

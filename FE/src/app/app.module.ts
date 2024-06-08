@@ -14,6 +14,8 @@ import { FormFlowComponent } from './components/form-flow/form-flow.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CashReviewComponent } from './components/cash-review/cash-review.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { EndMonthComponent } from './components/end-month/end-month.component';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { ModalComponent } from './components/modal/modal.component';
     AddFlowComponent,
     FormFlowComponent,
     CashReviewComponent,
-    ModalComponent
+    ModalComponent,
+    EndMonthComponent
   ],
   imports: [
     BrowserModule,
