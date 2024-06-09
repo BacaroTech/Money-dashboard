@@ -1,0 +1,40 @@
+<div *ngFor="let alert of alerts" [ngClass]="{'cursor-pointer': alert.action != ''}">
+    <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md mt-5" role="alert"
+        *ngIf="alert.type == 'info'" [routerLink]="[alert.action]" >
+        <div class="flex">
+            <div class="py-1">
+                <svg class="fill-current h-7 w-7 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                </svg>
+            </div>
+            <div>
+                <p class="font-bold capitalize">{{alert.title}}</p>
+                <p class="text-sm">{{alert.description}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="bg-red-100 border-t-4 border-red-500 rounded-b text-red-900 px-4 py-3 shadow-md mt-5" role="alert"
+        *ngIf="alert.type == 'important'" [routerLink]="[alert.action]" >
+        <div class="flex">
+            <div class="py-1">
+                <svg class=" h-7 w-7 mr-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M12 10V13" stroke="#e50b0b" stroke-width="2" stroke-linecap="round"></path>
+                        <path d="M12 16V15.9888" stroke="#e50b0b" stroke-width="2" stroke-linecap="round"></path>
+                        <path
+                            d="M10.2518 5.147L3.6508 17.0287C2.91021 18.3618 3.87415 20 5.39912 20H18.6011C20.126 20 21.09 18.3618 20.3494 17.0287L13.7484 5.147C12.9864 3.77538 11.0138 3.77538 10.2518 5.147Z"
+                            stroke="#e50b0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </svg>
+            </div>
+            <div>
+                <p class="font-bold capitalize">{{alert.title}}</p>
+                <p class="text-sm">{{alert.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CashReviewComponent } from './components/cash-review/cash-review.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { EndMonthComponent } from './components/end-month/end-month.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { EndMonthComponent } from './components/end-month/end-month.component';
     FormFlowComponent,
     CashReviewComponent,
     ModalComponent,
-    EndMonthComponent
+    EndMonthComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Alert } from 'src/app/model/alert';
 
 @Component({
   selector: 'app-end-month',
@@ -8,6 +9,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class EndMonthComponent implements OnInit {
 
+  alerts: Alert[] = [
+    {title: "alert1", description: "description1", action:"/dashboard", type:"info"},
+    {title: "alert2", description: "description2", action:"/review", type:"important"},
+  ]
   insert: "succed"| "fail" | "todo" = "todo";
 
   bioSection = new FormGroup({
