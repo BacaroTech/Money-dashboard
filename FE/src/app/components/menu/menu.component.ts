@@ -13,7 +13,8 @@ export class MenuComponent implements OnInit {
     { "name": "Home", "url": "/dashboard", "active": true },
     { "name": "Aggiungi flusso", "url": "/addFlow", "active": false },
     { "name": "Fine mese", "url": "/end", "active": false },
-    { "name": "Revisione", "url": "/review", "active": false }
+    { "name": "Revisione", "url": "/review", "active": false },
+    { "name": "Documenti", "url": "/documents", "active": false }
   ]
 
   constructor(private route: ActivatedRoute, private router: Router) { }

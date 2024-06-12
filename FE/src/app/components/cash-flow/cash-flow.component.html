@@ -14,28 +14,9 @@
             </div>
         </div>
     </form>
-
-
-    <table class="border-collapse border border-slate-400" *ngIf="this.datas && this.datas.length > 0">
-        <thead>
-            <tr>
-                <th *ngFor="let title of titles" class="border border-slate-300 capitalize dark:text-white">{{title}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of datas" class="capitalize">
-                <td class="border border-slate-300 px-40 dark:text-white">{{data.date}}
-                </td>
-                <td class="border border-slate-300 px-40 dark:text-white">{{data.nature}}
-                </td>
-                <td class="border border-slate-300 px-40 dark:text-white">{{data.category}}
-                </td>
-                <td class="border border-slate-300 px-40 dark:text-white">{{data.import}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div *ngIf="!this.datas || this.datas.length == 0">
-        <p>Non sono presenti dati nel database di questo periodo</p>
-    </div>
+    <app-table
+        [titles]="this.titles"
+        [datas]="this.datas"
+        [type]="'cashFlow'"
+    ></app-table>
 </section>

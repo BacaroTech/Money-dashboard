@@ -1,0 +1,12 @@
+<section id="home" class="h-screen ">
+    <h1 class="text-5xl mt-6 dark:text-white">Documenti inseriti</h1>
+    <h2 class="text-3xl mt-2 dark:text-white">Da questa schermata puoi visulizzare lo storico di tutti i fine mese che
+        hai inserito</h2>
+    <div class="mt-10">
+        <app-table 
+            [titles]="this.titles" 
+            [datas]="this.datas"
+            [type]="'documenti'">
+        </app-table>
+    </div>
+</section>

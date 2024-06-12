@@ -16,6 +16,9 @@ import { CashReviewComponent } from './components/cash-review/cash-review.compon
 import { ModalComponent } from './components/modal/modal.component';
 import { EndMonthComponent } from './components/end-month/end-month.component';
 import { AlertComponent } from './components/alert/alert.component';
+import { DocumentsComponent } from './components/documents/documents.component';
+import { TableComponent } from './components/table/table.component';
+import { SingleDocumentComponent } from './components/single-document/single-document.component';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { AlertComponent } from './components/alert/alert.component';
     CashReviewComponent,
     ModalComponent,
     EndMonthComponent,
-    AlertComponent
+    AlertComponent,
+    DocumentsComponent,
+    TableComponent,
+    SingleDocumentComponent
   ],
   imports: [
     BrowserModule,

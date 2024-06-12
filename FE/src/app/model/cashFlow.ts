@@ -1,4 +1,5 @@
 type CashFlow = {
+    id: string,
     date: string,
     nature: string,
     category: string,
