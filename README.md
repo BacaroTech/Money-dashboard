@@ -1,1 +1,31 @@
-# money-dashboard
+# MoneyDashboard - Gestione delle Finanze Personali💰
+## Descrizione del Progetto
+MoneyDashboard è un'applicazione web sviluppata con Angular che ti permette di gestire le tue finanze personali e le tue spese su base mensile. Con MoneyDashboard, puoi monitorare le tue entrate e uscite, creare budget, e avere una visione chiara delle tue finanze per prendere decisioni informate.
+
+## Caratteristiche Principali
+- Monitoraggio delle Entrate e delle Uscite: Registra tutte le tue transazioni finanziarie.
+- Visualizzazione Grafica: Grafici e tabelle per visualizzare l'andamento delle tue finanze.
+- Report Mensili: Report dettagliati delle tue finanze mensili.
+
+## Requisiti di Sistema
+Node.js (versione 12.x o superiore)
+Angular CLI (versione 10.x o superiore)
+
+## Installazione
+Segui questi passaggi per clonare e avviare il progetto in locale:
+- Clona il repository: git clone https://github.com/tuo-username/money-dashboard.git
+- Esegui cd money-dashboard e installa le dipendenze, assicurati di avere Node.js installato, poi esegui: npm install
+- Dopo aver installato le dipendenze, avvia il server di sviluppo Angular: ng serve
+- Apri il tuo browser e naviga a http://localhost:4200. Ora puoi iniziare a utilizzare MoneyDashboard per gestire le tue finanze.
+
+## Script Utili
+ng serve: Avvia il server di sviluppo.
+ng build: Compila il progetto per la distribuzione.
+ng test: Esegue i test unitari.
+ng lint: Esegue il linting del codice per assicurare la conformità agli standard di codice.
+
+## Contributi
+I contributi sono benvenuti! Se desideri contribuire, per favore apri una issue o invia una pull request.
+
+## Contatti
+Per qualsiasi domanda o suggerimento, puoi contattare il team di sviluppo a [bacarotech@gmail.com].
