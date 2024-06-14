@@ -1,11 +1,11 @@
-<section class="mt-5 ">
-    <h2 class="text-3xl mb-5 dark:text-white">Queste sono tutte le spese del mese</h2>
-    <form class="bg-white dark:bg-gray-900 rounded mb-4" [formGroup]="this.dateSection" (ngSubmit)="this.ngSubmit()">
-        <div class="mb-4">
+<section class="">
+    <h2 class="text-3xl mb-5 dark:text-white"><b>Queste sono tutte le spese del mese</b></h2>
+    <form class="bg-white dark:bg-gray-900 rounded" [formGroup]="this.dateSection" (ngSubmit)="this.ngSubmit()">
+        <div class="my-8 flex flex-row">
             <input
                 class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline space-x-10"
                 formControlName="date" id="date" type="date">
-            <div class="mt-5">
+            <div class="ml-5">
                 <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit">
@@ -14,9 +14,5 @@
             </div>
         </div>
     </form>
-    <app-table
-        [titles]="this.titles"
-        [datas]="this.datas"
-        [type]="'cashFlow'"
-    ></app-table>
+    <app-table [titles]="this.titles" [datas]="this.datas" [type]="'cashFlow'"></app-table>
 </section>

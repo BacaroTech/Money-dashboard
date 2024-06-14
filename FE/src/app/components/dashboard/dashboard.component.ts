@@ -1,7 +1,9 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { BarController, BarElement, CategoryScale, Chart, 
+import {
+  BarController, BarElement, CategoryScale, Chart,
   ChartItem, Decimation, Filler, Legend, LineController, LineElement,
-  LinearScale, PointElement, Title, Tooltip, registerables } from 'chart.js';
+  LinearScale, PointElement, Title, Tooltip, registerables
+} from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +17,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor() {
     Chart.register(
-      BarElement, LinearScale, LineController, PointElement, LineElement, BarController, CategoryScale, 
+      BarElement, LinearScale, LineController, PointElement, LineElement, BarController, CategoryScale,
       Decimation, Filler, Legend, Title, Tooltip, LinearScale
     );
   }
@@ -24,14 +26,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const ctx = (this.element.nativeElement.id) as ChartItem;
-    switch(this.element.nativeElement.id){
-      case 'conti': 
+    switch (this.element.nativeElement.id) {
+      case 'conti':
         this.buildChart(ctx, 'bar');
         break;
-      case 'patrimonio': 
+      case 'patrimonio':
         this.buildChart(ctx, 'bar');
         break;
-      case 'rapporto': 
+      case 'rapporto':
         this.buildChart(ctx, 'line');
         break;
       default:
@@ -40,7 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private buildChart(ctx: ChartItem, typeChar: any){
+  private buildChart(ctx: ChartItem, typeChar: any) {
     new Chart(ctx, {
       type: typeChar,
       data: {
@@ -53,7 +55,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       options: {
         responsive: true,
-        scales: {}
+        options: { }
       }
     });
   }

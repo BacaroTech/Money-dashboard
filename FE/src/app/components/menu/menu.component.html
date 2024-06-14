@@ -1,12 +1,14 @@
 <div class="border-r-2">
     <nav class="bg-white border-gray-200 dark:bg-gray-900 h-screen">
-        <div class="max-w-screen-xl p-5">
-            <a class="space-x-3 rtl:space-x-reverse" (click)="setHome()" [routerLink]="'/dashboard'">
-                <span class="text-2xl font-semibold whitespace-nowrap dark:text-white ">Money <br>Manager</span>
-            </a>
-            <div class="w-full " id="">
+        <div class="max-w-screen-xl ">
+            <div class="bg-blue-200 px-5 py-3 mx-auto hover:bg-blue-300">
+                <a class="space-x-3 rtl:space-x-reverse text-2xl font-semibold whitespace-nowrap" (click)="setHome()" [routerLink]="'/dashboard'">
+                    Money Manager
+                </a>
+            </div>
+            <div class="w-full px-5" id="">
                 <ul class="font-medium flex flex-col mt-4 rtl:space-x-reverse">
-                    <li *ngFor="let menu of menus" class="mr-5" (click)="goActive(menu.url)">
+                    <li *ngFor="let menu of menus" class="" (click)="goActive(menu.url)">
                         <p *ngIf="menu.active" [routerLink]="[menu.url]" 
                         class="block py-2 px-3 my-2 text-white bg-blue-700 rounded-xl dark:text-white cursor-pointer" aria-current="page">{{menu.name}}</p>
                         <p *ngIf="!menu.active" [routerLink]="[menu.url]" 
@@ -15,7 +17,7 @@
                 </ul>
             </div>
         </div>
-        <div class="mx-7">
+        <div class="mx-7 mt-5">
             <app-to-dark></app-to-dark>
         </div>
         

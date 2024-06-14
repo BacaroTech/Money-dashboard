@@ -1,19 +1,18 @@
 <section class="home h-full dark:bg-gray-900 py-6">
-    <div class="mb-6">
-        <h1 class="text-5xl dark:text-white">Bentornato Giorgio</h1>
-        <h2 class="text-3xl pt-2 dark:text-white">Dai un occhiata ai tuoi grafici</h2>
-    </div>
-    
-    <div id="mydashboard" class="">
-        <div class="mt-2">
-            <h3 class="text-2xl dark:text-white">Andamento del tuo patrimonio</h3>
-            <p class="text-lg mb-5 dark:text-white">I risultati sono relativi agli utimi 5 mesi</p>
-            <app-dashboard [type]="'patrimonio'"></app-dashboard>
-        </div>
-        <div class="mt-2">
-            <h3 class="text-2xl dark:text-white">Rapporto entrate e uscite</h3>
-            <p class="text-lg mb-5 dark:text-white">I risultati sono relativi agli utimi 5 mesi</p>
-            <app-dashboard [type]="'rapporto'"></app-dashboard>
+    <h1 class="text-5xl dark:text-white">Bentornato Giorgio</h1>
+    <div class="mt-10">
+        <h2 class="text-3xl pt-2 dark:text-white"><b>Dai un occhiata ai tuoi grafici</b></h2>
+        <div id="mydashboard" class="w-full grid grid-cols-2 gap-10 mt-4">
+            <div class="">
+                <h3 class="text-2xl dark:text-white">Andamento del tuo patrimonio</h3>
+                <p class="text-lg dark:text-white">I risultati sono relativi agli utimi 5 mesi</p>
+                <app-dashboard [type]="'patrimonio'"></app-dashboard>
+            </div>
+            <div class="">
+                <h3 class="text-2xl dark:text-white">Rapporto entrate e uscite</h3>
+                <p class="text-lg dark:text-white">I risultati sono relativi agli utimi 5 mesi</p>
+                <app-dashboard [type]="'rapporto'"></app-dashboard>
+            </div>
         </div>
     </div>
     <app-cash-flow></app-cash-flow>

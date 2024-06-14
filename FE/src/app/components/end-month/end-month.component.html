@@ -2,45 +2,54 @@
     <app-alert [alerts]="this.alerts"></app-alert>
     <h1 class="text-5xl mt-6 dark:text-white">Rendiconto fine mese</h1>
     <h2 class="text-3xl mt-2 dark:text-white">Da questa schermata puoi inserire il tuo rendiconto di questo mese</h2>
-    
-    <form class="bg-white rounded py-8 mb-4 dark:bg-gray-900" [formGroup]="this.bioSection" (ngSubmit)="this.ngSubmit()">
-        
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2 dark:text-white" for="cc">
-                Conto corrente principale
-            </label>
-            <input
-                class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="cc" id="cc" type="text" placeholder="Inserisci la natura">
-        </div>
 
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2 dark:text-white" for="cash">
-                Denaro contante
-            </label>
-            <input
-                class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="cash" id="cash" type="text" placeholder="Inserisci la natura">
-        </div>
+    <div class="grid grid-cols-3 gap-10 py-8 mb-4">
+        <form class="bg-white rounded dark:bg-gray-900" [formGroup]="this.bioSection" (ngSubmit)="this.ngSubmit()">
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="cc">
+                    Conto corrente principale
+                </label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    formControlName="cc" id="cc" type="text" placeholder="Inserisci la natura">
+            </div>
 
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2 dark:text-white" for="others">
-                Altri conti diversi dal principale
-            </label>
-            <input
-                class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="others" id="others" type="text" placeholder="Inserisci la natura">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="cash">
+                    Denaro contante
+                </label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    formControlName="cash" id="cash" type="text" placeholder="Inserisci la natura">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="others">
+                    Altri conti diversi dal principale
+                </label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    formControlName="others" id="others" type="text" placeholder="Inserisci la natura">
+            </div>
+            
+            
+            <div class="flex items-center justify-between">
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit">
+                    Inserisci rendiconto
+                </button>
+            </div>
+        </form>
+        <div class="col-span-2">
+            <h3 class="text-2xl dark:text-white"><b>A cosa serve questa schermata?</b></h3>
+            <p class="text-xl dark:text-white">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque excepturi qui exercitationem reiciendis, minus adipisci voluptates quis labore asperiores quod voluptate temporibus distinctio officia itaque, maiores nisi soluta neque earum.
+            </p>
         </div>
-        
-        
-        <div class="flex items-center justify-between">
-            <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit">
-                Inserisci rendiconto
-            </button>
-        </div>
-    </form>
+    </div>
+
     <app-modal *ngIf="this.insert == 'succed'" title="Rendiconto aggiunto" text="Il rendiconto è stato inserito correttamente" redirect="/dashboard"></app-modal>
     <app-modal *ngIf="this.insert == 'fail'" title="Rendiconto non aggiunto" text="Si è verificato un errore" redirect="/dashboard"></app-modal>
 </section>

@@ -1,40 +1,42 @@
-<table class="border-collapse border border-slate-400" *ngIf="this.datas && this.datas.length > 0">
+<table class="border-collapse border border-slate-400 w-full" *ngIf="this.datas && this.datas.length > 0">
     <thead>
         <tr>
-            <th *ngFor="let title of titles" class="border border-slate-300 capitalize dark:text-white">{{title}}</th>
+            <th *ngFor="let title of titles" class="border capitalize bg-slate-300
+            dark:text-white dark:bg-gray-400">{{title}}</th>
         </tr>
     </thead>
     <tbody *ngIf="this.type === 'cashFlow'">
-        <tr *ngFor="let data of datas" class="capitalize">
-            <td class="border border-slate-300 px-24 dark:text-white">
+        <tr *ngFor="let data of datas" class="border capitalize">
+            <td class="border border-slate-300  dark:text-white">
                 <p class="text-center">{{data.id}}</p>
             </td>
-            <td class="border border-slate-300 px-24 dark:text-white">
+            <td class="border border-slate-300  dark:text-white">
                 <p class="min-w-32 text-center">{{data.date}}</p>
             </td>
-            <td class="border border-slate-300 px-24 dark:text-white">
+            <td class="border border-slate-300  dark:text-white">
                 <p class="min-w-32 text-center">{{data.nature}}</p>
             </td>
-            <td class="border border-slate-300 px-24 dark:text-white">
+            <td class="border border-slate-300  dark:text-white">
                 <p class="min-w-32 text-center">{{data.category}}</p>
             </td>
-            <td class="border border-slate-300 px-24 dark:text-white">
+            <td class="border border-slate-300  dark:text-white">
                 <p class="min-w-32 text-center">{{data.import}}</p>
             </td>
         </tr>
     </tbody>
     <tbody *ngIf="this.type === 'documenti'">
-        <tr *ngFor="let data of datas" class="capitalize cursor-pointer" [routerLink]="'/document/'+data.id">
-            <td class="border border-slate-300 px-24 dark:text-white">
+        <tr *ngFor="let data of datas" class="capitalize cursor-pointer border hover:bg-slate-200"
+            [routerLink]="'/document/'+data.id">
+            <td class="border border-slate-300  dark:text-white ">
                 <p class="text-center">{{data.id}}</p>
             </td>
-            <td class="border border-slate-300 px-24 dark:text-white">
+            <td class="border border-slate-300  dark:text-white">
                 <p class="min-w-32 text-center">{{data.dateInsert}}</p>
             </td>
-            <td class="border border-slate-300 px-24 dark:text-white">
+            <td class="border border-slate-300  dark:text-white">
                 <p class="min-w-32 text-center">{{data.dateLastUpdate}}</p>
             </td>
-            <td class="border border-slate-300 px-24 dark:text-white">
+            <td class="border border-slate-300  dark:text-white">
                 <p class="min-w-32 text-center">{{data.balance}}</p>
             </td>
         </tr>

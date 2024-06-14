@@ -10,8 +10,8 @@ import { Alert } from 'src/app/model/alert';
 export class EndMonthComponent implements OnInit {
 
   alerts: Alert[] = [
-    {title: "alert1", description: "description1", action:"/dashboard", type:"info"},
-    {title: "alert2", description: "description2", action:"/review", type:"important"},
+    //{title: "alert1", description: "description1", action:"/dashboard", type:"info"},
+    //{title: "alert2", description: "description2", action:"/review", type:"important"},
   ]
   insert: "succed"| "fail" | "todo" = "todo";
 

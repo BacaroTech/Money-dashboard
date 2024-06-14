@@ -1,6 +1,16 @@
 <div class="h-screen">
     <h1 class="text-5xl mt-6 dark:text-white">Revisione flussi</h1>
     <h2 class="text-3xl mt-2 dark:text-white">Da questa schermata puoi visualizzare l'evoluzione della tua situazione finanziaria</h2>
-    <h3 class="text-xl mt-20 dark:text-white">Evoluzione della tua ricchezza</h3>
-    <app-dashboard [type]="'conti'"></app-dashboard>
+    
+    <div id="mydashboard" class="w-full grid grid-cols-2 gap-10 mt-10">
+        <div class="mt-2">
+            <app-dashboard [type]="'conti'"></app-dashboard>
+        </div>
+        <div>
+            <h3 class="text-2xl dark:text-white my-2"><b>Evoluzione della tua ricchezza</b></h3>
+            <p class="text-xl dark:text-white">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur eveniet adipisci, minus excepturi assumenda dolore quasi unde dicta, aliquid rerum beatae pariatur culpa officiis fugit nam porro consequuntur nostrum et.
+            </p>
+        </div>
+    </div>
 </div>
