@@ -14,8 +14,8 @@ export class CashFlowComponent implements OnInit {
   ] 
 
   datas: CashFlow[] = [
-    {id:"1", date: "01-01-2020", nature: "entrata", category: "stipendio", import: "1000$"},
-    {id:"2", date: "03-01-2020", nature: "uscita", category: "casa e bollette", import: "300$"},
+    {id:"1", date: "01-01-2020", nature: "entrata", category: "stipendio", import: "1000€"},
+    {id:"2", date: "03-01-2020", nature: "uscita", category: "casa e bollette", import: "300€"},
   ]
 
   constructor() { }

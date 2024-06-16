@@ -1,1 +1,43 @@
-<p>single-document works!</p>
+<section class="h-full">
+    <h2 class="text-5xl mt-6 dark:text-white">Documento numero {{this.idDocument}}</h2>
+    <h2 class="text-3xl mt-2 dark:text-white">Queste card ti aiuteranno a capire come si è concluso il mese di {{this.monthDocument}}</h2>
+    
+    <div class="grid grid-cols-3 gap-4 my-8 mb-4">
+        <div *ngFor="let title of this.titles; index as i"
+            class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <a href="#">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {{title}} 💸
+                </h5>
+            </a>
+            <p class="mb-3 text-2xl text-gray-700 dark:text-white">
+                {{this.values[i].value}} €
+            </p>
+            <p *ngIf="this.values[i].status == 'uguale'"
+                class="text-base dark:text-white"
+            >
+                Rispetto allo scorso mese l'importo è rimasto uguale
+            </p>
+            <p *ngIf="this.values[i].status != 'uguale'" 
+                class="text-base"
+                [ngClass]="{
+                    'text-rose-500': this.values[i].status == 'decrementato',
+                    'text-green-500': this.values[i].status == 'incrementato'
+                }"  >
+                Rispetto allo scorso mese l'importo è {{this.values[i].status}} di {{this.values[i].difference}} €
+            </p>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mt-16">
+        <app-dashboard type="bilancio"></app-dashboard>
+        <div>
+            <h3 class="text-2xl dark:text-white"><b>Composizione</b></h3>
+            <p class="text-xl dark:text-white">
+                Bilancio totale: {{this.balance}} €
+            </p>
+            <p class="text-xl dark:text-white mt-4">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque excepturi qui exercitationem reiciendis, minus adipisci voluptates quis labore asperiores quod voluptate temporibus distinctio officia itaque, maiores nisi soluta neque earum.
+            </p>
+        </div>
+    </div>
+</section>

@@ -13,8 +13,8 @@ export class DocumentsComponent implements OnInit {
   ] 
 
   datas: Documents[] = [
-    {id: "1", dateInsert: "01-01-2020", dateLastUpdate: "01-01-2020", balance: "1000$"},
-    {id: "2", dateInsert: "01-01-2020", dateLastUpdate: "01-01-2020", balance: "1000$"},
+    {id: "1", dateInsert: "01-01-2020", dateLastUpdate: "01-01-2020", balance: "1000€"},
+    {id: "2", dateInsert: "01-01-2020", dateLastUpdate: "01-01-2020", balance: "1000€"},
   ]
 
   constructor() { }

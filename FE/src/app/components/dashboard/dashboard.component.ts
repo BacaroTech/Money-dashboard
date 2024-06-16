@@ -1,8 +1,9 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
+  ArcElement,
   BarController, BarElement, CategoryScale, Chart,
-  ChartItem, Decimation, Filler, Legend, LineController, LineElement,
-  LinearScale, PointElement, Title, Tooltip, registerables
+  ChartItem, Decimation, DoughnutController, Filler, Legend, LineController, LineElement,
+  LinearScale, PointElement, PolarAreaController, RadialLinearScale, Title, Tooltip, registerables
 } from 'chart.js';
 
 @Component({
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor() {
     Chart.register(
       BarElement, LinearScale, LineController, PointElement, LineElement, BarController, CategoryScale,
-      Decimation, Filler, Legend, Title, Tooltip, LinearScale
+      Decimation, Filler, Legend, Title, Tooltip, LinearScale, DoughnutController, ArcElement
     );
   }
 
@@ -35,6 +36,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         break;
       case 'rapporto':
         this.buildChart(ctx, 'line');
+        break;
+      case 'bilancio':
+        this.buildChart(ctx, 'doughnut');
         break;
       default:
         console.error('questo grafico non è presente');
