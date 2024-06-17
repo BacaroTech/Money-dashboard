@@ -18,6 +18,16 @@ Segui questi passaggi per clonare e avviare il progetto in locale:
 - Dopo aver installato le dipendenze, avvia il server di sviluppo Angular: ng serve
 - Apri il tuo browser e naviga a http://localhost:4200. Ora puoi iniziare a utilizzare MoneyDashboard per gestire le tue finanze.
 
+## BE
+cd BE/src
+npm start index.ts --> server produzione
+nodemon index.ts --> server sviluppo(hot reload)
+
+## PORTE USATE
+4200 -> angular
+3000 -> node
+5432 -> postgress(docker)
+
 ## Script Utili
 ng serve: Avvia il server di sviluppo.
 ng build: Compila il progetto per la distribuzione.
