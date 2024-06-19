@@ -1,3 +1,6 @@
+# Compile project
+*.js
+
 # Node modules
 node_modules/
 

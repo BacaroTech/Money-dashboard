@@ -14,6 +14,15 @@ services:
 
     volumes:
       - moneydashboard_postgres_db:/var/lib/postgresql/data
+  moneydashboard_node:
+    build: .
+    command: bash -c "cd src && npm install typescript && npx tsc && npm start index.ts"
+    volumes:
+      - .:/usr/src
+    ports:
+      - "3000:3000"
+    depends_on:
+      - moneydashboard_postgres_db
 
 volumes:
   moneydashboard_postgres_db:
