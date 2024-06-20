@@ -1,10 +1,10 @@
 //controllers/someController.js
 import express, { Request, Response } from "express";
-import { queryTest } from "../services/balanceService";
-import createBalanceTable from "../models/balanceModel";
+import { queryTest } from "../services/flowService";
+import createFlowTable from "../models/flowModel";
 
 let router = express.Router();
-createBalanceTable()
+createFlowTable()
 
 router.get("/", async (req: Request, res: Response) => {
     res.send("Test query: " + await queryTest())

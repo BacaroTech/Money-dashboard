@@ -16,6 +16,8 @@ COPY . .
 # Compilare TypeScript
 RUN npm install -g typescript
 
+#RUN npm i nodemon
+
 # Esporre la porta che il server utilizzerà
 EXPOSE 3000
 

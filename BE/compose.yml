@@ -16,7 +16,7 @@ services:
       - moneydashboard_postgres_db:/var/lib/postgresql/data
   moneydashboard_node:
     build: .
-    command: bash -c "cd src && npm install typescript && npx tsc && npm start index.ts"
+    command: bash -c "cd src && npm install typescript && npm start index.ts"
     volumes:
       - .:/usr/src
     ports:
