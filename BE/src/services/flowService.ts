@@ -22,6 +22,20 @@ async function getFlowById(id: number){
 	}
 }
 
+async function getAllFlowForMonth(date: string){
+	
+	let piecesDate =  date.split('-');
+	//return [piecesDate[0]+'-'+piecesDate[1]+'-01', date];
+    const result = await client.query('SELECT * FROM flusso WHERE data_inserimento >= $1 AND data_inserimento <= $2',
+		[piecesDate[0]+'-'+piecesDate[1]+'-01', date]
+	)
+	if(result.rows && result.rows.length > 0){
+		return result.rows;
+	}else{
+		return [];
+	}
+}
+
 async function insertFlow(flow: flow){
 	flow.id = Math.floor(Math.random() * 1000000);
     const result = await client.query(
@@ -35,4 +49,4 @@ async function insertFlow(flow: flow){
 	}
 }
 
-export {getAllFlow, insertFlow}
+export {getAllFlow, insertFlow, getAllFlowForMonth, getFlowById}

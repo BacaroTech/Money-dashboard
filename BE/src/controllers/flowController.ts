@@ -1,6 +1,6 @@
 //controllers/someController.js
 import express, { Request, Response } from "express";
-import { getAllFlow, insertFlow } from "../services/flowService";
+import { getAllFlow, getAllFlowForMonth, insertFlow } from "../services/flowService";
 import { createFlowTable } from "../models/flowModel";
 
 let router = express.Router();
@@ -8,6 +8,10 @@ createFlowTable()
 
 router.get("/getAll", async (req: Request, res: Response) => {
     res.send(await getAllFlow());
+});
+
+router.get("/forMonth", async (req: Request, res: Response) => {
+    res.send(await getAllFlowForMonth(req.body.date));
 });
 
 router.post("/insertFlow", async (req: Request, res: Response) => {
