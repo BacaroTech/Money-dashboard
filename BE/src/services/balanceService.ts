@@ -6,7 +6,7 @@ async function queryTest(){
 	if(result.rows && result.rows.length > 0){
 		return result.rows;
 	}else{
-		return "no dati";
+		return [];
 	}
 }
 

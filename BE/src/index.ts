@@ -8,6 +8,7 @@ connectionDB()
 /******* START SERVER *******/
 dotenv.config();
 const app: Express = express();
+app.use(express.json());
 const port = process.env.PORT || 3000;
 
 /******* SET UP CONTROLLERS *******/
