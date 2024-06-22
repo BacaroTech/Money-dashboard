@@ -4,7 +4,12 @@ import { getAllFlow, getAllFlowForMonth, insertFlow } from "../services/flowServ
 import { createFlowTable } from "../models/flowModel";
 
 let router = express.Router();
-createFlowTable()
+createFlowTable();
+
+const cors = require('cors');
+router.use(cors({
+	origin: 'http://localhost:4200'
+}));
 
 router.get("/getAll", async (req: Request, res: Response) => {
     res.send(await getAllFlow());

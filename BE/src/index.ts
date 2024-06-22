@@ -5,7 +5,7 @@ import { connectionDB } from "./dbconnection";
 /******* CONNECTION ON DATABASE *******/
 connectionDB()
 
-/******* START SERVER *******/
+/******* CONFIGUARATION SERVER *******/
 dotenv.config();
 const app: Express = express();
 app.use(express.json());
@@ -16,6 +16,12 @@ let balance = require('./controllers/balanceController');
 app.use('/balance', balance);
 let flow = require('./controllers/flowController');
 app.use('/flow', flow);
+
+/******* SET UP CORS FOR LOCALHOST *******/
+const cors = require('cors');
+app.use(cors({
+	origin: 'http://localhost:4200'
+}));
 
 /******* TEST SERVER NODE IF IS WORKING *******/
 app.get("/", (req: Request, res: Response) => {

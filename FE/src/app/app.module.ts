@@ -19,6 +19,8 @@ import { AlertComponent } from './components/alert/alert.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { TableComponent } from './components/table/table.component';
 import { SingleDocumentComponent } from './components/single-document/single-document.component';
+import {HttpClientModule} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { SingleDocumentComponent } from './components/single-document/single-doc
     AppRoutingModule,
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

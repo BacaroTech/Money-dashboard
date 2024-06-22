@@ -1,9 +1,9 @@
 type CashFlow = {
     id: string,
-    date: string,
-    nature: string,
-    category: string,
-    import: string
+    data_inserimento: string,
+    natura: string,
+    categoria: string,
+    importo: string
 }
 
 export {CashFlow}
