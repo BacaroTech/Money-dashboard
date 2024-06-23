@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { CashFlow } from 'src/app/model/cashFlow';
+import { FlowService } from 'src/app/services/flow.service';
 
 @Component({
   selector: 'app-form-flow',
@@ -17,7 +19,7 @@ export class FormFlowComponent implements OnInit {
     import: new FormControl<string>('')
   });
 
-  constructor() { }
+  constructor(private flow: FlowService) { }
 
   ngOnInit(): void {
     this.insert = "todo";
@@ -25,7 +27,14 @@ export class FormFlowComponent implements OnInit {
 
   ngSubmit(): void{
     console.log(this.bioSection.value)
-    this.insert = "fail";
+    this.flow.insertFlow([this.bioSection.value] as CashFlow[])
+    .subscribe((data: CashFlow[]) => {
+      if(data && data.length > 0){
+        this.insert = "succed"
+      }else{
+        this.insert = "fail"
+      }
+    })
   }
 
 }

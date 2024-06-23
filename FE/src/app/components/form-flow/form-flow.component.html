@@ -13,33 +13,41 @@
                     formControlName="date" id="date" type="date">
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="nature">
-                    Natura
-                </label>
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="nature" id="nature" type="text" placeholder="Inserisci la natura">
-            </div>
-            <div class="mb-4">
                 <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="category">
                     Categoria
                 </label>
                 <div class="relative" id="category">
                     <select
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="grid-state">
+                        id="grid-state" formControlName="category" >
+                        <option value="" disabled selected>Seleziona la categoria del flusso</option>
                         <option>Entrata</option>
                         <option>Uscita</option>
                     </select>
                 </div>
             </div>
             <div class="mb-4">
+                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="nature">
+                    Natura
+                </label>
+                <div class="relative" id="nature">
+                    <select
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="grid-state" formControlName="nature">
+                        <option value="" disabled selected>Seleziona la natura del flusso</option>
+                        <option>Stipendio</option>
+                        <option>Casa</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mb-4">
                 <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="import">
                     Importo
                 </label>
                 <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="import" id="import" type="number" min="0" placeholder="0">
+                    formControlName="import" id="import" type="number" min="0" placeholder="0" step="100">
             </div>
             <div class="flex items-center justify-between">
                 <button

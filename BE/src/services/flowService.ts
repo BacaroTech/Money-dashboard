@@ -23,7 +23,7 @@ async function getFlowById(id: number){
 }
 
 async function getAllFlowForMonth(date: string){
-	
+	console.log("mydate ", date)
 	let piecesDate =  date.split('-');
 	//return [piecesDate[0]+'-'+piecesDate[1]+'-01', date];
     const result = await client.query('SELECT * FROM flusso WHERE data_inserimento >= $1 AND data_inserimento <= $2',

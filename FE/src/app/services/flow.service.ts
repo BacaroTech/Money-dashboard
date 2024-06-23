@@ -14,4 +14,12 @@ export class FlowService {
   getAllFlow(): Observable<CashFlow[]> {
     return this.http.get<CashFlow[]>(url+'/flow/getAll');
   }
+
+  insertFlow(body: CashFlow[]): Observable<CashFlow[]> {
+    return this.http.post<CashFlow[]>(url+'/flow/insertFlow', body);
+  }
+
+  postForMonth(date: string): Observable<CashFlow[]> {
+    return this.http.post<CashFlow[]>(url+'/flow/forMonth', {"date":date});
+  }
 }

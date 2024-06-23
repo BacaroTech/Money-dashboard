@@ -19,15 +19,7 @@ export class CashFlowComponent implements OnInit {
   constructor(private flow: FlowService) { }
 
   ngOnInit(): void {
-    this.flow.getAllFlow().subscribe({
-      next: (data: CashFlow[]) => {
-        this.normalizationFlow(data);     
-        this.datas = data
-      },
-      error: (error) => {
-        console.log(error)
-      }
-    })  
+    this.singlePostForMonth(new Date().toJSON().slice(0, 10))
   }
 
   dateSection = new FormGroup({
@@ -35,12 +27,26 @@ export class CashFlowComponent implements OnInit {
   });
 
   ngSubmit(): void{
-    console.log(this.dateSection.value);
+    this.singlePostForMonth(this.dateSection.value.date as string);
   }
 
   normalizationFlow(datas: CashFlow[]){
     return datas.map(data => {
       data.data_inserimento = data.data_inserimento.split('T')[0];
     })
+  }
+
+  singlePostForMonth(date: string){
+    this.flow.postForMonth(date)
+    .subscribe({
+      next: (data: CashFlow[]) => {
+        console.log(data)
+        this.normalizationFlow(data);     
+        this.datas = data
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    }) 
   }
 }
