@@ -1,7 +1,7 @@
 type MoneyStatus = {
-    value: string,
+    value: number,
     status: string,
-    difference: string,
+    difference: number,
 }
 
 export default MoneyStatus

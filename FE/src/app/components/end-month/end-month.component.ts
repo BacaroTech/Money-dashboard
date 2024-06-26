@@ -11,11 +11,9 @@ import { BalanceService } from 'src/app/services/balance.service';
 })
 export class EndMonthComponent implements OnInit {
 
-  alerts: Alert[] = [
-    //{title: "alert1", description: "description1", action:"/dashboard", type:"info"},
-    //{title: "alert2", description: "description2", action:"/review", type:"important"},
-  ]
-  insert: "succed"| "fail" | "todo" = "todo";
+  alerts: Alert[] = []
+  insert: "succed" | "fail" | "todo" = "todo";
+  exist: boolean = false;
 
   bioSection = new FormGroup({
     conto: new FormControl<number>(0),
@@ -27,23 +25,41 @@ export class EndMonthComponent implements OnInit {
 
   ngOnInit(): void {
     this.insert = "todo";
+    this.balance.getAllDocumentByMonth({ "date": new Date().toJSON().slice(0, 10) })
+      .subscribe((data: Documents[]) => {
+        if (data && data.length > 0) {
+          this.exist = true;
+          this.alerts.push(
+            {
+              title: "Inserimento",
+              description: "Per questo mese hai già inserito un documento di fine mese, clicca per modificarlo", 
+              action: "dashboard",       //da sistemare action con pagina per modifiche
+              type: "important"
+            }
+          )
+        }
+      })
   }
 
-  ngSubmit(): void{
-    this.balance.insertDocument(this.createDocument())
-    .subscribe((data: Documents[]) => {
-      if(data && data.length > 0){
-        this.insert = "succed"
-      }else{
-        this.insert = "fail"
-      }
-    })
+  ngSubmit(): void {
+    if(!this.exist){
+      this.balance.insertDocument(this.createDocument())
+      .subscribe((data: Documents[]) => {
+        if (data && data.length > 0) {
+          this.insert = "succed";
+          this.exist = true;
+        } else {
+          this.insert = "fail";
+        }
+      })
+    }
+    
   }
 
-  createDocument(): Documents[]{
+  createDocument(): Documents[] {
     return [
       {
-        id: 0, 
+        id: 0,
         data_inserimento: new Date().toJSON().slice(0, 10),
         data_ultimo_aggiornamento: new Date().toJSON().slice(0, 10),
         conto: this.bioSection.value.conto as number,

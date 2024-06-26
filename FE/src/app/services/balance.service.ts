@@ -15,7 +15,15 @@ export class BalanceService {
     return this.http.get<Documents[]>(url+'/balance/getAll');
   }
 
-  insertDocument(body: Documents[]): Observable<Documents[]> {
+  getDocumentById(body: Documents[]): Observable<Documents[]> {
+    return this.http.post<Documents[]>(url+'/balance/byID', body);
+  }
+
+  getAllDocumentByMonth(body: any): Observable<Documents[]> {
+    return this.http.post<Documents[]>(url+'/balance/byMonth', body);
+  }
+
+  insertDocument(body: any): Observable<Documents[]> {
     return this.http.post<Documents[]>(url+'/balance/insertDocument', body);
   }
 }

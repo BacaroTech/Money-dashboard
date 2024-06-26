@@ -10,7 +10,7 @@ async function getAllDocuments(){
 	}
 }
 
-async function getFlowById(id: number){
+async function getDocumentById(id: number){
 	const result = await client.query(
 		'SELECT * FROM bilancio WHERE id = $1',
 		[id]
@@ -29,10 +29,24 @@ async function insertDocument(document: document){
 		[document.id, document.data_inserimento, document.data_ultimo_aggiornamento, Math.ceil(document.conto), Math.ceil(document.contante), Math.ceil(document.altro)]
 	)
 	if(result.rowCount > 0){
-		return getFlowById(document.id);
+		return getDocumentById(document.id);
 	}else{
 		return false;
 	}
 }
 
-export {getAllDocuments, insertDocument}
+async function getAllDocumentByMonth(date:string) {
+	let piecesDate =  date.split('-');
+	console.log(piecesDate)
+    const result = await client.query('SELECT * FROM bilancio WHERE data_inserimento >= $1 AND data_inserimento <= $2',
+		[piecesDate[0]+'-'+piecesDate[1]+'-01', date]
+	)
+	if(result.rowCount > 0){
+		console.log(result.rows[0].id)
+		return getDocumentById(result.rows[0].id);
+	}else{
+		return false;
+	}
+}
+
+export {getAllDocuments, insertDocument, getAllDocumentByMonth, getDocumentById}
