@@ -14,6 +14,7 @@ export class EndMonthComponent implements OnInit {
   alerts: Alert[] = []
   insert: "succed" | "fail" | "todo" = "todo";
   exist: boolean = false;
+  load: boolean = false;
 
   bioSection = new FormGroup({
     conto: new FormControl<number>(0),
@@ -43,6 +44,7 @@ export class EndMonthComponent implements OnInit {
 
   ngSubmit(): void {
     if(!this.exist){
+      this.load = true;
       this.balance.insertDocument(this.createDocument())
       .subscribe((data: Documents[]) => {
         if (data && data.length > 0) {
@@ -51,6 +53,7 @@ export class EndMonthComponent implements OnInit {
         } else {
           this.insert = "fail";
         }
+        this.load = false;
       })
     }
     

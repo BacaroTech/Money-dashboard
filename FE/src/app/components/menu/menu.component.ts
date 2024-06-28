@@ -41,6 +41,10 @@ export class MenuComponent implements OnInit {
     this.setActive('/dashboard');
   }
 
+  openLeftMenu(){
+    document.getElementById("default-sidebar")?.classList.add()
+  }
+
   private setActive(url: string) {
     this.menus.forEach(voice => {
       if (voice.url == url) {

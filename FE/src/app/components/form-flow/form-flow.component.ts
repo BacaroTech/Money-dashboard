@@ -11,6 +11,7 @@ import { FlowService } from 'src/app/services/flow.service';
 export class FormFlowComponent implements OnInit {
 
   insert: "succed"| "fail" | "todo" = "todo";
+  load: boolean = false;
 
   bioSection = new FormGroup({
     date: new FormControl<String>((new Date()).toISOString().substring(0,10)),
@@ -26,7 +27,7 @@ export class FormFlowComponent implements OnInit {
   }
 
   ngSubmit(): void{
-    console.log(this.bioSection.value)
+    this.load = true;
     this.flow.insertFlow([this.bioSection.value] as CashFlow[])
     .subscribe((data: CashFlow[]) => {
       if(data && data.length > 0){
@@ -35,6 +36,7 @@ export class FormFlowComponent implements OnInit {
         this.insert = "fail"
       }
     })
+    this.load = false;
   }
 
 }

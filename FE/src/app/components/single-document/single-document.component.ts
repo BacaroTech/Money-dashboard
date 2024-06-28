@@ -17,7 +17,7 @@ export class SingleDocumentComponent implements OnInit {
   titles: string[] = ["Conto corrente", "Contanti", "Altri conti aggregati"];
   
   //incrementato, decrementato, uguale
-  //TODO DA SISTEMARE QUESTO
+  //TODO DA SISTEMARE QUESTO A BACKEND LA API
   values: MoneyStatus[] = [
     {value: 0, status: "uguale", difference: 0},
     {value: 0, status: "uguale", difference: 0},
