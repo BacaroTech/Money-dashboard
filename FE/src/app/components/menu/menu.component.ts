@@ -42,7 +42,13 @@ export class MenuComponent implements OnInit {
   }
 
   openLeftMenu(){
-    document.getElementById("default-sidebar")?.classList.add()
+    document.getElementById("default-sidebar")?.classList.remove("-translate-x-full");
+    document.getElementById("background")?.classList.add("-z-10");
+  }
+
+  closeLeftMenu(){
+    document.getElementById("default-sidebar")?.classList.add("-translate-x-full");
+    document.getElementById("background")?.classList.remove("-z-10");
   }
 
   private setActive(url: string) {
