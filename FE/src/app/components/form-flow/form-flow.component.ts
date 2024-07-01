@@ -28,14 +28,17 @@ export class FormFlowComponent implements OnInit {
 
   ngSubmit(): void{
     this.load = true;
+    if(this.bioSection.value.date && this.bioSection.value.category && 
+      this.bioSection.value.import && this.bioSection.value.nature)
     this.flow.insertFlow([this.bioSection.value] as CashFlow[])
     .subscribe((data: CashFlow[]) => {
       if(data && data.length > 0){
-        this.insert = "succed"
+        this.insert = "succed";
       }else{
-        this.insert = "fail"
+        this.insert = "fail";
       }
     })
+    this.insert = "fail";
     this.load = false;
   }
 

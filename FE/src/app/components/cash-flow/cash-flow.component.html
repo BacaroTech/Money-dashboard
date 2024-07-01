@@ -1,5 +1,5 @@
 <section class="">
-    <h2 class="text-3xl mb-5 dark:text-white"><b>Queste sono tutte le spese del mese</b></h2>
+    <h2 class="text-3xl mt-5 mb-2 dark:text-white"><b>Movimenti mensili</b></h2>
     <form class="bg-white dark:bg-gray-900 rounded" [formGroup]="this.dateSection" (ngSubmit)="this.ngSubmit()">
         <div class="my-8 flex flex-row">
             <input
@@ -14,5 +14,14 @@
             </div>
         </div>
     </form>
-    <app-table [titles]="this.titles" [datas]="this.datas" [type]="'cashFlow'"></app-table>
+    <div class="mt-8" *ngIf="this.datasIn">
+        <h1 class="mb-2 text-2xl dark:text-white"><b>Lista delle Entrate</b></h1>
+        <div class="mb-2 dark:text-white">Lista delle entrate del mese selezionato</div>
+        <app-table [titles]="this.titles" [datas]="this.datasIn" [type]="'cashFlow'"></app-table>
+    </div>
+    <div class="mt-8" *ngIf="this.datasOut">
+        <h1 class="mb-2 text-2xl dark:text-white"><b>Lista delle Uscite</b></h1>
+        <div class="mb-2 dark:text-white">Lista delle uscite del mese selezionato</div>
+        <app-table [titles]="this.titles" [datas]="this.datasOut" [type]="'cashFlow'"></app-table>
+    </div>
 </section>

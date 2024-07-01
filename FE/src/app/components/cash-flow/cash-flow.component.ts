@@ -14,7 +14,8 @@ export class CashFlowComponent implements OnInit {
     "ID", "Data", "Natura", "Categoria", "Importo"
   ] 
 
-  datas: CashFlow[] = [ ]
+  datasIn: CashFlow[] = [ ]
+  datasOut: CashFlow[] = [ ]
 
   constructor(private flow: FlowService) { }
 
@@ -30,10 +31,17 @@ export class CashFlowComponent implements OnInit {
     this.singlePostForMonth(this.dateSection.value.date as string);
   }
 
-  normalizationFlow(datas: CashFlow[]){
-    return datas.map(data => {
+  normalizationFlow(datas: CashFlow[]): void{
+    datas.map(data => {
       data.data_inserimento = data.data_inserimento.split('T')[0];
+      if(data.categoria === "Entrata"){
+        this.datasIn.push(data);
+      }else{
+        this.datasOut.push(data);
+      }
     })
+
+    
   }
 
   singlePostForMonth(date: string){
@@ -41,8 +49,9 @@ export class CashFlowComponent implements OnInit {
     .subscribe({
       next: (data: CashFlow[]) => {
         console.log(data)
+        this.datasIn = [];
+        this.datasOut = [];
         this.normalizationFlow(data);     
-        this.datas = data
       },
       error: (error) => {
         console.log(error)
