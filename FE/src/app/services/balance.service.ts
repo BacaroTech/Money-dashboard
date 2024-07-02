@@ -15,7 +15,7 @@ export class BalanceService {
     return this.http.get<Documents[]>(url+'/balance/getAll');
   }
 
-  getDocumentById(body: Documents[]): Observable<Documents[]> {
+  getDocumentById(body: any): Observable<Documents[]> {
     return this.http.post<Documents[]>(url+'/balance/byID', body);
   }
 

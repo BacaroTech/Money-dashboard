@@ -10,7 +10,8 @@ async function getAllDocuments(){
 	}
 }
 
-async function getDocumentById(id: number){
+async function getDocumentById(id: any){
+	console.log(id);
 	const result = await client.query(
 		'SELECT * FROM bilancio WHERE id = $1',
 		[id]
@@ -41,7 +42,7 @@ async function getAllDocumentByMonth(date:string) {
     const result = await client.query('SELECT * FROM bilancio WHERE data_inserimento >= $1 AND data_inserimento <= $2',
 		[piecesDate[0]+'-'+piecesDate[1]+'-01', date]
 	)
-	if(result.rowCount > 0){
+	if(result.rows && result.rows.length > 0){
 		console.log(result.rows[0].id)
 		return getDocumentById(result.rows[0].id);
 	}else{
