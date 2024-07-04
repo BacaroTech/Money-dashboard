@@ -13,6 +13,9 @@ import {
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
 
+  @Input() datas!: any[];
+  @Input() label!: any[];
+  @Input() description!: string;
   @Input() type!: string;
   @ViewChild('dynamicElement') element!: ElementRef;
 
@@ -23,7 +26,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log(this.datas)
+   }
 
   ngAfterViewInit(): void {
     const ctx = (this.element.nativeElement.id) as ChartItem;
@@ -50,10 +55,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     new Chart(ctx, {
       type: typeChar,
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+        labels: this.label,
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2],
+          label: this.description,
+          data: this.datas,
           borderWidth: 1
         }]
       },
