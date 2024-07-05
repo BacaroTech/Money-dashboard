@@ -31,7 +31,7 @@ export class SingleDocumentComponent implements OnInit {
 
     this.balance.getDocumentById({"id":this.idDocument})
       .subscribe((data: Documents[]) => {
-        console.log(data)
+        
         if (data && data.length > 0) {
           this.myBalance = data[0];
           this.myBalance.bilancio = this.myBalance.contante + this.myBalance.altro + this.myBalance.conto

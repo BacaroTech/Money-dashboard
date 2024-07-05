@@ -14,8 +14,8 @@ export class CashFlowComponent implements OnInit {
     "ID", "Data", "Natura", "Categoria", "Importo"
   ] 
 
-  datasIn: CashFlow[] = [ ]
-  datasOut: CashFlow[] = [ ]
+  datasIn: CashFlow[] = [];
+  datasOut: CashFlow[] = [];
 
   constructor(private flow: FlowService) { }
 
@@ -39,16 +39,14 @@ export class CashFlowComponent implements OnInit {
       }else{
         this.datasOut.push(data);
       }
-    })
-
-    
+    })    
   }
 
   singlePostForMonth(date: string){
     this.flow.postForMonth(date)
     .subscribe({
       next: (data: CashFlow[]) => {
-        console.log(data)
+        
         this.datasIn = [];
         this.datasOut = [];
         this.normalizationFlow(data);     

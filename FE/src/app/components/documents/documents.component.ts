@@ -21,7 +21,7 @@ export class DocumentsComponent implements OnInit {
     this.balance.getAllDocument()
     .subscribe({
       next: (data: Documents[]) => {
-        console.log(data)
+        
         this.normalizationDocument(data);     
         this.datas = data
       },

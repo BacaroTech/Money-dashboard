@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.datas)
+    //console.log(this.datas)
    }
 
   ngAfterViewInit(): void {
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.buildChart(ctx, 'bar');
         break;
       case 'rapporto':
-        this.buildChart(ctx, 'line');
+        this.buildChart(ctx, 'bar');
         break;
       case 'bilancio':
         this.buildChart(ctx, 'doughnut');
