@@ -1,10 +1,10 @@
-<div class="h-screen">
+<div class="h-screen" *ngIf="!this.isLoadingBalance">
     <h1 class="text-5xl mt-6 dark:text-white">Revisione flussi</h1>
     <h2 class="text-3xl mt-2 dark:text-white">Da questa schermata puoi visualizzare l'evoluzione della tua situazione finanziaria</h2>
     
     <div id="mydashboard" class="w-full grid grid-cols-2 gap-10 mt-10">
         <div class="mt-2">
-            <app-dashboard [type]="'conti'"></app-dashboard>
+            <app-dashboard [type]="'patrimonio'" [datas]="this.datasBilancioValue" [label]="this.datasBilancioLabelX" [description]="'Rapporto'"></app-dashboard>
         </div>
         <div>
             <h3 class="text-2xl dark:text-white my-2"><b>Evoluzione della tua ricchezza</b></h3>

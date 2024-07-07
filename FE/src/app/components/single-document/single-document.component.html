@@ -1,4 +1,4 @@
-<section class="h-full">
+<section class="h-full" *ngIf="!this.isLoading">
     <h2 class="text-5xl mt-6 dark:text-white">Documento numero {{this.idDocument}}</h2>
     <h2 class="text-3xl mt-2 dark:text-white">Queste card ti aiuteranno a capire come si è concluso il mese di {{this.monthDocument}}</h2>
     
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="grid grid-cols-2 gap-4 mt-16">
-        <app-dashboard type="bilancio"></app-dashboard>
+        <app-dashboard [type]="'bilancio'" [datas]="this.balanceValues" [label]="this.titles" [description]="'Rapporto'"></app-dashboard>
         <div>
             <h3 class="text-2xl dark:text-white"><b>Composizione</b></h3>
             <p class="text-xl dark:text-white">

@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.buildChart(ctx, 'bar');
         break;
       case 'patrimonio':
-        this.buildChart(ctx, 'bar');
+        this.buildChart(ctx, 'line');
         break;
       case 'rapporto':
         this.buildChart(ctx, 'bar');

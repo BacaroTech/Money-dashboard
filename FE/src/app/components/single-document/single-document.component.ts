@@ -13,6 +13,8 @@ export class SingleDocumentComponent implements OnInit {
   idDocument: string = "";
   myBalance: Documents | null = null;
   monthDocument: string = this.convertToName(new Date().toJSON().slice(0, 10).split('-')[1]);
+  balanceValues: number[] = []
+  isLoading: boolean = true;
 
   titles: string[] = ["Conto corrente", "Contanti", "Altri conti aggregati"];
   
@@ -38,7 +40,10 @@ export class SingleDocumentComponent implements OnInit {
           this.values[0].value = this.myBalance.conto;
           this.values[1].value = this.myBalance.contante;
           this.values[2].value = this.myBalance.altro;
+
+          this.balanceValues = [this.values[0].value, this.values[1].value, this.values[2].value];
         }
+        this.isLoading = false
       })
     
   }
