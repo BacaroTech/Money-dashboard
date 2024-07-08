@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import url from './setting';
 import { Documents } from '../model/document';
 import { Observable } from 'rxjs';
+import DocumentsBetween from '../model/documentsBetween';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class BalanceService {
     return this.http.get<Documents[]>(url+'/balance/getAll');
   }
 
-  getDocumentById(body: any): Observable<Documents[]> {
-    return this.http.post<Documents[]>(url+'/balance/byID', body);
+  getDocumentById(body: any): Observable<DocumentsBetween[]> {
+    return this.http.post<DocumentsBetween[]>(url+'/balance/byID', body);
   }
 
   getAllDocumentByMonth(body: any): Observable<Documents[]> {
