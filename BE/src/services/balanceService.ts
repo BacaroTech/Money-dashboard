@@ -2,7 +2,7 @@ import { client } from "../dbconnection";
 import { document } from "../models/balanceModel";
 
 async function getAllDocuments(){
-    const result = await client.query('SELECT * FROM bilancio')
+    const result = await client.query('SELECT * FROM bilancio order by data_inserimento ')
 	if(result.rows && result.rows.length > 0){
 		return result.rows;
 	}else{
@@ -13,6 +13,18 @@ async function getAllDocuments(){
 async function getDocumentById(id: any){
 	const result = await client.query(
 		'select b.conto, b2.conto as contoOld, b.contante, b2.contante as contanteold, b.altro, b2.altro as altroOld from bilancio b join bilancio b2 on EXTRACT(MONTH FROM b.data_inserimento)-1 = EXTRACT(MONTH FROM b2.data_inserimento) where b.id = $1 and b.id <> b2.id',
+		[id]
+	)
+	if(result.rows && result.rows.length > 0){
+		return result.rows;
+	}else{
+		return getDocumentBySingleId(id);
+	}
+}
+
+async function getDocumentBySingleId(id: any){
+	const result = await client.query(
+		'select b.conto, b.contante, b.altro from bilancio b where b.id = $1',
 		[id]
 	)
 	if(result.rows && result.rows.length > 0){

@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.buildChart(ctx, 'bar');
         break;
       case 'patrimonio':
-        this.buildChart(ctx, 'line');
+        this.buildChart(ctx, 'bar');
         break;
       case 'rapporto':
         this.buildChart(ctx, 'bar');
@@ -59,7 +59,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         datasets: [{
           label: this.description,
           data: this.datas,
-          borderWidth: 1
+          borderWidth: 1,
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
         }]
       },
       options: {

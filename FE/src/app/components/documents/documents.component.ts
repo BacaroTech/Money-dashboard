@@ -23,7 +23,7 @@ export class DocumentsComponent implements OnInit {
       next: (data: Documents[]) => {
         
         this.normalizationDocument(data);     
-        this.datas = data
+        this.datas = data.reverse()
       },
       error: (error) => {
         console.log(error)
