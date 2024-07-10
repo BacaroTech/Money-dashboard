@@ -27,8 +27,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    //console.log(this.datas)
-   }
+    
+  }
 
   ngAfterViewInit(): void {
     const ctx = (this.element.nativeElement.id) as ChartItem;

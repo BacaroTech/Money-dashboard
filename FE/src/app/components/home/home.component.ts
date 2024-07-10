@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import convertToName from 'src/app/common/mappingMonth';
 import { CashFlow } from 'src/app/model/cashFlow';
 import { Documents } from 'src/app/model/document';
 import { BalanceService } from 'src/app/services/balance.service';
@@ -27,11 +28,10 @@ export class HomeComponent implements OnInit {
         this.datasBilancioValue = [];
         this.datasBilancioLabelX = [];
         this.normalizationDocumentForChar(data);
-        console.log(this.datasBilancioValue, this.datasBilancioLabelX)
         this.isLoadingBalance = false;
       },
       error: (error) => {
-        console.log(error);
+        console.error(error);
         this.isLoadingBalance = false;
       }
     }) 
@@ -41,33 +41,32 @@ export class HomeComponent implements OnInit {
       next: (data: CashFlow[]) => {
         this.datasFlowValue = [];
         this.datasFlowLabelX = [];
-        this.normalizationFlow(data);
+        this.normalizationHomeFlow(data);
         this.isLoadingDocument = false;     
       },
       error: (error) => {
-        console.log(error);
+        console.error(error);
         this.isLoadingDocument = false;
       }
     }) 
   }
 
-  normalizationDocumentForChar(datas: Documents[]){
+  private normalizationDocumentForChar(datas: Documents[]){
     datas.forEach(data => {
-      this.datasBilancioLabelX.push(this.convertToName(data.data_inserimento.split('-')[1]));
+      this.datasBilancioLabelX.push(convertToName(data.data_inserimento.split('-')[1]));
       this.datasBilancioValue.push(
         data.contante + data.altro + data.conto
       );
     })
   }
 
-  normalizationFlow(datas: CashFlow[]): void{
+  private normalizationHomeFlow(datas: CashFlow[]): void{
     datas.map(data => {
-      data.data_inserimento = this.convertToName(data.data_inserimento.split('-')[1]);
+      data.data_inserimento = convertToName(data.data_inserimento.split('-')[1]);
       if(data.categoria != "Entrata"){
         data.importo = (Number(data.importo) * -1).toString(); 
       }
     })
-    console.log(datas)
     let mapMouthsFlow = new Map<string, number>();
     datas.forEach(data => {
       if(mapMouthsFlow.get(data.data_inserimento)){
@@ -78,23 +77,5 @@ export class HomeComponent implements OnInit {
     })
     this.datasFlowLabelX = Array.from(mapMouthsFlow.keys());
     this.datasFlowValue = Array.from(mapMouthsFlow.values());
-  }
-
-  convertToName(numberMonth: string): string{
-    const months = new Map([
-      ["01", "gennaio"],
-      ["02", "febbraio"],
-      ["03", "marzo"],
-      ["04", "aprile"],
-      ["05", "maggio"],
-      ["06", "giugno"],
-      ["07", "luglio"],
-      ["08", "agosto"],
-      ["09", "settembre"],
-      ["10", "ottobre"],
-      ["11", "novembre"],
-      ["12", "dicembre"],
-    ]);
-    return months.get(numberMonth) as string;
   }
 }

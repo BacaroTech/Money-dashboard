@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import convertToName from 'src/app/common/mappingMonth';
 import { Documents } from 'src/app/model/document';
 import DocumentsBetween from 'src/app/model/documentsBetween';
 import MoneyStatus from 'src/app/model/moneystatus';
@@ -13,14 +14,12 @@ import { BalanceService } from 'src/app/services/balance.service';
 export class SingleDocumentComponent implements OnInit {
   idDocument: string = "";
   myBalance: DocumentsBetween | null = null;
-  monthDocument: string = this.convertToName(new Date().toJSON().slice(0, 10).split('-')[1]);
+  monthDocument: string = convertToName(new Date().toJSON().slice(0, 10).split('-')[1]);
   balanceValues: number[] = []
   isLoading: boolean = true;
 
   titles: string[] = ["Conto corrente", "Contanti", "Altri conti aggregati"];
   
-  //incrementato, decrementato, uguale
-  //TODO DA SISTEMARE QUESTO A BACKEND LA API
   values: MoneyStatus[] = [
     {value: 0, status: "uguale", difference: 0},
     {value: 0, status: "uguale", difference: 0},
@@ -34,7 +33,6 @@ export class SingleDocumentComponent implements OnInit {
 
     this.balance.getDocumentById({"id":this.idDocument})
       .subscribe((data: DocumentsBetween[]) => {
-        console.log("dati dettaglio bilancio: ", data)
         if (data && data.length > 0) {
           this.myBalance = data[0];
           this.myBalance.bilancio = this.myBalance.contante + this.myBalance.altro + this.myBalance.conto
@@ -46,24 +44,6 @@ export class SingleDocumentComponent implements OnInit {
         this.isLoading = false
       })
     
-  }
-
-  private convertToName(numberMonth: string): string{
-    const months = new Map([
-      ["01", "gennaio"],
-      ["02", "febbraio"],
-      ["03", "marzo"],
-      ["04", "aprile"],
-      ["05", "maggio"],
-      ["06", "giugno"],
-      ["07", "luglio"],
-      ["08", "agosto"],
-      ["09", "settembre"],
-      ["10", "ottobre"],
-      ["11", "novembre"],
-      ["12", "dicembre"],
-    ]);
-    return months.get(numberMonth) as string;
   }
 
   private setValues(now: number, old: number, pos: number){

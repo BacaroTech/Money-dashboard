@@ -16,7 +16,6 @@ router.get("/getAll", async (req: Request, res: Response) => {
 });
 
 router.post("/forMonth", async (req: Request, res: Response) => {
-    console.log("body ",req.body)
     res.send(await getAllFlowForMonth(req.body.date));
 });
 

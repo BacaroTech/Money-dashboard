@@ -31,7 +31,7 @@ export class CashFlowComponent implements OnInit {
     this.singlePostForMonth(this.dateSection.value.date as string);
   }
 
-  normalizationFlow(datas: CashFlow[]): void{
+  private normalizationCashFlow(datas: CashFlow[]): void{
     datas.map(data => {
       data.data_inserimento = data.data_inserimento.split('T')[0];
       if(data.categoria === "Entrata"){
@@ -42,17 +42,17 @@ export class CashFlowComponent implements OnInit {
     })    
   }
 
-  singlePostForMonth(date: string){
+  private singlePostForMonth(date: string){
     this.flow.postForMonth(date)
     .subscribe({
       next: (data: CashFlow[]) => {
         
         this.datasIn = [];
         this.datasOut = [];
-        this.normalizationFlow(data);     
+        this.normalizationCashFlow(data);     
       },
       error: (error) => {
-        console.log(error)
+        console.error(error)
       }
     }) 
   }

@@ -23,12 +23,10 @@ router.post("/insertDocument", async (req: Request, res: Response) => {
 });
 
 router.post("/byID", async (req: Request, res: Response) => {
-    console.log("body ",req.body)
     res.send(await getDocumentById(req.body.id));
 });
 
 router.post("/byMonth", async (req: Request, res: Response) => {
-    console.log("body ",req.body)
     res.send(await getAllDocumentByMonth(req.body.date));
 });
 

@@ -26,12 +26,12 @@ export class DocumentsComponent implements OnInit {
         this.datas = data.reverse()
       },
       error: (error) => {
-        console.log(error)
+        console.error(error)
       }
     }) 
   }
 
-  normalizationDocument(datas: Documents[]){
+  private normalizationDocument(datas: Documents[]){
     return datas.map(data => {
       data.data_inserimento = data.data_inserimento.split('T')[0];
       data.data_ultimo_aggiornamento = data.data_ultimo_aggiornamento.split('T')[0];

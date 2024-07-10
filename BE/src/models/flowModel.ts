@@ -11,10 +11,12 @@ type flow = {
 const flow:string = "CREATE TABLE IF NOT EXISTS public.flusso (data_inserimento date NULL, id int NOT NULL, natura varchar NULL, categoria varchar NULL, importo integer NULL, CONSTRAINT flusso_pk PRIMARY KEY (id));";
 
 async function createFlowTable(){
-    await client.query(
-        (flow), 
-        (err: any, res:any) => {
-        console.log(err, res);
+    await client.query((flow), (err: any, res:any) => {
+        if(err){
+            console.error(err);
+        }else{
+            console.log("CREAZIONE FLUSSO RIUSCITA", res);
+        }
     });
 }
 

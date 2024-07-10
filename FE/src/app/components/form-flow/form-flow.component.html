@@ -31,12 +31,26 @@
                     Natura
                 </label>
                 <div class="relative" id="nature">
-                    <select
+                    <select *ngIf="this.bioSection.value.category == ''"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="grid-state" formControlName="nature">
                         <option value="" disabled selected>Seleziona la natura del flusso</option>
-                        <option>Stipendio</option>
-                        <option>Casa</option>
+                    </select>
+                </div>
+                <div class="relative" id="nature">
+                    <select *ngIf="this.bioSection.value.category == 'Entrata'"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="grid-state" formControlName="nature">
+                        <option value="" disabled selected>Seleziona la natura del flusso</option>
+                        <option *ngFor="let label of labelIn">{{label}}</option>
+                    </select>
+                </div>
+                <div class="relative" id="nature">
+                    <select *ngIf="this.bioSection.value.category == 'Uscita'"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="grid-state" formControlName="nature">
+                        <option value="" disabled selected>Seleziona la natura del flusso</option>
+                        <option *ngFor="let label of labelOut">{{label}}</option>
                     </select>
                 </div>
             </div>

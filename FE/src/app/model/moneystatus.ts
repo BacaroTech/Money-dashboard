@@ -1,6 +1,6 @@
 type MoneyStatus = {
     value: number,
-    status: string,
+    status: "incrementato" | "decrementato" | "uguale",
     difference: number,
 }
 

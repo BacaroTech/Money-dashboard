@@ -12,6 +12,8 @@ export class FormFlowComponent implements OnInit {
 
   insert: "succed"| "fail" | "todo" = "todo";
   load: boolean = false;
+  labelIn: string[] = ["Stipendio", "Walfare", "Extra"];
+  labelOut: string[] = ["Casa", "Investimenti", "Svago", "Vestiti", "Spesa"];
 
   bioSection = new FormGroup({
     date: new FormControl<String>((new Date()).toISOString().substring(0,10)),

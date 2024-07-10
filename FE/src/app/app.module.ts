@@ -9,7 +9,6 @@ import { Error404Component } from './components/error404/error404.component';
 import { ToDarkComponent } from './components/to-dark/to-dark.component';
 import { HomeComponent } from './components/home/home.component';
 import { CashFlowComponent } from './components/cash-flow/cash-flow.component';
-import { AddFlowComponent } from './components/add-flow/add-flow.component';
 import { FormFlowComponent } from './components/form-flow/form-flow.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CashReviewComponent } from './components/cash-review/cash-review.component';
@@ -32,7 +31,6 @@ import { HttpClient } from '@angular/common/http';
     ToDarkComponent,
     HomeComponent,
     CashFlowComponent,
-    AddFlowComponent,
     FormFlowComponent,
     CashReviewComponent,
     ModalComponent,

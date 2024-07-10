@@ -49,12 +49,10 @@ async function insertDocument(document: document){
 
 async function getAllDocumentByMonth(date:string) {
 	let piecesDate =  date.split('-');
-	console.log(piecesDate)
     const result = await client.query('SELECT * FROM bilancio WHERE data_inserimento >= $1 AND data_inserimento <= $2',
 		[piecesDate[0]+'-'+piecesDate[1]+'-01', date]
 	)
 	if(result.rows && result.rows.length > 0){
-		console.log(result.rows[0].id)
 		return getDocumentById(result.rows[0].id);
 	}else{
 		return false;

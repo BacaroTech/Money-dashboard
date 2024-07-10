@@ -59,7 +59,7 @@ export class EndMonthComponent implements OnInit {
     
   }
 
-  createDocument(): Documents[] {
+  private createDocument(): Documents[] {
     return [
       {
         id: 0,
