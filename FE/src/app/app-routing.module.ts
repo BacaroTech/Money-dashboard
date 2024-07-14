@@ -8,6 +8,7 @@ import { EndMonthComponent } from './components/end-month/end-month.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { SingleDocumentComponent } from './components/single-document/single-document.component';
 import { FormFlowComponent } from './components/form-flow/form-flow.component';
+import { ModifyEndMonthComponent } from './components/modify-end-month/modify-end-month.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "dashboard", pathMatch: "full"},
@@ -18,6 +19,9 @@ const routes: Routes = [
   {path: "documents", component: DocumentsComponent},
   {path: "document", children: [
     {path: "**", component: SingleDocumentComponent}
+  ]},
+  {path: "modify", children: [
+    {path: "**", component: ModifyEndMonthComponent}
   ]},
   {path: "404", component: Error404Component},
   {path: "**", redirectTo: "404"}

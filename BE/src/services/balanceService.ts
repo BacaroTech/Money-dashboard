@@ -11,6 +11,7 @@ async function getAllDocuments(){
 }
 
 async function getDocumentById(id: any){
+	console.log("test ", id);
 	const result = await client.query(
 		'select b.conto, b2.conto as contoOld, b.contante, b2.contante as contanteold, b.altro, b2.altro as altroOld from bilancio b join bilancio b2 on EXTRACT(MONTH FROM b.data_inserimento)-1 = EXTRACT(MONTH FROM b2.data_inserimento) where b.id = $1 and b.id <> b2.id',
 		[id]
@@ -53,7 +54,7 @@ async function getAllDocumentByMonth(date:string) {
 		[piecesDate[0]+'-'+piecesDate[1]+'-01', date]
 	)
 	if(result.rows && result.rows.length > 0){
-		return getDocumentById(result.rows[0].id);
+		return {"id": result.rows[0].id};
 	}else{
 		return false;
 	}

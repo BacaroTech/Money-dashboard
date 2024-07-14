@@ -20,6 +20,7 @@ import { TableComponent } from './components/table/table.component';
 import { SingleDocumentComponent } from './components/single-document/single-document.component';
 import {HttpClientModule} from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { ModifyEndMonthComponent } from './components/modify-end-month/modify-end-month.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { HttpClient } from '@angular/common/http';
     AlertComponent,
     DocumentsComponent,
     TableComponent,
-    SingleDocumentComponent
+    SingleDocumentComponent,
+    ModifyEndMonthComponent
   ],
   imports: [
     BrowserModule,

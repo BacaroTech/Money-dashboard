@@ -20,8 +20,8 @@ export class BalanceService {
     return this.http.post<DocumentsBetween[]>(url+'/balance/byID', body);
   }
 
-  getAllDocumentByMonth(body: any): Observable<Documents[]> {
-    return this.http.post<Documents[]>(url+'/balance/byMonth', body);
+  getAllDocumentByMonth(body: any): Observable<{"id": number}> {
+    return this.http.post<{"id": number}>(url+'/balance/byMonth', body);
   }
 
   insertDocument(body: any): Observable<Documents[]> {
