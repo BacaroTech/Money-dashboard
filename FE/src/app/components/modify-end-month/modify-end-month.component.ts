@@ -41,8 +41,7 @@ export class ModifyEndMonthComponent implements OnInit {
   ngSubmit(): void {
     if(!this.exist){
       this.load = true;
-      //todo i'm going to replace with uppdate
-      this.balance.insertDocument(this.createDocument())
+      this.balance.updateDocument(this.createDocument())
       .subscribe((data: Documents[]) => {
         if (data && data.length > 0) {
           this.insert = "succed";
@@ -59,7 +58,7 @@ export class ModifyEndMonthComponent implements OnInit {
     
     return [
       {
-        id: 0,
+        id: this.idDocument as any,
         data_inserimento: new Date().toJSON().slice(0, 10),
         data_ultimo_aggiornamento: new Date().toJSON().slice(0, 10),
         conto: this.bioSection.value.conto as number,

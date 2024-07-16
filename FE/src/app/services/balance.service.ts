@@ -27,4 +27,8 @@ export class BalanceService {
   insertDocument(body: any): Observable<Documents[]> {
     return this.http.post<Documents[]>(url+'/balance/insertDocument', body);
   }
+
+  updateDocument(body: any): Observable<Documents[]> {
+    return this.http.put<Documents[]>(url+'/balance/updateID', body);
+  }
 }

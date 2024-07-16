@@ -11,7 +11,6 @@ async function getAllDocuments(){
 }
 
 async function getDocumentById(id: any){
-	console.log("test ", id);
 	const result = await client.query(
 		'select b.conto, b2.conto as contoOld, b.contante, b2.contante as contanteold, b.altro, b2.altro as altroOld from bilancio b join bilancio b2 on EXTRACT(MONTH FROM b.data_inserimento)-1 = EXTRACT(MONTH FROM b2.data_inserimento) where b.id = $1 and b.id <> b2.id',
 		[id]
@@ -48,6 +47,20 @@ async function insertDocument(document: document){
 	}
 }
 
+async function updateDocument(document: document[]) {
+	let singleDocument = document[0];
+	const result = await client.query(
+		"UPDATE public.bilancio SET data_ultimo_aggiornamento=$1, conto=$2, contante=$3, altro=$4 WHERE id=$5;",
+		[singleDocument.data_ultimo_aggiornamento, singleDocument.conto, singleDocument.contante, singleDocument.contante, singleDocument.id]
+	)
+	console.log("OUTPUT QUERY:", result)
+	if(result.rowCount > 0){
+		return getDocumentById(singleDocument.id);
+	}else{
+		return false;
+	}
+}
+
 async function getAllDocumentByMonth(date:string) {
 	let piecesDate =  date.split('-');
     const result = await client.query('SELECT * FROM bilancio WHERE data_inserimento >= $1 AND data_inserimento <= $2',
@@ -60,4 +73,4 @@ async function getAllDocumentByMonth(date:string) {
 	}
 }
 
-export {getAllDocuments, insertDocument, getAllDocumentByMonth, getDocumentById}
+export {getAllDocuments, insertDocument, getAllDocumentByMonth, getDocumentById, updateDocument}
