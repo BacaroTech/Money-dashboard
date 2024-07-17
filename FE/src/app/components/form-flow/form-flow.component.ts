@@ -12,7 +12,7 @@ export class FormFlowComponent implements OnInit {
 
   insert: "succed"| "fail" | "todo" = "todo";
   load: boolean = false;
-  labelIn: string[] = ["Stipendio", "Walfare", "Extra"];
+  labelIn: string[] = ["Stipendio", "Welfare", "Extra"];
   labelOut: string[] = ["Casa", "Investimenti", "Svago", "Vestiti", "Spesa"];
 
   bioSection = new FormGroup({

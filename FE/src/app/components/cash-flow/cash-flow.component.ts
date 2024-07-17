@@ -17,6 +17,14 @@ export class CashFlowComponent implements OnInit {
   datasIn: CashFlow[] = [];
   datasOut: CashFlow[] = [];
 
+  onDeleteFlow:Function = () => {
+    console.log("todo delete flow");
+  }
+
+  onUpdateFlow:Function = () => {
+    console.log("todo update flow");
+  }
+
   constructor(private flow: FlowService) { }
 
   ngOnInit(): void {
@@ -56,4 +64,6 @@ export class CashFlowComponent implements OnInit {
       }
     }) 
   }
+
+  
 }

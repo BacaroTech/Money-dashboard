@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Documents } from 'src/app/model/document';
 import { BalanceService } from 'src/app/services/balance.service';
 
@@ -15,7 +16,15 @@ export class DocumentsComponent implements OnInit {
 
   datas: Documents[] = []
 
-  constructor(private balance: BalanceService) { }
+  constructor(private balance: BalanceService, private router: Router) { }
+
+  onDeleteFlow:Function = () => {
+    console.log("todo delete document");
+  }
+
+  onUpdateFlow:Function = (id: number) => {
+    this.router.navigateByUrl('/modify/'+id);
+  }
 
   ngOnInit(): void {
     this.balance.getAllDocument()

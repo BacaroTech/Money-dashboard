@@ -6,7 +6,9 @@
         <app-table 
             [titles]="this.titles" 
             [datas]="this.datas"
-            [type]="'documenti'">
+            [type]="'documenti'"
+            [onModify]="onUpdateFlow" 
+            [onDelete]="onDeleteFlow">
         </app-table>
     </div>
 </section>

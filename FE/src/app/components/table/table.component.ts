@@ -16,8 +16,16 @@ export class TableComponent implements OnInit {
   @Input()
   type: string = "";
 
+  @Input()
+  onModify: Function = () => {}
+
+  @Input()
+  onDelete: Function = () => {}
+
   constructor() { }
 
   ngOnInit(): void {
+    
   }
+
 }

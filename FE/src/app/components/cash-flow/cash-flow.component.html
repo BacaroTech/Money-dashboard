@@ -17,7 +17,7 @@
     <div class="mt-8" *ngIf="this.datasIn">
         <h1 class="mb-2 text-2xl dark:text-white"><b>Lista delle Entrate</b></h1>
         <div class="mb-2 dark:text-white">Lista delle entrate del mese selezionato</div>
-        <app-table [titles]="this.titles" [datas]="this.datasIn" [type]="'cashFlow'"></app-table>
+        <app-table [titles]="this.titles" [datas]="this.datasIn" [type]="'cashFlow'" [onModify]="onUpdateFlow" [onDelete]="onDeleteFlow"></app-table>
     </div>
     <div class="mt-8" *ngIf="this.datasOut">
         <h1 class="mb-2 text-2xl dark:text-white"><b>Lista delle Uscite</b></h1>
