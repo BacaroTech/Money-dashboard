@@ -53,9 +53,21 @@ async function updateDocument(document: document[]) {
 		"UPDATE public.bilancio SET data_ultimo_aggiornamento=$1, conto=$2, contante=$3, altro=$4 WHERE id=$5;",
 		[singleDocument.data_ultimo_aggiornamento, singleDocument.conto, singleDocument.contante, singleDocument.contante, singleDocument.id]
 	)
-	console.log("OUTPUT QUERY:", result)
 	if(result.rowCount > 0){
 		return getDocumentById(singleDocument.id);
+	}else{
+		return false;
+	}
+}
+
+async function deleteDocument(document: any) {
+	const result = await client.query(
+		"DELETE FROM public.bilancio WHERE id=$1;",
+		[document.id]
+	)
+	console.log("OUTPUT QUERY:", result)
+	if(result.rowCount > 0){
+		return true;
 	}else{
 		return false;
 	}
@@ -73,4 +85,4 @@ async function getAllDocumentByMonth(date:string) {
 	}
 }
 
-export {getAllDocuments, insertDocument, getAllDocumentByMonth, getDocumentById, updateDocument}
+export {getAllDocuments, insertDocument, getAllDocumentByMonth, getDocumentById, updateDocument, deleteDocument}

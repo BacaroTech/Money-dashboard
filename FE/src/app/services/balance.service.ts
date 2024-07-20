@@ -31,4 +31,8 @@ export class BalanceService {
   updateDocument(body: any): Observable<Documents[]> {
     return this.http.put<Documents[]>(url+'/balance/updateID', body);
   }
+
+  deleteDocument(body: any): Observable<any> {
+    return this.http.post<any>(url+'/balance/deleteID', body);
+  }
 }

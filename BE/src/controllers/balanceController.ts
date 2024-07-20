@@ -1,6 +1,6 @@
 //controllers/someController.js
 import express, { Request, Response } from "express";
-import { getAllDocumentByMonth, getAllDocuments, getDocumentById, insertDocument, updateDocument } from "../services/balanceService";
+import { deleteDocument, getAllDocumentByMonth, getAllDocuments, getDocumentById, insertDocument, updateDocument } from "../services/balanceService";
 import { createBalanceTable } from "../models/balanceModel";
 
 let router = express.Router();
@@ -28,6 +28,10 @@ router.post("/byID", async (req: Request, res: Response) => {
 
 router.put("/updateID", async (req: Request, res: Response) => {
     res.send(await updateDocument(req.body));
+});
+
+router.post("/deleteID", async (req: Request, res: Response) => {
+    res.send(await deleteDocument(req.body));
 });
 
 router.post("/byMonth", async (req: Request, res: Response) => {

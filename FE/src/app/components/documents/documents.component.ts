@@ -16,13 +16,18 @@ export class DocumentsComponent implements OnInit {
 
   datas: Documents[] = []
 
-  constructor(private balance: BalanceService, private router: Router) { }
+  constructor(public balance: BalanceService, private router: Router) { }
 
-  onDeleteFlow:Function = () => {
-    console.log("todo delete document");
+  onDeleteDocument:Function = (id: number) => {
+    
+    this.balance.deleteDocument({id: id})
+    .subscribe(() => {
+      this.router.navigateByUrl('/dashboard');
+    })
+    
   }
 
-  onUpdateFlow:Function = (id: number) => {
+  onUpdateDocument:Function = (id: number) => {
     this.router.navigateByUrl('/modify/'+id);
   }
 
@@ -30,7 +35,6 @@ export class DocumentsComponent implements OnInit {
     this.balance.getAllDocument()
     .subscribe({
       next: (data: Documents[]) => {
-        
         this.normalizationDocument(data);     
         this.datas = data.reverse()
       },
