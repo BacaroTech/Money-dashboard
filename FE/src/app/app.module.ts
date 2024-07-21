@@ -21,6 +21,7 @@ import { SingleDocumentComponent } from './components/single-document/single-doc
 import {HttpClientModule} from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { ModifyEndMonthComponent } from './components/modify-end-month/modify-end-month.component';
+import { ModifyFlowComponent } from './components/modify-flow/modify-flow.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ModifyEndMonthComponent } from './components/modify-end-month/modify-en
     DocumentsComponent,
     TableComponent,
     SingleDocumentComponent,
-    ModifyEndMonthComponent
+    ModifyEndMonthComponent,
+    ModifyFlowComponent
   ],
   imports: [
     BrowserModule,

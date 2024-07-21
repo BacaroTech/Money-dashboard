@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CashFlow } from 'src/app/model/cashFlow';
 import { FlowService } from 'src/app/services/flow.service';
 
@@ -21,11 +22,12 @@ export class CashFlowComponent implements OnInit {
     console.log("todo delete flow");
   }
 
-  onUpdateFlow:Function = () => {
+  onUpdateFlow:Function = (id: any) => {
     console.log("todo update flow");
+    this.router.navigateByUrl("/modifyFlow/"+id)
   }
 
-  constructor(private flow: FlowService) { }
+  constructor(private flow: FlowService, private router: Router) { }
 
   ngOnInit(): void {
     this.singlePostForMonth(new Date().toJSON().slice(0, 10))
