@@ -47,4 +47,17 @@ async function insertFlow(flow: flow){
 	}
 }
 
-export {getAllFlow, insertFlow, getAllFlowForMonth, getFlowById}
+async function deleteFlow(document: any) {
+	const result = await client.query(
+		"DELETE FROM public.flusso WHERE id=$1;",
+		[document.id]
+	)
+	console.log("OUTPUT QUERY:", result)
+	if(result.rowCount > 0){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+export {getAllFlow, insertFlow, getAllFlowForMonth, getFlowById, deleteFlow}

@@ -18,16 +18,24 @@ export class CashFlowComponent implements OnInit {
   datasIn: CashFlow[] = [];
   datasOut: CashFlow[] = [];
 
-  onDeleteFlow:Function = () => {
-    console.log("todo delete flow");
+  constructor(private flow: FlowService, private router: Router) { }
+
+  onDeleteFlow:Function = (id:any) => {
+    this.flow.deleteFlow({id: id})
+    .subscribe(() => {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate(['/dashboard']);
+    })
   }
 
   onUpdateFlow:Function = (id: any) => {
     console.log("todo update flow");
     this.router.navigateByUrl("/modifyFlow/"+id)
+   
   }
 
-  constructor(private flow: FlowService, private router: Router) { }
+  
 
   ngOnInit(): void {
     this.singlePostForMonth(new Date().toJSON().slice(0, 10))

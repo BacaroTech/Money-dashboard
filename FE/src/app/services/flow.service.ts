@@ -22,4 +22,8 @@ export class FlowService {
   postForMonth(date: string): Observable<CashFlow[]> {
     return this.http.post<CashFlow[]>(url+'/flow/forMonth', {"date":date});
   }
+
+  deleteFlow(body: any): Observable<any> {
+    return this.http.post<any>(url+'/flow/deleteID', body);
+  }
 }
