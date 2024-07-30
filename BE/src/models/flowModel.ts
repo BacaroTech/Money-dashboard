@@ -6,6 +6,9 @@ type flow = {
     nature: string,
     category: string,
     import: number
+    natura: string,
+    categoria: string,
+    importo: number
 }
 
 const flow:string = "CREATE TABLE IF NOT EXISTS public.flusso (data_inserimento date NULL, id int NOT NULL, natura varchar NULL, categoria varchar NULL, importo integer NULL, CONSTRAINT flusso_pk PRIMARY KEY (id));";

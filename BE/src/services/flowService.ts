@@ -47,6 +47,19 @@ async function insertFlow(flow: flow){
 	}
 }
 
+async function updateFlow(flow: flow){
+	console.log("flow", flow)
+    const result = await client.query(
+		'UPDATE public.flusso SET natura=$1, categoria=$2, importo=$3 WHERE id=$4;',
+		[flow.natura, flow.categoria, flow.importo, flow.id]
+	)
+	if(result.rowCount > 0){
+		return getFlowById(flow.id);
+	}else{
+		return false;
+	}
+}
+
 async function deleteFlow(document: any) {
 	const result = await client.query(
 		"DELETE FROM public.flusso WHERE id=$1;",
@@ -60,4 +73,4 @@ async function deleteFlow(document: any) {
 	}
 }
 
-export {getAllFlow, insertFlow, getAllFlowForMonth, getFlowById, deleteFlow}
+export {getAllFlow, insertFlow, getAllFlowForMonth, getFlowById, deleteFlow, updateFlow}
