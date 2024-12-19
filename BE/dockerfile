@@ -10,16 +10,14 @@ COPY package*.json ./
 # Installare le dipendenze
 RUN npm install
 
+# Installare nodemon globalmente
+RUN npm install -g nodemon
+
 # Copiare tutto il resto del codice sorgente
 COPY . .
-
-# Compilare TypeScript
-RUN npm install -g typescript
-
-#RUN npm i nodemon
 
 # Esporre la porta che il server utilizzerà
 EXPOSE 3000
 
-# Comando di avvio (specificato anche nel docker-compose.yml)
-CMD ["node", "dist/index.js"]
+# Impostare il comando di default per utilizzare nodemon
+CMD ["nodemon", "dist/index.js"]
