@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  # Database PostgreSQL
+  moneydashboard_postgres_db:
+    container_name: moneydashboard_postgres_db
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=moneydashboard
+    ports:
+      - 5432:5432
+    volumes:
+      - moneydashboard_postgres_data:/var/lib/postgresql/data
+
+  # Backend Node.js
+  moneydashboard_backend:
+    container_name: moneydashboard_backend
+    build:
+      context: ./BE
+    working_dir: /usr/src/app
+    command: bash -c "npm install && npm start"
+    volumes:
+      - ./BE:/usr/src/app
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_HOST=moneydashboard_postgres_db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_NAME=moneydashboard
+    depends_on:
+      - moneydashboard_postgres_db
+
+  # Frontend Angular
+  moneydashboard_frontend:
+    container_name: moneydashboard_frontend
+    build:
+      context: ./FE
+    working_dir: /usr/src/app
+    command: npm start
+    volumes:
+      - ./FE:/usr/src/app
+      - /usr/src/app/node_modules # Evita problemi di dipendenze condivise
+    ports:
+      - 4200:4200
+    depends_on:
+      - moneydashboard_backend
+      - moneydashboard_postgres_db
+
+volumes:
+  moneydashboard_postgres_data:
