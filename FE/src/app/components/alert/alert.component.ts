@@ -4,7 +4,8 @@ import { Alert } from 'src/app/model/alert';
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.css']
+  styleUrls: ['./alert.component.css'],
+  standalone: false
 })
 export class AlertComponent implements OnInit {
 

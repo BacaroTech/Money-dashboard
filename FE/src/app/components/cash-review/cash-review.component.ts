@@ -6,7 +6,8 @@ import { BalanceService } from 'src/app/services/balance.service';
 @Component({
   selector: 'app-cash-review',
   templateUrl: './cash-review.component.html',
-  styleUrls: ['./cash-review.component.css']
+  styleUrls: ['./cash-review.component.css'],
+  standalone: false
 })
 export class CashReviewComponent implements OnInit {
 

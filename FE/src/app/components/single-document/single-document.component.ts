@@ -9,7 +9,8 @@ import { BalanceService } from 'src/app/services/balance.service';
 @Component({
   selector: 'app-single-document',
   templateUrl: './single-document.component.html',
-  styleUrls: ['./single-document.component.css']
+  styleUrls: ['./single-document.component.css'],
+  standalone: false
 })
 export class SingleDocumentComponent implements OnInit {
   idDocument: string = "";

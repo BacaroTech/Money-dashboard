@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-to-dark',
   templateUrl: './to-dark.component.html',
-  styleUrls: ['./to-dark.component.css']
+  styleUrls: ['./to-dark.component.css'],
+  standalone: false
 })
 export class ToDarkComponent implements OnInit {
 

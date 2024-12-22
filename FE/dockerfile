@@ -10,11 +10,13 @@ COPY package*.json ./
 # Installa le dipendenze
 RUN npm install
 
-# Copia tutto il codice sorgente Angular (sarà sovrascritto dal volume in Docker Compose)
-COPY . .
+# Copia solo i file di configurazione principali e non il codice (sarà montato come volume in Docker Compose)
+COPY angular.json ./
+COPY tsconfig.json ./
 
 # Espone la porta per il live server Angular
 EXPOSE 4200
 
-# Comando di default: avvia il server di sviluppo con live reload
-CMD ["npm", "start"]
+# Comando di default: avvia il server di sviluppo Angular
+CMD ["npm", "start",]
+

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -18,10 +17,11 @@ import { AlertComponent } from './components/alert/alert.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { TableComponent } from './components/table/table.component';
 import { SingleDocumentComponent } from './components/single-document/single-document.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { ModifyEndMonthComponent } from './components/modify-end-month/modify-end-month.component';
 import { ModifyFlowComponent } from './components/modify-flow/modify-flow.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
@@ -42,7 +42,8 @@ import { ModifyFlowComponent } from './components/modify-flow/modify-flow.compon
     TableComponent,
     SingleDocumentComponent,
     ModifyEndMonthComponent,
-    ModifyFlowComponent
+    ModifyFlowComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

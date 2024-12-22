@@ -6,7 +6,8 @@ import { BalanceService } from 'src/app/services/balance.service';
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.css']
+  styleUrls: ['./documents.component.css'],
+  standalone: false
 })
 export class DocumentsComponent implements OnInit {
 

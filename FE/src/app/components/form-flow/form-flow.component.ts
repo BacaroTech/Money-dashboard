@@ -6,7 +6,8 @@ import { FlowService } from 'src/app/services/flow.service';
 @Component({
   selector: 'app-form-flow',
   templateUrl: './form-flow.component.html',
-  styleUrls: ['./form-flow.component.css']
+  styleUrls: ['./form-flow.component.css'],
+  standalone: false
 })
 export class FormFlowComponent implements OnInit {
 

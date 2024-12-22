@@ -7,7 +7,8 @@ import { FlowService } from 'src/app/services/flow.service';
 @Component({
   selector: 'app-cash-flow',
   templateUrl: './cash-flow.component.html',
-  styleUrls: ['./cash-flow.component.css']
+  styleUrls: ['./cash-flow.component.css'],
+  standalone: false
 })
 export class CashFlowComponent implements OnInit {
 

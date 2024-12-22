@@ -7,7 +7,8 @@ import { FlowService } from 'src/app/services/flow.service';
 @Component({
   selector: 'app-modify-flow',
   templateUrl: './modify-flow.component.html',
-  styleUrls: ['./modify-flow.component.css']
+  styleUrls: ['./modify-flow.component.css'],
+  standalone: false
 })
 export class ModifyFlowComponent implements OnInit {
 

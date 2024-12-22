@@ -1,9 +1,9 @@
 <section>
-    <div id="mydashboard" class="grid grid-cols-12 gap-0">
-        <div class="col-span-2 fixed">
+    <div id="mydashboard" class="grid grid-cols-12 gap-0" >
+        <div class="col-span-2 fixed" *ngIf="this.showMenu">
             <app-menu></app-menu>
         </div>
-        <div id="background" class="col-span-10 sticky left-60">
+        <div id="background" class="sticky left-60" [ngClass]="this.showMenu ? 'col-span-10' : 'col-span-12'">
             <router-outlet>
             </router-outlet>
         </div>

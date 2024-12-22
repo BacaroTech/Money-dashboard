@@ -8,7 +8,8 @@ import { BalanceService } from 'src/app/services/balance.service';
 @Component({
   selector: 'app-modify-end-month',
   templateUrl: './modify-end-month.component.html',
-  styleUrls: ['./modify-end-month.component.css']
+  styleUrls: ['./modify-end-month.component.css'],
+  standalone: false
 })
 export class ModifyEndMonthComponent implements OnInit {
 

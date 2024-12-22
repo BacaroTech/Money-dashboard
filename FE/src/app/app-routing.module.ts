@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { Error404Component } from './components/error404/error404.component';
 import { CashReviewComponent } from './components/cash-review/cash-review.component';
 import { HomeComponent } from './components/home/home.component';
@@ -10,9 +9,11 @@ import { SingleDocumentComponent } from './components/single-document/single-doc
 import { FormFlowComponent } from './components/form-flow/form-flow.component';
 import { ModifyEndMonthComponent } from './components/modify-end-month/modify-end-month.component';
 import { ModifyFlowComponent } from './components/modify-flow/modify-flow.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  {path: "", redirectTo: "dashboard", pathMatch: "full"},
+  {path: "", redirectTo: "login", pathMatch: "full"},
+  {path: "login", component: LoginComponent},
   {path: "dashboard", component: HomeComponent},
   {path: "addFlow", component: FormFlowComponent},
   {path: "review", component: CashReviewComponent},
