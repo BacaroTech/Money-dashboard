@@ -17,7 +17,7 @@ fun Application.configureDatabases() {
         password = dbConfig["password"].toString(),
     )
 
-//    transaction {
-//        SchemaUtils.create(UserTable, BankAccountTable, OperationTable)
-//    }
+    transaction {
+        SchemaUtils.create(UserTable, BankAccountTable, OperationTable)
+    }
 }
