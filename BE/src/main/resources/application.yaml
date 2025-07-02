@@ -5,7 +5,7 @@ ktor:
     deployment:
         port: 8080
 postgres:
-  url: "$URL:jdbc:postgresql://localhost:5432/money_dashboard"
+  url: "$URL:jdbc:postgresql://localhost:5432/moneydashboard"
   user: "$USERNAME:postgres"
   password: "$PASSWORD:postgres"
   driver: org.postgresql.Driver

@@ -1,6 +1,9 @@
 package mft.dev.configuration
 
 import io.ktor.server.application.*
+import mft.dev.table.BankAccountTable
+import mft.dev.table.OperationTable
+import mft.dev.table.UserTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -13,4 +16,8 @@ fun Application.configureDatabases() {
         driver = dbConfig["driver"].toString(),
         password = dbConfig["password"].toString(),
     )
+
+//    transaction {
+//        SchemaUtils.create(UserTable, BankAccountTable, OperationTable)
+//    }
 }
