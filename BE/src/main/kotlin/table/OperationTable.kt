@@ -1,7 +1,6 @@
 package mft.dev.table
 
 import mft.dev.enums.OperationCategory
-import mft.dev.table.BankAccountTable.defaultExpression
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
@@ -21,5 +20,5 @@ object OperationTable : UUIDTable(name = "operations") {
     val creationDate: Column<LocalDate> = date(name = "creation_date").defaultExpression(CurrentDate)
     val lastUpdate: Column<LocalDateTime> = datetime(name = "last_update").defaultExpression(CurrentDateTime)
 
-    val bankAccountId: Column<EntityID<Int>> = BankAccountTable.reference("bank_account_id", BankAccountTable, onDelete = ReferenceOption.CASCADE)
+    val bankAccountId: Column<EntityID<Int>> = OperationTable.reference("bank_account_id", BankAccountTable, onDelete = ReferenceOption.CASCADE)
 }

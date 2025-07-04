@@ -1,8 +1,8 @@
 package mft.dev.service
 
-import mft.dev.dto.InsertUserDTO
-import mft.dev.dto.LoginDTO
-import mft.dev.dto.UserDTO
+import mft.dev.dto.user.InsertUserDTO
+import mft.dev.dto.user.LoginDTO
+import mft.dev.dto.user.UserDTO
 import java.util.UUID
 
 interface IUserService {

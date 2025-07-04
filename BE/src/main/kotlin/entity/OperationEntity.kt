@@ -18,5 +18,5 @@ class OperationEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     var date: LocalDate by OperationTable.date
     var creationDate: LocalDate by OperationTable.creationDate
     var lastUpdate: LocalDateTime by OperationTable.lastUpdate
-    val bankAccountEntity by BankAccountEntity referencedOn OperationTable.bankAccountId
+    var bankAccountEntity by BankAccountEntity referencedOn OperationTable.bankAccountId
 }

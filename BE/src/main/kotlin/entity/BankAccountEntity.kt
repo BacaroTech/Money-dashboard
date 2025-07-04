@@ -17,5 +17,5 @@ class BankAccountEntity(id: EntityID<Int>) : IntEntity(id) {
     var type: BankAccountType by BankAccountTable.type
     var creationDate: LocalDate by BankAccountTable.creationDate
     var lastUpdate: LocalDateTime by BankAccountTable.lastUpdate
-    val userEntity by UserEntity referencedOn BankAccountTable.userId
+    var userEntity by UserEntity referencedOn BankAccountTable.userId
 }

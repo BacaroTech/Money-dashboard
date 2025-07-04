@@ -1,9 +1,9 @@
 package mft.dev.service.impl
 
 import kotlinx.coroutines.Dispatchers
-import mft.dev.dto.InsertUserDTO
-import mft.dev.dto.LoginDTO
-import mft.dev.dto.UserDTO
+import mft.dev.dto.user.InsertUserDTO
+import mft.dev.dto.user.LoginDTO
+import mft.dev.dto.user.UserDTO
 import mft.dev.entity.UserEntity
 import mft.dev.mapper.toUserDTO
 import mft.dev.service.IUserService
@@ -35,6 +35,13 @@ class UserService : IUserService {
             UserEntity.find {
                 UserTable.uuid eq uuid
             }.singleOrNull()?.toUserDTO()
+        }
+
+    internal suspend fun getUserEntityByUuid(uuid: UUID): UserEntity? =
+        dbQuery {
+            UserEntity.find {
+                UserTable.uuid eq uuid
+            }.singleOrNull()
         }
 
     private suspend fun <T> dbQuery(block: suspend () -> T): T =

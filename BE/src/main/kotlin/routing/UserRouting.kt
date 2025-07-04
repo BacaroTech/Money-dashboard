@@ -6,15 +6,15 @@ import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import mft.dev.dto.InsertUserDTO
-import mft.dev.dto.LoginDTO
-import mft.dev.dto.UserDTO
-import mft.dev.service.IUserService
+import mft.dev.dto.user.InsertUserDTO
+import mft.dev.dto.user.LoginDTO
+import mft.dev.dto.user.UserDTO
+import mft.dev.service.impl.UserService
 import org.koin.ktor.ext.inject
 import java.util.UUID
 
 fun Application.configureUserRouting() {
-    val userService: IUserService by inject()
+    val userService: UserService by inject()
 
     routing {
         route("/users") {
@@ -47,7 +47,7 @@ fun Application.configureUserRouting() {
 
                 return@get response?.let {
                     call.respond(HttpStatusCode.OK, response)
-                } ?: call.respond(HttpStatusCode.Forbidden, "Authentication failed")
+                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
             }
 
         }

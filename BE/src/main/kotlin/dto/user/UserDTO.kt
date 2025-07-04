@@ -1,4 +1,4 @@
-package mft.dev.dto
+package mft.dev.dto.user
 
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
