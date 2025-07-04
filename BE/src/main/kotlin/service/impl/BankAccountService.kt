@@ -8,6 +8,8 @@ import mft.dev.entity.UserEntity
 import mft.dev.mapper.toBankAccountDTO
 import mft.dev.service.IBankAccountService
 import mft.dev.table.BankAccountTable
+import mft.dev.table.UserTable
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import java.util.*
@@ -52,6 +54,17 @@ class BankAccountService(private val userService: UserService) : IBankAccountSer
                     it.delete()
                     1
                 } ?: 0
+            }
+        }
+
+    internal suspend fun getBankAccountByUuid(userUuid: UUID, bankAccountUuid: UUID): BankAccountEntity? =
+        dbQuery {
+            val user: UserEntity? = userService.getUserEntityByUuid(userUuid)
+
+            return@dbQuery user?.let {
+                BankAccountEntity.find {
+                    (BankAccountTable.userId eq user.id) and (BankAccountTable.uuid eq bankAccountUuid)
+                }.singleOrNull()
             }
         }
 
