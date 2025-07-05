@@ -25,6 +25,7 @@ class OperationService(private val bankAccountService: BankAccountService) : IOp
                     amount = dto.amount
                     description = dto.description
                     date = dto.date
+                    bankAccountEntity = bankAccount
                 }.id.value
             }
         }

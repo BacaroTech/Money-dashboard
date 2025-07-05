@@ -5,6 +5,7 @@ import mft.dev.configuration.configureDatabases
 import mft.dev.configuration.configureFrameworks
 import mft.dev.configuration.configureSerialization
 import mft.dev.routing.configureBankAccountRouting
+import mft.dev.routing.configureOperationRouting
 import mft.dev.routing.configureUserRouting
 
 fun main(args: Array<String>) {
@@ -17,4 +18,5 @@ fun Application.module() {
     configureFrameworks()
     configureUserRouting()
     configureBankAccountRouting()
+    configureOperationRouting()
 }
