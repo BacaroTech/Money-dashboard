@@ -1,0 +1,46 @@
+{
+    "endpoints": [
+        {
+            "endpoint": "/moneydashboard/api/v1/bank-account",
+            "methods": [
+                "GET"
+            ],
+            "backend": [
+                {
+                    "host": [
+                        "http://moneydashboard_backend:8080"
+                    ],
+                    "url_pattern": "/bank-account"
+                }
+            ]
+        },
+        {
+            "endpoint": "/moneydashboard/api/v1/bank-account",
+            "methods": [
+                "POST"
+            ],
+            "backend": [
+                {
+                    "host": [
+                        "http://moneydashboard_backend:8080"
+                    ],
+                    "url_pattern": "/bank-account"
+                }
+            ]
+        },
+        {
+            "endpoint": "/moneydashboard/api/v1/bank-account/{uuid}",
+            "methods": [
+                "DELETE"
+            ],
+            "backend": [
+                {
+                    "host": [
+                        "http://moneydashboard_backend:8080"
+                    ],
+                    "url_pattern": "/bank-account/{uuid}"
+                }
+            ]
+        }
+    ]
+}

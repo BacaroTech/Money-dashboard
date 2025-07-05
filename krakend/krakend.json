@@ -1,0 +1,192 @@
+{
+  "version": 3,
+  "output_encoding": "no-op",
+  "extra_config": {
+    "security/cors": {
+      "allow_origins": [
+        "*"
+      ],
+      "allow_methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "max_age": "12h",
+      "allow_credentials": false,
+      "debug": false
+    }
+  },
+  "endpoints": [
+    {
+      "endpoint": "/moneydashboard/api/v1/users/register",
+      "input_headers": [
+        "Content-Type"
+      ],
+      "method": "POST",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/users/register"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/users/login",
+      "input_headers": [
+        "Content-Type"
+      ],
+      "method": "POST",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/users/login"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/users",
+      "input_headers": [
+        "uuid"
+      ],
+      "method": "GET",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/users"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/bank-account",
+      "input_headers": [
+        "uuid"
+      ],
+      "method": "GET",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/bank-account"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/bank-account",
+      "input_headers": [
+        "Content-Type",
+        "uuid"
+      ],
+      "method": "POST",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/bank-account"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/bank-account/{uuid}",
+      "input_headers": [
+        "uuid"
+      ],
+      "methods": [
+        "DELETE"
+      ],
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/bank-account/{uuid}"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/operations/bank-account/{bankAccountUuid}",
+      "input_headers": [
+        "uuid"
+      ],
+      "method": "GET",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/operations/bank-account/{bankAccountUuid}"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/operations/bank-account/{bankAccountUuid}",
+      "input_headers": [
+        "Content-Type",
+        "uuid"
+      ],
+      "method": "POST",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/operations/bank-account/{bankAccountUuid}"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/operations/{uuid}/bank-account/{bankAccountUuid}",
+      "input_headers": [
+        "uuid"
+      ],
+      "method": "GET",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/operations/{uuid}/bank-account/{bankAccountUuid}"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/operations/{uuid}/bank-account/{bankAccountUuid}",
+      "input_headers": [
+        "Content-Type",
+        "uuid"
+      ],
+      "method": "PUT",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/operations/{uuid}/bank-account/{bankAccountUuid}"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/operations/{uuid}/bank-account/{bankAccountUuid}",
+      "input_headers": [
+        "uuid"
+      ],
+      "method": "DELETE",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/operations/{uuid}/bank-account/{bankAccountUuid}"
+        }
+      ]
+    }
+  ]
+}

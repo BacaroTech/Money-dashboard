@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "endpoint": "/moneydashboard/api/v1/users/register",
+            "methods": [
+                "POST"
+            ],
+            "backend": [
+                {
+                    "host": [
+                        "http://moneydashboard_backend:8080"
+                    ],
+                    "url_pattern": "/users/register"
+                }
+            ]
+        },
+        {
+            "endpoint": "/moneydashboard/api/v1/users/login",
+            "methods": [
+                "POST"
+            ],
+            "backend": [
+                {
+                    "host": [
+                        "http://moneydashboard_backend:8080"
+                    ],
+                    "url_pattern": "/users/login"
+                }
+            ]
+        },
+        {
+            "endpoint": "/moneydashboard/api/v1/users",
+            "input_headers": [
+              "uuid"
+            ],
+            "methods": [
+                "GET"
+            ],
+            "backend": [
+                {
+                    "host": [
+                        "http://moneydashboard_backend:8080"
+                    ],
+                    "url_pattern": "/users"
+                }
+            ]
+        }   
+    ]
+}

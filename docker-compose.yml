@@ -14,25 +14,32 @@ services:
       - 5432:5432
     volumes:
       - moneydashboard_postgres_data:/var/lib/postgresql/data
+    networks:
+      - back
 
-  # Backend Node.js
+  # Backend Ktor
   moneydashboard_backend:
     container_name: moneydashboard_backend
     build:
       context: ./BE
-    working_dir: /usr/src/app
-    command: bash -c "npm install && npm start"
-    volumes:
-      - ./BE:/usr/src/app
     ports:
-      - 3000:3000
-    environment:
-      - DATABASE_HOST=moneydashboard_postgres_db
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres
-      - DATABASE_NAME=moneydashboard
+      - 8080:8080
     depends_on:
       - moneydashboard_postgres_db
+    networks:
+      - back
+
+  # Krakend
+  moneydashboard_krakend:
+    container_name: moneydashboard_krakend
+    build:
+      context: ./krakend
+    ports:
+      - 8081:8080
+    depends_on:
+      - moneydashboard_backend
+    networks:
+      - back
 
   # Frontend Angular
   # moneydashboard_frontend:
@@ -52,3 +59,6 @@ services:
 
 volumes:
   moneydashboard_postgres_data:
+
+networks:
+  back:
