@@ -13,7 +13,7 @@ class OperationEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<OperationEntity>(OperationTable)
 
     var category: OperationCategory by OperationTable.category
-    var amount: Int by OperationTable.amount
+    var amount: Double by OperationTable.amount
     var description: String? by OperationTable.description
     var date: LocalDate by OperationTable.date
     var creationDate: LocalDate by OperationTable.creationDate
