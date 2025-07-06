@@ -10,7 +10,7 @@ info:
 servers:
   - url: http://localhost:8080
     description: Development server
-  - url: http://moneydashboard_backend:8080
+  - url: http://moneydashboard_backend:8081/moneydashboard/api/v1/
     description: Docker server
 
 paths:
