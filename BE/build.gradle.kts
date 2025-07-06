@@ -29,6 +29,8 @@ dependencies {
     implementation(libs.exposed.dao)
     implementation(libs.exposed.javatime)
     implementation(libs.ktor.server.netty)
+    implementation("io.ktor:ktor-server-openapi:3.2.0")
+    implementation("io.ktor:ktor-server-swagger:3.2.0")
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)
     testImplementation(libs.ktor.server.test.host)
