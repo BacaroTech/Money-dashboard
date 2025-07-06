@@ -41,21 +41,15 @@ services:
     networks:
       - back
 
-  # Frontend Angular
-  # moneydashboard_frontend:
-  #   container_name: moneydashboard_frontend
-  #   build:
-  #     context: ./FE
-  #   working_dir: /usr/src/app
-  #   command: npm start
-  #   volumes:
-  #     - ./FE:/usr/src/app
-  #     - /usr/src/app/node_modules 
-  #   ports:
-  #     - 4200:4200
-  #   depends_on:
-  #     - moneydashboard_backend
-  #     - moneydashboard_postgres_db
+  #Frontend Angular
+  moneydashboard_frontend:
+    container_name: moneydashboard_frontend
+    build:
+      context: ./FE
+    ports:
+      - 80:80
+    depends_on:
+      - moneydashboard_krakend
 
 volumes:
   moneydashboard_postgres_data:
