@@ -14,7 +14,7 @@ data class InsertOperationDTO(
     val category: OperationCategory,
     @SerialName("amount")
     @Required
-    val amount: Int,
+    val amount: Double,
     @SerialName("description")
     val description: String?,
     @SerialName("date")

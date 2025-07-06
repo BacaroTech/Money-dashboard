@@ -11,7 +11,7 @@ data class UpdateOperationDTO(
     @SerialName("category")
     val category: OperationCategory?,
     @SerialName("amount")
-    val amount: Int?,
+    val amount: Double?,
     @SerialName("description")
     val description: String?,
     @SerialName("date")

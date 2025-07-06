@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 
 object OperationTable : UUIDTable(name = "operations") {
     val category: Column<OperationCategory> = enumerationByName("category", length = 128)
-    val amount: Column<Int> = integer("amount")
+    val amount: Column<Double> = double("amount")
     val description: Column<String?> = varchar("description", length = 256).nullable()
     val date: Column<LocalDate> = date("date")
     val creationDate: Column<LocalDate> = date(name = "creation_date").defaultExpression(CurrentDate)
