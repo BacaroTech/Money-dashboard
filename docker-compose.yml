@@ -41,7 +41,7 @@ services:
     networks:
       - back
 
-  #Frontend Angular
+  # #Frontend Angular
   moneydashboard_frontend:
     container_name: moneydashboard_frontend
     build:
@@ -50,6 +50,8 @@ services:
       - 80:80
     depends_on:
       - moneydashboard_krakend
+    networks:
+      - back
 
 volumes:
   moneydashboard_postgres_data:
