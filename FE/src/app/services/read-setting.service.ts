@@ -27,6 +27,6 @@ export class ReadSettingService {
   }
 
   public getKrakend() {
-  return this.krakend;
-}
+    return this.krakend;
+  }
 }

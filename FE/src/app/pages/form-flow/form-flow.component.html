@@ -1,95 +1,126 @@
-<section id="home" class="h-screen ">
-    <h1 class="text-5xl mt-6 dark:text-white">Inserisci nuovo flusso</h1>
-    <h2 class="text-3xl mt-2 dark:text-white">Da questa schermata puoi inserire sia uscite che entrate</h2>
-    
-    <div class="grid grid-cols-3 gap-10 py-8 mb-4">
-        <form class="bg-white rounded dark:bg-gray-900" [formGroup]="this.bioSection" (ngSubmit)="this.ngSubmit()">
-            <div class="mb-4">
-                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="date">
-                    Data movimento
-                </label>
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="date" id="date" type="date">
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="category">
-                    Categoria
-                </label>
-                <div class="relative" id="category">
-                    <select
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="grid-state" formControlName="category" >
-                        <option value="" disabled selected>Seleziona la categoria del flusso</option>
-                        <option>Entrata</option>
-                        <option>Uscita</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="nature">
-                    Natura
-                </label>
-                <div class="relative" id="nature">
-                    <select *ngIf="this.bioSection.value.category == ''"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="grid-state" formControlName="nature">
-                        <option value="" disabled selected>Seleziona la natura del flusso</option>
-                    </select>
-                </div>
-                <div class="relative" id="nature">
-                    <select *ngIf="this.bioSection.value.category == 'Entrata'"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="grid-state" formControlName="nature">
-                        <option value="" disabled selected>Seleziona la natura del flusso</option>
-                        <option *ngFor="let label of labelIn">{{label}}</option>
-                    </select>
-                </div>
-                <div class="relative" id="nature">
-                    <select *ngIf="this.bioSection.value.category == 'Uscita'"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="grid-state" formControlName="nature">
-                        <option value="" disabled selected>Seleziona la natura del flusso</option>
-                        <option *ngFor="let label of labelOut">{{label}}</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="mb-4">
-                <label class="block text-gray-700 text-xl font-bold mb-2 dark:text-white" for="import">
-                    Importo
-                </label>
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="import" id="import" type="number" min="0" placeholder="0" step="100">
-            </div>
-            <div class="flex items-center justify-between">
-                <button
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mt-2 focus:outline-none focus:shadow-outline"
-                    type="submit"
-                    [ngClass]="{'opacity-50 cursor-not-allowed': this.load }" >
-                    Inserisci flusso
-                </button>
-            </div>
-        </form>
-        <div class="col-span-2">
-            <h3 class="text-2xl dark:text-white"><b>A cosa serve questa schermata?</b></h3>
-            <p class="text-xl dark:text-white">
-                Questa sezione del gestionale consente di inserire un nuovo flusso economico, facilitando la gestione e il monitoraggio delle entrate e delle uscite finanziarie. Compilare correttamente tutti i campi richiesti per garantire un'accurata registrazione dei dati economici.
-            </p>
-            <div class="text-xl dark:text-white mt-5 ">
-                <p class="mb-2">Instruzioni per compilare correttamente il form:</p>
-                <ol>
-                    <li>Data movimento - Quando è avvenuto il movimento </li>
-                    <li>Categoria di Flusso - Entrata/Uscita</li>
-                    <li>Natura del Flusso - Categoria di spesa/ingresso</li>
-                    <li>Importo del Flusso - Di quanto consiste il flusso</li>
-                </ol>
-            </div>
-            <p class="text-xl dark:text-white mt-5"><b>Attenzione:</b> tutti i dati sono obbligatori!</p>
-        </div>
-    </div>
+<section id="home" class="min-h-screen py-6 dark:bg-gray-900">
+  <h1 class="text-5xl font-bold mt-6 mb-2 dark:text-white">Inserisci nuovo flusso</h1>
+  <h2 class="text-3xl font-semibold mb-6 dark:text-white">Da questa schermata puoi inserire sia uscite che entrate</h2>
 
-    <app-modal *ngIf="this.insert == 'succed'" title="Flusso aggiunto" text="Il flusso è stato inserito correttamente" redirect="/dashboard"></app-modal>
-    <app-modal *ngIf="this.insert == 'fail'" title="Flusso non aggiunto" text="Si è verificato un errore" redirect="/dashboard"></app-modal>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 py-8 mb-4">
+    <!-- FORM -->
+    <form
+      class="bg-white rounded shadow-md dark:bg-gray-800 p-6"
+      [formGroup]="bioSection"
+      (ngSubmit)="ngSubmit()"
+      aria-label="Form inserimento nuovo flusso"
+    >
+      <!-- DATA -->
+      <div class="mb-4">
+        <label for="date" class="block text-xl font-bold mb-2 dark:text-white">
+          Data movimento
+        </label>
+        <input
+          id="date"
+          type="date"
+          formControlName="date"
+          class="shadow border rounded w-full py-2 px-3 leading-tight text-gray-700 focus:outline-none focus:shadow-outline"
+        />
+      </div>
+
+      <!-- CATEGORIA -->
+      <div class="mb-4">
+        <label for="category" class="block text-xl font-bold mb-2 dark:text-white">
+          Categoria
+        </label>
+        <select
+          id="category"
+          formControlName="category"
+          class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+        >
+          <option value="" disabled selected>Seleziona la categoria del flusso</option>
+          <option>Entrata</option>
+          <option>Uscita</option>
+        </select>
+      </div>
+
+      <!-- NATURA -->
+      <div class="mb-4">
+        <label for="nature" class="block text-xl font-bold mb-2 dark:text-white">
+          Natura
+        </label>
+        <select
+          id="nature"
+          formControlName="nature"
+          class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+        >
+          <option value="" disabled selected>Seleziona la natura del flusso</option>
+          <ng-container *ngIf="bioSection.value.category === 'Entrata'">
+            <option *ngFor="let label of labelIn">{{ label }}</option>
+          </ng-container>
+          <ng-container *ngIf="bioSection.value.category === 'Uscita'">
+            <option *ngFor="let label of labelOut">{{ label }}</option>
+          </ng-container>
+        </select>
+      </div>
+
+      <!-- IMPORTO -->
+      <div class="mb-4">
+        <label for="import" class="block text-xl font-bold mb-2 dark:text-white">
+          Importo
+        </label>
+        <input
+          id="import"
+          type="number"
+          formControlName="import"
+          placeholder="0"
+          step="100"
+          min="0"
+          class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+        />
+      </div>
+
+      <!-- SUBMIT -->
+      <div>
+        <button
+          type="submit"
+          [disabled]="load"
+          [ngClass]="{ 'opacity-50 cursor-not-allowed': load }"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mt-2 focus:outline-none focus:shadow-outline"
+        >
+          Inserisci flusso
+        </button>
+      </div>
+    </form>
+
+    <!-- INFO -->
+    <div class="lg:col-span-2 p-4">
+      <h3 class="text-2xl font-semibold dark:text-white mb-2">A cosa serve questa schermata?</h3>
+      <p class="text-lg dark:text-gray-300 mb-4">
+        Questa sezione consente di inserire un nuovo flusso economico, facilitando la gestione e il monitoraggio delle
+        entrate e delle uscite finanziarie. Compila correttamente tutti i campi richiesti per garantire un'accurata registrazione dei dati.
+      </p>
+      <div class="text-lg dark:text-gray-300 mb-4">
+        <p class="mb-2">Istruzioni per compilare correttamente il form:</p>
+        <ol class="list-decimal ml-5 space-y-1">
+          <li>Data movimento - Quando è avvenuto il movimento</li>
+          <li>Categoria di Flusso - Entrata/Uscita</li>
+          <li>Natura del Flusso - Categoria di spesa/ingresso</li>
+          <li>Importo del Flusso - Di quanto consiste il flusso</li>
+        </ol>
+      </div>
+      <p class="text-lg dark:text-gray-300">
+        <b>Attenzione:</b> tutti i dati sono obbligatori!
+      </p>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <app-modal
+    *ngIf="insert === 'succed'"
+    title="Flusso aggiunto"
+    text="Il flusso è stato inserito correttamente"
+    redirect="/dashboard"
+  ></app-modal>
+  <app-modal
+    *ngIf="insert === 'fail'"
+    title="Flusso non aggiunto"
+    text="Si è verificato un errore"
+    redirect="/dashboard"
+  ></app-modal>
 </section>

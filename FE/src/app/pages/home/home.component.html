@@ -1,19 +1,42 @@
-<section class="home h-full dark:bg-gray-900 py-6" *ngIf="!this.isLoadingBalance && !this.isLoadingDocument">
-    <h1 class="text-5xl dark:text-white">Bentornato Giorgio</h1>
-    <div class="mt-10">
-        <h2 class="text-3xl pt-2 dark:text-white"><b>Dai un occhiata ai tuoi grafici</b></h2>
-        <div id="mydashboard" class="w-full grid grid-cols-2 gap-10 mt-4">
-            <div class="">
-                <h3 class="text-2xl dark:text-white">Andamento del tuo patrimonio</h3>
-                <p class="text-lg dark:text-white">I risultati sono relativi agli utimi 5 mesi</p>
-                <app-dashboard [type]="'patrimonio'" [datas]="this.datasBilancioValue" [label]="this.datasBilancioLabelX" [description]="'Patrimonio mensile'"></app-dashboard>
-            </div>
-            <div class="">
-                <h3 class="text-2xl dark:text-white">Rapporto entrate e uscite</h3>
-                <p class="text-lg dark:text-white">I risultati sono relativi agli utimi 5 mesi</p>
-                <app-dashboard [type]="'rapporto'" [datas]="this.datasFlowValue" [label]="this.datasFlowLabelX" [description]="'Rapporto'"></app-dashboard>
-            </div>
-        </div>
+<section
+  class="home min-h-screen dark:bg-gray-900 py-6"
+  *ngIf="!isLoadingBalance && !isLoadingDocument"
+>
+  <h1 class="text-5xl font-bold mb-6 dark:text-white">Bentornato Giorgio</h1>
+
+  <div class="mt-10">
+    <h2 class="text-3xl font-bold mb-4 dark:text-white">Dai un’occhiata ai tuoi grafici</h2>
+    <div
+      id="mydashboard"
+      class="w-full gap-8 mt-4"
+    >
+      <section>
+        <h3 class="text-2xl font-semibold mb-2 dark:text-white">Andamento del tuo patrimonio</h3>
+        <p class="text-base mb-4 text-gray-600 dark:text-gray-300">
+          I risultati sono relativi agli ultimi 5 mesi
+        </p>
+        <app-dashboard
+          type="patrimonio"
+          [datas]="datasBilancioValue"
+          [label]="datasBilancioLabelX"
+          description="Patrimonio mensile"
+        ></app-dashboard>
+      </section>
+
+      <section>
+        <h3 class="text-2xl font-semibold mb-2 dark:text-white">Rapporto entrate e uscite</h3>
+        <p class="text-base mb-4 text-gray-600 dark:text-gray-300">
+          I risultati sono relativi agli ultimi 5 mesi
+        </p>
+        <app-dashboard
+          type="rapporto"
+          [datas]="datasFlowValue"
+          [label]="datasFlowLabelX"
+          description="Rapporto"
+        ></app-dashboard>
+      </section>
     </div>
-    <app-cash-flow></app-cash-flow>
+  </div>
+
+  <app-cash-flow class="mt-10"></app-cash-flow>
 </section>
