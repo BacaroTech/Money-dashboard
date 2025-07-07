@@ -1,23 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { Alert } from 'src/app/model/alert';
 import { Documents } from 'src/app/model/document';
-import { BalanceService } from 'src/app/services/balance.service';
+import { BalanceProviderService } from 'src/app/provider/balance.provider';
 
 @Component({
-  selector: 'app-modify-end-month',
-  templateUrl: './modify-end-month.component.html',
-  styleUrls: ['./modify-end-month.component.css'],
+  selector: 'app-end-month',
+  templateUrl: './end-month.component.html',
+  styleUrls: ['./end-month.component.css'],
   standalone: false
 })
-export class ModifyEndMonthComponent implements OnInit {
+export class EndMonthComponent implements OnInit {
 
   alerts: Alert[] = []
   insert: "succed" | "fail" | "todo" = "todo";
   exist: boolean = false;
   load: boolean = false;
-  idDocument: string = ""; 
 
   bioSection = new FormGroup({
     conto: new FormControl<number>(0),
@@ -25,24 +23,31 @@ export class ModifyEndMonthComponent implements OnInit {
     altro: new FormControl<number>(0),
   });
 
-  constructor(private balance: BalanceService, private route: ActivatedRoute) { }
+  constructor(private balance: BalanceProviderService) { }
 
   ngOnInit(): void {
     this.insert = "todo";
-    this.idDocument = this.route.snapshot.url[0].path;
-    this.balance.getDocumentById({"id":this.idDocument})
-    .subscribe(data => {
-      this.bioSection.setControl("conto", new FormControl<number>(data[0].conto))
-      this.bioSection.setControl("contante", new FormControl<number>(data[0].contante))
-      this.bioSection.setControl("altro", new FormControl<number>(data[0].altro))
-    })
+    this.balance.getAllDocumentByMonth({ "date": new Date().toJSON().slice(0, 10) })
+      .subscribe((data: {"id": number}) => {
+        if (data && data.id) {
+          this.exist = true;
+          this.alerts.push(
+            {
+              title: "Inserimento",
+              description: "Per questo mese hai già inserito un documento di fine mese, clicca per modificarlo", 
+              action: "/modify/"+data.id,       //da sistemare action con pagina per modifiche
+              type: "important"
+            }
+          )
+        }   
+      })
     
   }
 
   ngSubmit(): void {
     if(!this.exist){
       this.load = true;
-      this.balance.updateDocument(this.createDocument())
+      this.balance.insertDocument(this.createDocument())
       .subscribe((data: Documents[]) => {
         if (data && data.length > 0) {
           this.insert = "succed";
@@ -53,13 +58,13 @@ export class ModifyEndMonthComponent implements OnInit {
         this.load = false;
       })
     }
+    
   }
 
   private createDocument(): Documents[] {
-    
     return [
       {
-        id: this.idDocument as any,
+        id: 0,
         data_inserimento: new Date().toJSON().slice(0, 10),
         data_ultimo_aggiornamento: new Date().toJSON().slice(0, 10),
         conto: this.bioSection.value.conto as number,

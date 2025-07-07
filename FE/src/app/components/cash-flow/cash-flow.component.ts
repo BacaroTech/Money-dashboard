@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CashFlow } from 'src/app/model/cashFlow';
-import { FlowService } from 'src/app/services/flow.service';
+import { FlowProviderService } from 'src/app/provider/flow.provider';
 
 @Component({
   selector: 'app-cash-flow',
@@ -19,7 +19,10 @@ export class CashFlowComponent implements OnInit {
   datasIn: CashFlow[] = [];
   datasOut: CashFlow[] = [];
 
-  constructor(private flow: FlowService, private router: Router) { }
+  constructor(
+    private flow: FlowProviderService, 
+    private router: Router
+  ) { }
 
   onDeleteFlow:Function = (id:any) => {
     this.flow.deleteFlow({id: id})

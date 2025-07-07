@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CashFlow } from 'src/app/model/cashFlow';
-import { FlowService } from 'src/app/services/flow.service';
+import { FlowProviderService } from 'src/app/provider/flow.provider';
 
 @Component({
   selector: 'app-modify-flow',
@@ -25,7 +25,10 @@ export class ModifyFlowComponent implements OnInit {
     import: new FormControl<String>('')
   });
 
-  constructor(private flow: FlowService, private route: ActivatedRoute) { }
+  constructor(
+    private flow: FlowProviderService, 
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.insert = "todo";

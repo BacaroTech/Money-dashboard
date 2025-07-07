@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import convertToName from 'src/app/common/mappingMonth';
 import { CashFlow } from 'src/app/model/cashFlow';
 import { Documents } from 'src/app/model/document';
-import { BalanceService } from 'src/app/services/balance.service';
-import { FlowService } from 'src/app/services/flow.service';
+import { BalanceProviderService } from 'src/app/provider/balance.provider';
+import { FlowProviderService } from 'src/app/provider/flow.provider';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,10 @@ export class HomeComponent implements OnInit {
   isLoadingBalance: boolean = true;
   isLoadingDocument: boolean = true;
 
-  constructor(private balance: BalanceService, private flow: FlowService) {}
+  constructor(
+    private balance: BalanceProviderService, 
+    private flow: FlowProviderService
+  ) {}
 
   ngOnInit(): void {
     this.balance.getAllDocument()

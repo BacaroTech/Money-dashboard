@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import convertToName from 'src/app/common/mappingMonth';
 import { Documents } from 'src/app/model/document';
-import { BalanceService } from 'src/app/services/balance.service';
+import { BalanceProviderService } from 'src/app/provider/balance.provider';
 
 @Component({
   selector: 'app-cash-review',
@@ -15,7 +15,7 @@ export class CashReviewComponent implements OnInit {
   datasBilancioLabelX: String[] = [];
   isLoadingBalance: boolean = true;
 
-  constructor(private balance: BalanceService) { }
+  constructor(private balance: BalanceProviderService) { }
 
   ngOnInit(): void {
     this.balance.getAllDocument()

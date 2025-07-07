@@ -4,7 +4,7 @@ import convertToName from 'src/app/common/mappingMonth';
 import { Documents } from 'src/app/model/document';
 import DocumentsBetween from 'src/app/model/documentsBetween';
 import MoneyStatus from 'src/app/model/moneystatus';
-import { BalanceService } from 'src/app/services/balance.service';
+import { BalanceProviderService } from 'src/app/provider/balance.provider';
 
 @Component({
   selector: 'app-single-document',
@@ -27,7 +27,10 @@ export class SingleDocumentComponent implements OnInit {
     {value: 0, status: "uguale", difference: 0}
   ]
 
-  constructor(private route: ActivatedRoute, private balance: BalanceService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private balance: BalanceProviderService
+  ) { }
 
   ngOnInit(): void {
     this.idDocument = this.route.snapshot.url[0].path;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Documents } from 'src/app/model/document';
-import { BalanceService } from 'src/app/services/balance.service';
+import { BalanceProviderService } from 'src/app/provider/balance.provider';
 
 @Component({
   selector: 'app-documents',
@@ -17,7 +17,10 @@ export class DocumentsComponent implements OnInit {
 
   datas: Documents[] = []
 
-  constructor(public balance: BalanceService, private router: Router) { }
+  constructor(
+    public balance: BalanceProviderService, 
+    private router: Router
+  ) { }
 
   onDeleteDocument:Function = (id: number) => {
     

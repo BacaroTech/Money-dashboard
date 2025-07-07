@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Error404Component } from './components/error404/error404.component';
-import { CashReviewComponent } from './components/cash-review/cash-review.component';
-import { HomeComponent } from './components/home/home.component';
-import { EndMonthComponent } from './components/end-month/end-month.component';
+import { Error404Component } from './pages/error404/error404.component';
+import { CashReviewComponent } from './pages/cash-review/cash-review.component';
+import { HomeComponent } from './pages/home/home.component';
+import { EndMonthComponent } from './pages/end-month/end-month.component';
 import { DocumentsComponent } from './components/documents/documents.component';
-import { SingleDocumentComponent } from './components/single-document/single-document.component';
-import { FormFlowComponent } from './components/form-flow/form-flow.component';
-import { ModifyEndMonthComponent } from './components/modify-end-month/modify-end-month.component';
-import { ModifyFlowComponent } from './components/modify-flow/modify-flow.component';
-import { LoginComponent } from './components/login/login.component';
+import { SingleDocumentComponent } from './pages/single-document/single-document.component';
+import { FormFlowComponent } from './pages/form-flow/form-flow.component';
+import { ModifyEndMonthComponent } from './pages/modify-end-month/modify-end-month.component';
+import { ModifyFlowComponent } from './pages/modify-flow/modify-flow.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "login", pathMatch: "full"},
