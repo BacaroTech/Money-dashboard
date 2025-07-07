@@ -22,7 +22,12 @@ import { HttpClient } from '@angular/common/http';
 import { ModifyEndMonthComponent } from './pages/modify-end-month/modify-end-month.component';
 import { ModifyFlowComponent } from './pages/modify-flow/modify-flow.component';
 import { LoginComponent } from './pages/login/login.component';
+import { APP_INITIALIZER } from '@angular/core';
+import { ReadSettingService } from './services/read-setting.service';
 
+export function initApp(readSetting: ReadSettingService) {
+  return () => readSetting.loadConfig();
+}
 
 @NgModule({
   declarations: [
@@ -48,12 +53,19 @@ import { LoginComponent } from './pages/login/login.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ReadSettingService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      deps: [ReadSettingService],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
