@@ -689,6 +689,14 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
+            defs["AllOfUpdateBankAccountDTOType"] = {
+  "description" : "Type of bank account",
+  "allOf" : [ {
+    "$ref" : "#/components/schemas/BankAccountType"
+  }, {
+    "nullable" : true
+  } ]
+};
             defs["BankAccountDTO"] = {
   "required" : [ "name", "type", "uuid" ],
   "type" : "object",
@@ -861,6 +869,26 @@
   },
   "additionalProperties" : false
 };
+            defs["UpdateBankAccountDTO"] = {
+  "type" : "object",
+  "properties" : {
+    "name" : {
+      "type" : "string",
+      "description" : "Bank account name",
+      "nullable" : true,
+      "example" : "Updated Savings Account"
+    },
+    "type" : {
+      "description" : "Type of bank account",
+      "allOf" : [ {
+        "$ref" : "#/components/schemas/BankAccountType"
+      }, {
+        "nullable" : true
+      } ]
+    }
+  },
+  "additionalProperties" : false
+};
             defs["UpdateOperationDTO"] = {
   "type" : "object",
   "properties" : {
@@ -883,6 +911,24 @@
       "description" : "Operation date",
       "format" : "date",
       "example" : "2024-01-15"
+    }
+  },
+  "additionalProperties" : false
+};
+            defs["UpdateUserDTO"] = {
+  "type" : "object",
+  "properties" : {
+    "first_name" : {
+      "type" : "string",
+      "description" : "User's first name",
+      "nullable" : true,
+      "example" : "Jane"
+    },
+    "last_name" : {
+      "type" : "string",
+      "description" : "User's last name",
+      "nullable" : true,
+      "example" : "Smith"
     }
   },
   "additionalProperties" : false
@@ -930,6 +976,9 @@
                     <li data-group="BankAccounts" data-name="getUserBankAccounts" class="">
                       <a href="#api-BankAccounts-getUserBankAccounts">getUserBankAccounts</a>
                     </li>
+                    <li data-group="BankAccounts" data-name="updateBankAccount" class="">
+                      <a href="#api-BankAccounts-updateBankAccount">updateBankAccount</a>
+                    </li>
                   <li class="nav-header" data-group="Operations"><a href="#api-Operations">API Methods - Operations</a></li>
                     <li data-group="Operations" data-name="createOperation" class="">
                       <a href="#api-Operations-createOperation">createOperation</a>
@@ -947,6 +996,9 @@
                       <a href="#api-Operations-updateOperation">updateOperation</a>
                     </li>
                   <li class="nav-header" data-group="Users"><a href="#api-Users">API Methods - Users</a></li>
+                    <li data-group="Users" data-name="deleteUser" class="">
+                      <a href="#api-Users-deleteUser">deleteUser</a>
+                    </li>
                     <li data-group="Users" data-name="getCurrentUser" class="">
                       <a href="#api-Users-getCurrentUser">getCurrentUser</a>
                     </li>
@@ -955,6 +1007,9 @@
                     </li>
                     <li data-group="Users" data-name="registerUser" class="">
                       <a href="#api-Users-registerUser">registerUser</a>
+                    </li>
+                    <li data-group="Users" data-name="updateUser" class="">
+                      <a href="#api-Users-updateUser">updateUser</a>
                     </li>
           </ul>
         </nav>
@@ -2625,6 +2680,616 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-getUserBankAccounts-500-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-BankAccounts-updateBankAccount">
+                      <article id="api-BankAccounts-updateBankAccount-0" data-group="User" data-name="updateBankAccount" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateBankAccount</h1>
+                          <p>Update a bank account</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Updates a specific bank account owned by the authenticated user</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/bank-account/{uuid}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-BankAccounts-updateBankAccount-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-BankAccounts-updateBankAccount-0-java">Java</a></li>
+                          <li class=""><a href="#examples-BankAccounts-updateBankAccount-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-BankAccounts-updateBankAccount-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-BankAccounts-updateBankAccount-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-BankAccounts-updateBankAccount-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-BankAccounts-updateBankAccount-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-BankAccounts-updateBankAccount-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-BankAccounts-updateBankAccount-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-BankAccounts-updateBankAccount-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-BankAccounts-updateBankAccount-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-BankAccounts-updateBankAccount-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "uuid: [[apiKey]]"\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"http://localhost:8080/bank-account/{uuid}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.BankAccountsApi;
+
+import java.io.File;
+import java.util.*;
+
+public class BankAccountsApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+        // Configure API key authorization: UuidAuth
+        ApiKeyAuth UuidAuth = (ApiKeyAuth) defaultClient.getAuthentication("UuidAuth");
+        UuidAuth.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //UuidAuth.setApiKeyPrefix("Token");
+
+        BankAccountsApi apiInstance = new BankAccountsApi();
+        UpdateBankAccountDTO body = {
+  "name" : "Updated Savings Account",
+  "type" : "CASH"
+}; // UpdateBankAccountDTO | 
+        UUID uuid2 = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+        UUID uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Bank account UUID to update
+        try {
+            BankAccountDTO result = apiInstance.updateBankAccount(body, uuid2, uuid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling BankAccountsApi#updateBankAccount");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.BankAccountsApi;
+
+public class BankAccountsApiExample {
+
+    public static void main(String[] args) {
+        BankAccountsApi apiInstance = new BankAccountsApi();
+        UpdateBankAccountDTO body = {
+  "name" : "Updated Savings Account",
+  "type" : "CASH"
+}; // UpdateBankAccountDTO | 
+        UUID uuid2 = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+        UUID uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Bank account UUID to update
+        try {
+            BankAccountDTO result = apiInstance.updateBankAccount(body, uuid2, uuid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling BankAccountsApi#updateBankAccount");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+// Configure API key authorization: (authentication scheme: UuidAuth)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"uuid"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"uuid"];
+UpdateBankAccountDTO *body = {
+  "name" : "Updated Savings Account",
+  "type" : "CASH"
+}; // 
+UUID *uuid2 = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // User UUID for authentication
+UUID *uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // Bank account UUID to update
+
+BankAccountsApi *apiInstance = [[BankAccountsApi alloc] init];
+
+// Update a bank account
+[apiInstance updateBankAccountWith:body
+    uuid2:uuid2
+    uuid:uuid
+              completionHandler: ^(BankAccountDTO output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var UserApi = require('user_api');
+var defaultClient = UserApi.ApiClient.instance;
+
+// Configure API key authorization: UuidAuth
+var UuidAuth = defaultClient.authentications['UuidAuth'];
+UuidAuth.apiKey = "YOUR API KEY"
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//UuidAuth.apiKeyPrefix['uuid'] = "Token"
+
+var api = new UserApi.BankAccountsApi()
+var body = {
+  "name" : "Updated Savings Account",
+  "type" : "CASH"
+}; // {{UpdateBankAccountDTO}} 
+var uuid2 = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} User UUID for authentication
+var uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} Bank account UUID to update
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.updateBankAccount(bodyuuid2uuid, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class updateBankAccountExample
+    {
+        public void main()
+        {
+
+            // Configure API key authorization: UuidAuth
+            Configuration.Default.ApiKey.Add("uuid", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("uuid", "Bearer");
+
+            var apiInstance = new BankAccountsApi();
+            var body = new UpdateBankAccountDTO(); // UpdateBankAccountDTO | 
+            var uuid2 = new UUID(); // UUID | User UUID for authentication
+            var uuid = new UUID(); // UUID | Bank account UUID to update
+
+            try
+            {
+                // Update a bank account
+                BankAccountDTO result = apiInstance.updateBankAccount(body, uuid2, uuid);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling BankAccountsApi.updateBankAccount: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: UuidAuth
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('uuid', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('uuid', 'Bearer');
+
+$api_instance = new Swagger\Client\ApiBankAccountsApi();
+$body = {
+  "name" : "Updated Savings Account",
+  "type" : "CASH"
+}; // UpdateBankAccountDTO | 
+$uuid2 = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+$uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Bank account UUID to update
+
+try {
+    $result = $api_instance->updateBankAccount($body, $uuid2, $uuid);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling BankAccountsApi->updateBankAccount: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::BankAccountsApi;
+
+# Configure API key authorization: UuidAuth
+$WWW::SwaggerClient::Configuration::api_key->{'uuid'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'uuid'} = "Bearer";
+
+my $api_instance = WWW::SwaggerClient::BankAccountsApi->new();
+my $body = WWW::SwaggerClient::Object::UpdateBankAccountDTO->new(); # UpdateBankAccountDTO | 
+my $uuid2 = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | User UUID for authentication
+my $uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | Bank account UUID to update
+
+eval { 
+    my $result = $api_instance->updateBankAccount(body => $body, uuid2 => $uuid2, uuid => $uuid);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling BankAccountsApi->updateBankAccount: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-BankAccounts-updateBankAccount-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: UuidAuth
+swagger_client.configuration.api_key['uuid'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# swagger_client.configuration.api_key_prefix['uuid'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = swagger_client.BankAccountsApi()
+body = {
+  "name" : "Updated Savings Account",
+  "type" : "CASH"
+} # UpdateBankAccountDTO | 
+uuid2 = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | User UUID for authentication
+uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | Bank account UUID to update
+
+try: 
+    # Update a bank account
+    api_response = api_instance.update_bank_account(body, uuid2, uuid)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling BankAccountsApi->updateBankAccount: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">uuid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_updateBankAccount_uuid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      UUID
+                                                  </span>
+                                                      <span class="format">
+                                                          (uuid)
+                                                      </span>
+                                  
+                                                      <div class="inner description">
+                                                          Bank account UUID to update
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">uuid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_updateBankAccount_uuid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      UUID
+                                                  </span>
+                                                      <span class="format">
+                                                          (uuid)
+                                                      </span>
+                                  
+                                                      <div class="inner description">
+                                                          User UUID for authentication
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UpdateBankAccountDTO"
+      },
+      "example" : {
+        "name" : "Updated Savings Account",
+        "type" : "CASH"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_updateBankAccount_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_updateBankAccount_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Bank account updated successfully </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateBankAccount-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateBankAccount-200-schema">
+                                  <div id='responses-updateBankAccount-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Bank account updated successfully",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/BankAccountDTO"
+      },
+      "example" : {
+        "uuid" : "123e4567-e89b-12d3-a456-426614174000",
+        "name" : "Updated Savings Account",
+        "type" : "CASH"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateBankAccount-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateBankAccount-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateBankAccount-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - Invalid request data or UUID format </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateBankAccount-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateBankAccount-400-schema">
+                                  <div id='responses-updateBankAccount-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Invalid request data or UUID format",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "string",
+        "description" : "Error message",
+        "x-content-type" : "application/json"
+      },
+      "example" : "Invalid uuid"
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateBankAccount-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateBankAccount-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateBankAccount-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 403 - Access denied </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateBankAccount-403-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateBankAccount-403-schema">
+                                  <div id='responses-updateBankAccount-403-schema-403' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Access denied",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "string",
+        "description" : "Error message",
+        "x-content-type" : "application/json"
+      },
+      "example" : "Access denied"
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateBankAccount-403-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateBankAccount-403-schema-403');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateBankAccount-403-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 500 - Internal server error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateBankAccount-500-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateBankAccount-500-schema">
+                                  <div id='responses-updateBankAccount-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Internal server error",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateBankAccount-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateBankAccount-500-schema-500');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateBankAccount-500-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -5656,6 +6321,498 @@ except ApiException as e:
                   </section>
                 <section id="api-Users">
                   <h1>Users</h1>
+                    <div id="api-Users-deleteUser">
+                      <article id="api-Users-deleteUser-0" data-group="User" data-name="deleteUser" data-version="0">
+                        <div class="pull-left">
+                          <h1>deleteUser</h1>
+                          <p>Delete user account</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Deletes the authenticated user&#x27;s account</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/users</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Users-deleteUser-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Users-deleteUser-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Users-deleteUser-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Users-deleteUser-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Users-deleteUser-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Users-deleteUser-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Users-deleteUser-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Users-deleteUser-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Users-deleteUser-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Users-deleteUser-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Users-deleteUser-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Users-deleteUser-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "uuid: [[apiKey]]"\
+-H "Accept: application/json"\
+"http://localhost:8080/users"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Users-deleteUser-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.UsersApi;
+
+import java.io.File;
+import java.util.*;
+
+public class UsersApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+        // Configure API key authorization: UuidAuth
+        ApiKeyAuth UuidAuth = (ApiKeyAuth) defaultClient.getAuthentication("UuidAuth");
+        UuidAuth.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //UuidAuth.setApiKeyPrefix("Token");
+
+        UsersApi apiInstance = new UsersApi();
+        UUID uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+        try {
+            'String' result = apiInstance.deleteUser(uuid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UsersApi#deleteUser");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Users-deleteUser-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.UsersApi;
+
+public class UsersApiExample {
+
+    public static void main(String[] args) {
+        UsersApi apiInstance = new UsersApi();
+        UUID uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+        try {
+            'String' result = apiInstance.deleteUser(uuid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UsersApi#deleteUser");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Users-deleteUser-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Users-deleteUser-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+// Configure API key authorization: (authentication scheme: UuidAuth)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"uuid"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"uuid"];
+UUID *uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // User UUID for authentication
+
+UsersApi *apiInstance = [[UsersApi alloc] init];
+
+// Delete user account
+[apiInstance deleteUserWith:uuid
+              completionHandler: ^('String' output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Users-deleteUser-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var UserApi = require('user_api');
+var defaultClient = UserApi.ApiClient.instance;
+
+// Configure API key authorization: UuidAuth
+var UuidAuth = defaultClient.authentications['UuidAuth'];
+UuidAuth.apiKey = "YOUR API KEY"
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//UuidAuth.apiKeyPrefix['uuid'] = "Token"
+
+var api = new UserApi.UsersApi()
+var uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} User UUID for authentication
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.deleteUser(uuid, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Users-deleteUser-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Users-deleteUser-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class deleteUserExample
+    {
+        public void main()
+        {
+
+            // Configure API key authorization: UuidAuth
+            Configuration.Default.ApiKey.Add("uuid", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("uuid", "Bearer");
+
+            var apiInstance = new UsersApi();
+            var uuid = new UUID(); // UUID | User UUID for authentication
+
+            try
+            {
+                // Delete user account
+                'String' result = apiInstance.deleteUser(uuid);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling UsersApi.deleteUser: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Users-deleteUser-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: UuidAuth
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('uuid', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('uuid', 'Bearer');
+
+$api_instance = new Swagger\Client\ApiUsersApi();
+$uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+
+try {
+    $result = $api_instance->deleteUser($uuid);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UsersApi->deleteUser: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Users-deleteUser-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::UsersApi;
+
+# Configure API key authorization: UuidAuth
+$WWW::SwaggerClient::Configuration::api_key->{'uuid'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'uuid'} = "Bearer";
+
+my $api_instance = WWW::SwaggerClient::UsersApi->new();
+my $uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | User UUID for authentication
+
+eval { 
+    my $result = $api_instance->deleteUser(uuid => $uuid);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling UsersApi->deleteUser: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Users-deleteUser-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: UuidAuth
+swagger_client.configuration.api_key['uuid'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# swagger_client.configuration.api_key_prefix['uuid'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = swagger_client.UsersApi()
+uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | User UUID for authentication
+
+try: 
+    # Delete user account
+    api_response = api_instance.delete_user(uuid)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling UsersApi->deleteUser: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">uuid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteUser_uuid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      UUID
+                                                  </span>
+                                                      <span class="format">
+                                                          (uuid)
+                                                      </span>
+                                  
+                                                      <div class="inner description">
+                                                          User UUID for authentication
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - User deleted successfully </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteUser-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteUser-200-schema">
+                                  <div id='responses-deleteUser-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "User deleted successfully",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "string",
+        "description" : "Success message",
+        "x-content-type" : "application/json"
+      },
+      "example" : "User deleted"
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteUser-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteUser-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteUser-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - Invalid UUID format or missing UUID header </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteUser-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteUser-400-schema">
+                                  <div id='responses-deleteUser-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Invalid UUID format or missing UUID header",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "string",
+        "description" : "Error message",
+        "x-content-type" : "application/json"
+      },
+      "example" : "Invalid uuid"
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteUser-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteUser-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteUser-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 403 - Access denied </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteUser-403-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteUser-403-schema">
+                                  <div id='responses-deleteUser-403-schema-403' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Access denied",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "string",
+        "description" : "Error message",
+        "x-content-type" : "application/json"
+      },
+      "example" : "Access denied"
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteUser-403-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteUser-403-schema-403');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteUser-403-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 500 - Internal server error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteUser-500-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteUser-500-schema">
+                                  <div id='responses-deleteUser-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Internal server error",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteUser-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteUser-500-schema-500');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteUser-500-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Users-getCurrentUser">
                       <article id="api-Users-getCurrentUser-0" data-group="User" data-name="getCurrentUser" data-version="0">
                         <div class="pull-left">
@@ -7202,6 +8359,574 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-registerUser-500-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Users-updateUser">
+                      <article id="api-Users-updateUser-0" data-group="User" data-name="updateUser" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateUser</h1>
+                          <p>Update user information</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Updates the authenticated user&#x27;s information</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/users</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Users-updateUser-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Users-updateUser-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Users-updateUser-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Users-updateUser-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Users-updateUser-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Users-updateUser-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Users-updateUser-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Users-updateUser-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Users-updateUser-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Users-updateUser-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Users-updateUser-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Users-updateUser-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "uuid: [[apiKey]]"\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"http://localhost:8080/users"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Users-updateUser-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.UsersApi;
+
+import java.io.File;
+import java.util.*;
+
+public class UsersApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+        // Configure API key authorization: UuidAuth
+        ApiKeyAuth UuidAuth = (ApiKeyAuth) defaultClient.getAuthentication("UuidAuth");
+        UuidAuth.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //UuidAuth.setApiKeyPrefix("Token");
+
+        UsersApi apiInstance = new UsersApi();
+        UpdateUserDTO body = {
+  "first_name" : "Jane",
+  "last_name" : "Smith"
+}; // UpdateUserDTO | 
+        UUID uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+        try {
+            UserDTO result = apiInstance.updateUser(body, uuid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UsersApi#updateUser");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Users-updateUser-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.UsersApi;
+
+public class UsersApiExample {
+
+    public static void main(String[] args) {
+        UsersApi apiInstance = new UsersApi();
+        UpdateUserDTO body = {
+  "first_name" : "Jane",
+  "last_name" : "Smith"
+}; // UpdateUserDTO | 
+        UUID uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+        try {
+            UserDTO result = apiInstance.updateUser(body, uuid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UsersApi#updateUser");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Users-updateUser-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Users-updateUser-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+// Configure API key authorization: (authentication scheme: UuidAuth)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"uuid"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"uuid"];
+UpdateUserDTO *body = {
+  "first_name" : "Jane",
+  "last_name" : "Smith"
+}; // 
+UUID *uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // User UUID for authentication
+
+UsersApi *apiInstance = [[UsersApi alloc] init];
+
+// Update user information
+[apiInstance updateUserWith:body
+    uuid:uuid
+              completionHandler: ^(UserDTO output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Users-updateUser-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var UserApi = require('user_api');
+var defaultClient = UserApi.ApiClient.instance;
+
+// Configure API key authorization: UuidAuth
+var UuidAuth = defaultClient.authentications['UuidAuth'];
+UuidAuth.apiKey = "YOUR API KEY"
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//UuidAuth.apiKeyPrefix['uuid'] = "Token"
+
+var api = new UserApi.UsersApi()
+var body = {
+  "first_name" : "Jane",
+  "last_name" : "Smith"
+}; // {{UpdateUserDTO}} 
+var uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} User UUID for authentication
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.updateUser(bodyuuid, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Users-updateUser-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Users-updateUser-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class updateUserExample
+    {
+        public void main()
+        {
+
+            // Configure API key authorization: UuidAuth
+            Configuration.Default.ApiKey.Add("uuid", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("uuid", "Bearer");
+
+            var apiInstance = new UsersApi();
+            var body = new UpdateUserDTO(); // UpdateUserDTO | 
+            var uuid = new UUID(); // UUID | User UUID for authentication
+
+            try
+            {
+                // Update user information
+                UserDTO result = apiInstance.updateUser(body, uuid);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling UsersApi.updateUser: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Users-updateUser-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: UuidAuth
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('uuid', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('uuid', 'Bearer');
+
+$api_instance = new Swagger\Client\ApiUsersApi();
+$body = {
+  "first_name" : "Jane",
+  "last_name" : "Smith"
+}; // UpdateUserDTO | 
+$uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
+
+try {
+    $result = $api_instance->updateUser($body, $uuid);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UsersApi->updateUser: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Users-updateUser-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::UsersApi;
+
+# Configure API key authorization: UuidAuth
+$WWW::SwaggerClient::Configuration::api_key->{'uuid'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'uuid'} = "Bearer";
+
+my $api_instance = WWW::SwaggerClient::UsersApi->new();
+my $body = WWW::SwaggerClient::Object::UpdateUserDTO->new(); # UpdateUserDTO | 
+my $uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | User UUID for authentication
+
+eval { 
+    my $result = $api_instance->updateUser(body => $body, uuid => $uuid);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling UsersApi->updateUser: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Users-updateUser-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: UuidAuth
+swagger_client.configuration.api_key['uuid'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# swagger_client.configuration.api_key_prefix['uuid'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = swagger_client.UsersApi()
+body = {
+  "first_name" : "Jane",
+  "last_name" : "Smith"
+} # UpdateUserDTO | 
+uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | User UUID for authentication
+
+try: 
+    # Update user information
+    api_response = api_instance.update_user(body, uuid)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling UsersApi->updateUser: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">uuid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_updateUser_uuid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      UUID
+                                                  </span>
+                                                      <span class="format">
+                                                          (uuid)
+                                                      </span>
+                                  
+                                                      <div class="inner description">
+                                                          User UUID for authentication
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UpdateUserDTO"
+      },
+      "example" : {
+        "first_name" : "Jane",
+        "last_name" : "Smith"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_updateUser_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_updateUser_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - User updated successfully </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateUser-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateUser-200-schema">
+                                  <div id='responses-updateUser-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "User updated successfully",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UserDTO"
+      },
+      "example" : {
+        "first_name" : "Jane",
+        "last_name" : "Smith"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateUser-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateUser-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateUser-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - Invalid request data or UUID format </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateUser-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateUser-400-schema">
+                                  <div id='responses-updateUser-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Invalid request data or UUID format",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "string",
+        "description" : "Error message",
+        "x-content-type" : "application/json"
+      },
+      "example" : "Invalid uuid"
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateUser-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateUser-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateUser-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 403 - Access denied </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateUser-403-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateUser-403-schema">
+                                  <div id='responses-updateUser-403-schema-403' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Access denied",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "string",
+        "description" : "Error message",
+        "x-content-type" : "application/json"
+      },
+      "example" : "Access denied"
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateUser-403-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateUser-403-schema-403');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateUser-403-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 500 - Internal server error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateUser-500-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateUser-500-schema">
+                                  <div id='responses-updateUser-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Internal server error",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateUser-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateUser-500-schema-500');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateUser-500-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
