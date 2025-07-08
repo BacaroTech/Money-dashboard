@@ -143,6 +143,24 @@
       ]
     },
     {
+      "endpoint": "/moneydashboard/api/v1/bank-account/{uuid}",
+      "input_headers": [
+        "Content-Type",
+        "uuid"
+      ],
+      "methods": [
+        "PUT"
+      ],
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/bank-account/{uuid}"
+        }
+      ]
+    },
+    {
       "endpoint": "/moneydashboard/api/v1/operations/bank-account/{bankAccountUuid}",
       "input_headers": [
         "uuid"

@@ -371,6 +371,71 @@ paths:
                 $ref: '#/components/schemas/Error'
 
   /bank-account/{uuid}:
+    put:
+      summary: Update a bank account
+      description: Updates a specific bank account owned by the authenticated user
+      operationId: updateBankAccount
+      tags:
+        - Bank Accounts
+      parameters:
+        - name: uuid
+          in: header
+          required: true
+          description: User UUID for authentication
+          schema:
+            type: string
+            format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        - name: uuid
+          in: path
+          required: true
+          description: Bank account UUID to update
+          schema:
+            type: string
+            format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBankAccountDTO'
+            example:
+              name: "Updated Savings Account"
+              type: "CASH"
+      responses:
+        '200':
+          description: Bank account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountDTO'
+              example:
+                uuid: "123e4567-e89b-12d3-a456-426614174000"
+                name: "Updated Savings Account"
+                type: "CASH"
+        '400':
+          description: Invalid request data or UUID format
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Error message
+              example: "Invalid uuid"
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Error message
+              example: "Access denied"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     delete:
       summary: Delete a bank account
       description: Deletes a specific bank account owned by the authenticated user
@@ -816,6 +881,21 @@ components:
           example: "My Savings Account"
         type:
           $ref: '#/components/schemas/BankAccountType'
+      additionalProperties: false
+
+    UpdateBankAccountDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+          description: Bank account name
+          example: "Updated Savings Account"
+        type:
+          allOf:
+            - $ref: '#/components/schemas/BankAccountType'
+            - nullable: true
+          description: Type of bank account
       additionalProperties: false
 
     BankAccountType:
