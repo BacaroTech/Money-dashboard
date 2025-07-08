@@ -64,6 +64,37 @@
       ]
     },
     {
+      "endpoint": "/moneydashboard/api/v1/users",
+      "input_headers": [
+        "Content-Type",
+        "uuid"
+      ],
+      "method": "PUT",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/users"
+        }
+      ]
+    },
+    {
+      "endpoint": "/moneydashboard/api/v1/users",
+      "input_headers": [
+        "uuid"
+      ],
+      "method": "DELETE",
+      "backend": [
+        {
+          "host": [
+            "http://moneydashboard_backend:8080"
+          ],
+          "url_pattern": "/users"
+        }
+      ]
+    },
+    {
       "endpoint": "/moneydashboard/api/v1/bank-account",
       "input_headers": [
         "uuid"

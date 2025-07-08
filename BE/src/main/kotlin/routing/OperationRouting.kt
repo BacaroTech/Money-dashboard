@@ -36,7 +36,7 @@ fun Application.configureOperationRouting() {
                 val response: UUID? = operationService.insert(userUuid, bankAccountUuid, dto)
 
                 return@post response?.let {
-                    call.respond(HttpStatusCode.OK, response.toString())
+                    call.respond(HttpStatusCode.OK, it.toString())
                 } ?: call.respond(HttpStatusCode.Forbidden, "Access Denied")
 
             }
@@ -57,7 +57,7 @@ fun Application.configureOperationRouting() {
                 val response: List<OperationDTO>? = operationService.getByBankAccountUuid(userUuid, bankAccountUuid)
 
                 return@get response?.let {
-                    call.respond(HttpStatusCode.OK, response)
+                    call.respond(HttpStatusCode.OK, it)
                 } ?: call.respond(HttpStatusCode.Forbidden, "Access Denied")
             }
 
@@ -81,7 +81,7 @@ fun Application.configureOperationRouting() {
                 val response: OperationDTO? = operationService.getByUuid(userUuid, bankAccountUuid, operationUuid)
 
                 return@get response?.let {
-                    call.respond(HttpStatusCode.OK, response)
+                    call.respond(HttpStatusCode.OK, it)
                 } ?: call.respond(HttpStatusCode.Forbidden, "Access Denied")
             }
 
@@ -106,7 +106,7 @@ fun Application.configureOperationRouting() {
                 val response: OperationDTO? = operationService.update(userUuid, bankAccountUuid, operationUuid, dto)
 
                 return@put response?.let {
-                    call.respond(HttpStatusCode.OK, response)
+                    call.respond(HttpStatusCode.OK, it)
                 } ?: call.respond(HttpStatusCode.Forbidden, "Access Denied")
             }
 

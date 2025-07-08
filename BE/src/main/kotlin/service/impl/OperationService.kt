@@ -12,6 +12,7 @@ import mft.dev.table.OperationTable
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import java.time.LocalDateTime
 import java.util.*
 
 class OperationService(private val bankAccountService: BankAccountService) : IOperationService {
@@ -64,6 +65,7 @@ class OperationService(private val bankAccountService: BankAccountService) : IOp
                     dto.amount?.let { operation.amount = it  }
                     dto.description?.let { operation.description = it  }
                     dto.date?.let { operation.date = it  }
+                    operation.lastUpdate = LocalDateTime.now()
                 }?.toOperationDTO()
             }
         }

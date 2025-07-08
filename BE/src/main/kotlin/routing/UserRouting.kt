@@ -8,6 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import mft.dev.dto.user.InsertUserDTO
 import mft.dev.dto.user.LoginDTO
+import mft.dev.dto.user.UpdateUserDTO
 import mft.dev.dto.user.UserDTO
 import mft.dev.service.impl.UserService
 import org.koin.ktor.ext.inject
@@ -32,7 +33,7 @@ fun Application.configureUserRouting() {
                 val response: UUID? = userService.login(dto)
 
                 return@post response?.let {
-                    call.respond(HttpStatusCode.OK, response.toString())
+                    call.respond(HttpStatusCode.OK, it.toString())
                 } ?: call.respond(HttpStatusCode.Forbidden, "Authentication failed")
             }
 
@@ -43,13 +44,45 @@ fun Application.configureUserRouting() {
                 } catch (e: IllegalArgumentException) {
                     throw BadRequestException("Invalid uuid")
                 }
-                val response: UserDTO? = userService.getUser(uuid)
+                val response: UserDTO? = userService.get(uuid)
 
                 return@get response?.let {
-                    call.respond(HttpStatusCode.OK, response)
+                    call.respond(HttpStatusCode.OK, it)
                 } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
             }
 
+            delete {
+                val authHeader = call.request.headers["uuid"] ?: throw BadRequestException("Missing uuid")
+                val uuid = try {
+                    UUID.fromString(authHeader)
+                } catch (e: IllegalArgumentException) {
+                    throw BadRequestException("Invalid uuid")
+                }
+                val response: Int = userService.delete(uuid)
+
+                return@delete if (response == 1) {
+                    call.respond(HttpStatusCode.OK, "User deleted")
+                } else {
+                    call.respond(HttpStatusCode.Forbidden, "Access denied")
+                }
+            }
+
+            put {
+                val authHeader = call.request.headers["uuid"] ?: throw BadRequestException("Missing uuid")
+                val uuid = try {
+                    UUID.fromString(authHeader)
+                } catch (e: IllegalArgumentException) {
+                    throw BadRequestException("Invalid uuid")
+                }
+
+                val dto: UpdateUserDTO = call.receive<UpdateUserDTO>()
+
+                val response: UserDTO? = userService.update(uuid, dto)
+
+                return@put response?.let {
+                    call.respond(HttpStatusCode.OK, it)
+                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+            }
         }
     }
 }

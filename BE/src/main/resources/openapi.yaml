@@ -156,6 +156,108 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    put:
+      summary: Update user information
+      description: Updates the authenticated user's information
+      operationId: updateUser
+      tags:
+        - Users
+      parameters:
+        - name: uuid
+          in: header
+          required: true
+          description: User UUID for authentication
+          schema:
+            type: string
+            format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDTO'
+            example:
+              first_name: "Jane"
+              last_name: "Smith"
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+              example:
+                first_name: "Jane"
+                last_name: "Smith"
+        '400':
+          description: Invalid request data or UUID format
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Error message
+              example: "Invalid uuid"
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Error message
+              example: "Access denied"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete user account
+      description: Deletes the authenticated user's account
+      operationId: deleteUser
+      tags:
+        - Users
+      parameters:
+        - name: uuid
+          in: header
+          required: true
+          description: User UUID for authentication
+          schema:
+            type: string
+            format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Success message
+              example: "User deleted"
+        '400':
+          description: Invalid UUID format or missing UUID header
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Error message
+              example: "Invalid uuid"
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Error message
+              example: "Access denied"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /bank-account:
     post:
@@ -869,6 +971,21 @@ components:
           format: password
           description: User's password
           example: "securePassword123"
+      additionalProperties: false
+
+    UpdateUserDTO:
+      type: object
+      properties:
+        first_name:
+          type: string
+          nullable: true
+          description: User's first name
+          example: "Jane"
+        last_name:
+          type: string
+          nullable: true
+          description: User's last name
+          example: "Smith"
       additionalProperties: false
 
     Error:

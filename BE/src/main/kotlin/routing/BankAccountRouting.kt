@@ -30,7 +30,7 @@ fun Application.configureBankAccountRouting() {
                 val response: UUID? = bankAccountService.insert(userUuid, dto)
 
                 return@post response?.let {
-                    call.respond(HttpStatusCode.OK, response.toString())
+                    call.respond(HttpStatusCode.OK, it.toString())
                 } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
             }
 
@@ -45,7 +45,7 @@ fun Application.configureBankAccountRouting() {
                 val response: List<BankAccountDTO>? = bankAccountService.getByUserId(userUuid)
 
                 return@get response?.let {
-                    call.respond(HttpStatusCode.OK, response)
+                    call.respond(HttpStatusCode.OK, it)
                 } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
             }
 
