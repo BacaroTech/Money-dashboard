@@ -1,0 +1,97 @@
+<section class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center">
+    <div class="w-full max-w-md text-center mb-8">
+        <h1 class="text-4xl font-semibold text-gray-900 dark:text-white">MoneyDashboard</h1>
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-2">
+            Gestione delle Finanze Personali 💰
+        </h2>
+    </div>
+
+    <div class="w-full max-w-3xl bg-white dark:bg-gray-800 rounded-lg shadow p-8 space-y-8">
+        <!-- Intestazione Onboarding -->
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Onboarding</h2>
+            <span class="text-sm text-gray-500 dark:text-gray-400">Step {{ currentStep }} di 3</span>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-4 w-full">
+                <ng-container *ngFor="let step of steps; let i = index">
+                    <div class="flex-1 flex items-center">
+                        <div [class]="
+                'flex items-center justify-center w-8 h-8 rounded-full border-2 text-sm font-medium ' +
+                (i + 1 <= currentStep
+                  ? 'bg-blue-600 border-blue-600 text-white'
+                  : 'border-gray-300 text-gray-400')
+              ">
+                            {{ i + 1 }}
+                        </div>
+                        <div *ngIf="i < steps.length - 1" class="flex-auto border-t-2"
+                            [class.border-blue-600]="i + 1 < currentStep"
+                            [class.border-gray-300]="i + 1 >= currentStep">
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <!-- Tab content -->
+        <div class="mt-8">
+            <ng-container [ngSwitch]="currentStep">
+                <div *ngSwitchCase="1">
+                    <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Crea il tuo account</h3>
+
+                    <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.mail1"
+                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
+                    <app-error-message-label *ngIf="this.utils.checkMailIsBadFormated(this.userToRegistry.mail1)"
+                        [errorMessage]="'Mail formattata in modo scorretto o mancante'">
+                    </app-error-message-label>
+
+                    <input type="email" placeholder="Email di conferma" [(ngModel)]="this.userToRegistry.mail2"
+                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
+                    <app-error-message-label *ngIf="this.utils.checkMailIsBadFormated(this.userToRegistry.mail2)"
+                        [errorMessage]="'Mail formattata in modo scorretto o mancante'">
+                    </app-error-message-label>
+                    <app-error-message-label *ngIf="this.userToRegistry.mail1 !== this.userToRegistry.mail2"
+                        [errorMessage]="'Le due mail non coincidono'">
+                    </app-error-message-label>
+                    
+                    <input type="password" placeholder="Password" [(ngModel)]="this.userToRegistry.psw" #pswModel="ngModel"
+                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                    <app-error-message-label
+                        *ngIf="this.utils.checkMailIsBadFormated(this.userToRegistry.psw)"
+                        [errorMessage]="'La password deve essere tra 8 e 16 caratteri'">
+                    </app-error-message-label>
+                </div>
+
+                <div *ngSwitchCase="2">
+                    <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Dettagli profilo</h3>
+                    <input type="text" placeholder="Nome completo"
+                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
+                    <input type="text" placeholder="Telefono"
+                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                </div>
+
+                <div *ngSwitchCase="3">
+                    <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Conferma e termina</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Controlla i dati inseriti e clicca "Conferma" per completare.
+                    </p>
+                </div>
+            </ng-container>
+        </div>
+
+        <!-- Navigation buttons -->
+        <div class="flex justify-between">
+            <button (click)="previousStep()" [disabled]="currentStep === 1"
+                class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 dark:text-white hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                Indietro
+            </button>
+
+            <button (click)="nextStep()"
+                class="px-6 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+                [disabled]="checkStepValid(currentStep)">
+                {{ currentStep < steps.length ? 'Avanti' : 'Fine' }} </button>
+        </div>
+    </div>
+</section>

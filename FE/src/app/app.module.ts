@@ -24,6 +24,8 @@ import { ModifyFlowComponent } from './pages/modify-flow/modify-flow.component';
 import { LoginComponent } from './pages/login/login.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { ReadSettingService } from './services/read-setting.service';
+import { RegisterComponent } from './pages/register/register.component';
+import { ErrorMessageLabelComponent } from './components/error-message-label/error-message-label.component';
 
 export function initApp(readSetting: ReadSettingService) {
   return () => readSetting.loadConfig();
@@ -48,7 +50,9 @@ export function initApp(readSetting: ReadSettingService) {
     SingleDocumentComponent,
     ModifyEndMonthComponent,
     ModifyFlowComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
+    ErrorMessageLabelComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
@@ -9,45 +9,51 @@ import { filter, map } from 'rxjs';
   styleUrls: ['./menu.component.css'],
   standalone: false
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnChanges {
 
   menus: Array<{ name: string, url: string, active: boolean, icon: string }> = [
     {
       name: 'Home',
       url: '/dashboard',
       active: true,
-      icon: `
-      <svg viewBox="0 0 21 21" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 10L10.5 1 20 10"></path>
-        <path d="M4 10v7h5v-5h2v5h5v-7"></path>
-      </svg>`
+      icon: this.sanitizer.bypassSecurityTrustHtml(`
+        <svg viewBox="0 0 21 21" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 10L10.5 1 20 10"></path>
+          <path d="M4 10v7h5v-5h2v5h5v-7"></path>
+        </svg>`) as string
     },
     {
       name: 'Aggiungi operazione',
       url: '/addFlow',
       active: false,
-      icon: `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12h14"></path>
-      </svg>`
+      icon: this.sanitizer.bypassSecurityTrustHtml(`
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14"></path>
+        </svg>`) as string
     },
     {
       name: 'Analisi',
       url: '/review',
       active: false,
-      icon: `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-        <path d="M9 12l2 2 4-4"></path>
-      </svg>`
+      icon: this.sanitizer.bypassSecurityTrustHtml(`
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
+          <path d="M9 12l2 2 4-4"></path>
+        </svg>`) as string
     }
   ];
 
+  disabledPage: string[] = [
+    "",
+    "/login"
+  ]
 
-  isSidebarOpen = true;
+  isSidebarOpen: boolean = true;
+
+  activeRoute!: string;
 
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
   ) { }
@@ -55,7 +61,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
-      map(() => this.route),
+      map(() => this.activatedRoute),
       map(route => {
         while (route.firstChild) {
           route = route.firstChild;
@@ -64,39 +70,11 @@ export class MenuComponent implements OnInit {
       }),
       map(route => route.url)
     ).subscribe((e: any) => this.setActive('/' + e._value[0].path))
+  }
 
-    this.menus = [
-      {
-        name: 'Home',
-        url: '/dashboard',
-        active: true,
-        icon: this.sanitizer.bypassSecurityTrustHtml(`
-        <svg viewBox="0 0 21 21" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M1 10L10.5 1 20 10"></path>
-          <path d="M4 10v7h5v-5h2v5h5v-7"></path>
-        </svg>`) as string
-      },
-      {
-        name: 'Aggiungi operazione',
-        url: '/addFlow',
-        active: false,
-        icon: this.sanitizer.bypassSecurityTrustHtml(`
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 5v14M5 12h14"></path>
-        </svg>`) as string
-      },
-      {
-        name: 'Analisi',
-        url: '/review',
-        active: false,
-        icon: this.sanitizer.bypassSecurityTrustHtml(`
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-          <path d="M9 12l2 2 4-4"></path>
-        </svg>`) as string
-      }
-    ];
-
+  ngOnChanges(changes: SimpleChanges): void {
+    this.activeRoute = this.activatedRoute.snapshot.url.map(segment => segment.path).join('/');
+    console.log(this.activeRoute);
   }
 
   toggleSidebar() {

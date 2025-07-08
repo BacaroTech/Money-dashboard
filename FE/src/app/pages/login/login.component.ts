@@ -1,21 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Login } from 'src/app/model/loginCredenzial';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  standalone: false
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  loginCredenzial: Login = {
+    mail: '',
+    psw: ''
+  };
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    public utils: UtilsService
+  ) {}
 
-  ngOnInit(): void {
-  }
-
-  login(){
+  goToLogin() {
+    // A questo punto il form è già validato da Angular Template-driven
     this.router.navigateByUrl('dashboard');
   }
 
+  goToRegister() {
+    this.router.navigateByUrl('register');
+  }
 }
