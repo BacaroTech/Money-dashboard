@@ -39,7 +39,7 @@
         <div class="mt-8">
             <ng-container [ngSwitch]="currentStep">
                 <div *ngSwitchCase="1">
-                    <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Crea il tuo account</h3>
+                    <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Dati generali</h3>
 
                     <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.mail1"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
@@ -59,7 +59,7 @@
                     <input type="password" placeholder="Password" [(ngModel)]="this.userToRegistry.psw" #pswModel="ngModel"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
                     <app-error-message-label
-                        *ngIf="this.utils.checkMailIsBadFormated(this.userToRegistry.psw)"
+                        *ngIf="this.utils.checkPswHaventCorrectSize(this.userToRegistry.psw)"
                         [errorMessage]="'La password deve essere tra 8 e 16 caratteri'">
                     </app-error-message-label>
                 </div>

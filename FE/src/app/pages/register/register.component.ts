@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
       return this.utils.checkPswHaventCorrectSize(this.userToRegistry.psw) 
       || this.utils.checkMailIsBadFormated(this.userToRegistry.mail1)
       || this.utils.checkMailIsBadFormated(this.userToRegistry.mail2)
-      || this.userToRegistry.mail1 === this.userToRegistry.mail2
+      || this.userToRegistry.mail1 !== this.userToRegistry.mail2
     } else if(currentStep === 2){
       return true;
     } else {
