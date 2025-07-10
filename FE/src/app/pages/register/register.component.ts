@@ -28,9 +28,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private http: HttpClient,
     public utils: UtilsService
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
 
@@ -49,16 +47,26 @@ export class RegisterComponent implements OnInit {
   }
 
   
-  checkStepValid(currentStep: number): boolean{
+  checkStepIsValid(currentStep: number): boolean{
     if(currentStep === 1){
-      return this.utils.checkPswHaventCorrectSize(this.userToRegistry.psw) 
-      || this.utils.checkMailIsBadFormated(this.userToRegistry.mail1)
-      || this.utils.checkMailIsBadFormated(this.userToRegistry.mail2)
-      || this.userToRegistry.mail1 !== this.userToRegistry.mail2
+      console.log(this.isValidStepOne());
+      return this.isValidStepOne();
     } else if(currentStep === 2){
       return true;
     } else {
       return true;
     }
+  }
+
+  private isValidStepOne(): boolean{
+    return (
+      this.userToRegistry.mail1 !== ''
+      && this.userToRegistry.mail2 !== '' 
+      && this.userToRegistry.psw !== ''
+      && this.utils.checkPswHaveCorrectSize(this.userToRegistry.psw) 
+      && this.utils.checkMailIsGoodFormated(this.userToRegistry.mail1)
+      && this.utils.checkMailIsGoodFormated(this.userToRegistry.mail2)
+      && this.userToRegistry.mail1 === this.userToRegistry.mail2
+    );
   }
 }

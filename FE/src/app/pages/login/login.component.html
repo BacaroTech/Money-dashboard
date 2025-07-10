@@ -26,7 +26,7 @@
                  dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
         <app-error-message-label
-          *ngIf="this.utils.checkMailIsBadFormated(this.loginCredenzial.mail)"
+          *ngIf="this.loginCredenzial.mail !== '' && !this.utils.checkMailIsGoodFormated(this.loginCredenzial.mail)"
           [errorMessage]="'Mail formattata in modo scorretto o mancante'">
         </app-error-message-label>
       </div>
@@ -50,7 +50,7 @@
                  dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
         <app-error-message-label
-          *ngIf="this.utils.checkPswHaventCorrectSize(this.loginCredenzial.psw)"
+          *ngIf="this.loginCredenzial.psw !== '' && !this.utils.checkPswHaveCorrectSize(this.loginCredenzial.psw)"
           [errorMessage]="'La password deve essere tra 8 e 16 caratteri'">
         </app-error-message-label>
       </div>
@@ -58,10 +58,7 @@
       <!-- SUBMIT -->
       <button
         type="submit"
-        [disabled]="this.utils.checkPswHaventCorrectSize(this.loginCredenzial.psw) 
-        || this.utils.checkMailIsBadFormated(this.loginCredenzial.mail) 
-        || this.loginCredenzial.mail === ''
-        || this.loginCredenzial.psw === ''"
+        [disabled]="!activeLogin()"
         class="w-full px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg 
                hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
                dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 focus:outline-none

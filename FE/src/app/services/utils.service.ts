@@ -7,12 +7,12 @@ export class UtilsService {
 
   constructor() { }
 
-  checkMailIsBadFormated(mail: string){
+  checkMailIsGoodFormated(mail: string){
     const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-    return mail != "" && !regexp.test(mail) ;
+    return regexp.test(mail) ;
   }
 
-  checkPswHaventCorrectSize(psw: string){
-    return psw.length != 0 && !(psw.length >= 8 && psw.length <= 16)
+  checkPswHaveCorrectSize(psw: string){
+    return psw.length >= 8 && psw.length <= 16;
   }
 }

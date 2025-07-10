@@ -43,23 +43,24 @@
 
                     <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.mail1"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
-                    <app-error-message-label *ngIf="this.utils.checkMailIsBadFormated(this.userToRegistry.mail1)"
+                    <app-error-message-label *ngIf="this.userToRegistry.mail1 !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail1)"
                         [errorMessage]="'Mail formattata in modo scorretto o mancante'">
                     </app-error-message-label>
 
                     <input type="email" placeholder="Email di conferma" [(ngModel)]="this.userToRegistry.mail2"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
-                    <app-error-message-label *ngIf="this.utils.checkMailIsBadFormated(this.userToRegistry.mail2)"
+                    <app-error-message-label *ngIf="this.userToRegistry.mail2 !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail2)"
                         [errorMessage]="'Mail formattata in modo scorretto o mancante'">
                     </app-error-message-label>
-                    <app-error-message-label *ngIf="this.userToRegistry.mail1 !== this.userToRegistry.mail2"
+                    <app-error-message-label *ngIf="this.userToRegistry.mail1 !== '' && this.userToRegistry.mail1 !== this.userToRegistry.mail2"
                         [errorMessage]="'Le due mail non coincidono'">
                     </app-error-message-label>
-                    
-                    <input type="password" placeholder="Password" [(ngModel)]="this.userToRegistry.psw" #pswModel="ngModel"
+
+                    <input type="password" placeholder="Password" [(ngModel)]="this.userToRegistry.psw"
+                        #pswModel="ngModel"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-                    <app-error-message-label
-                        *ngIf="this.utils.checkPswHaventCorrectSize(this.userToRegistry.psw)"
+                    <label>La password deve contenere dagli 8 ai 16 caratteri</label>
+                    <app-error-message-label *ngIf="this.userToRegistry.psw !== '' && !this.utils.checkPswHaveCorrectSize(this.userToRegistry.psw)"
                         [errorMessage]="'La password deve essere tra 8 e 16 caratteri'">
                     </app-error-message-label>
                 </div>
@@ -90,7 +91,7 @@
 
             <button (click)="nextStep()"
                 class="px-6 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
-                [disabled]="checkStepValid(currentStep)">
+                [disabled]="!checkStepIsValid(currentStep)">
                 {{ currentStep < steps.length ? 'Avanti' : 'Fine' }} </button>
         </div>
     </div>

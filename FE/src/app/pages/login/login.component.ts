@@ -27,4 +27,14 @@ export class LoginComponent {
   goToRegister() {
     this.router.navigateByUrl('register');
   }
+
+  activeLogin(){
+    return(
+      this.utils.checkPswHaveCorrectSize(this.loginCredenzial.psw) 
+      && this.utils.checkMailIsGoodFormated(this.loginCredenzial.mail) 
+      && this.loginCredenzial.mail !== ''
+      && this.loginCredenzial.psw !== ''
+  
+    )
+  }
 }
