@@ -10,7 +10,7 @@
         <!-- Intestazione Onboarding -->
         <div class="flex items-center justify-between">
             <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Onboarding</h2>
-            <span class="text-sm text-gray-500 dark:text-gray-400">Step {{ currentStep }} di 3</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">Step {{ currentStep }} di 4</span>
         </div>
 
         <!-- Tabs -->
@@ -41,43 +41,175 @@
                 <div *ngSwitchCase="1">
                     <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Dati generali</h3>
 
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Mail
+                    </label>
                     <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.mail1"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
-                    <app-error-message-label *ngIf="this.userToRegistry.mail1 !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail1)"
+                    <app-error-message-label
+                        *ngIf="this.userToRegistry.mail1 !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail1)"
                         [errorMessage]="'Mail formattata in modo scorretto o mancante'">
                     </app-error-message-label>
 
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Mail di conferma
+                    </label>
                     <input type="email" placeholder="Email di conferma" [(ngModel)]="this.userToRegistry.mail2"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
-                    <app-error-message-label *ngIf="this.userToRegistry.mail2 !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail2)"
+                    <app-error-message-label
+                        *ngIf="this.userToRegistry.mail2 !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail2)"
                         [errorMessage]="'Mail formattata in modo scorretto o mancante'">
                     </app-error-message-label>
-                    <app-error-message-label *ngIf="this.userToRegistry.mail1 !== '' && this.userToRegistry.mail1 !== this.userToRegistry.mail2"
+                    <app-error-message-label
+                        *ngIf="this.userToRegistry.mail1 !== '' && this.userToRegistry.mail1 !== this.userToRegistry.mail2"
                         [errorMessage]="'Le due mail non coincidono'">
                     </app-error-message-label>
 
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Password
+                    </label>
                     <input type="password" placeholder="Password" [(ngModel)]="this.userToRegistry.psw"
                         #pswModel="ngModel"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-                    <label>La password deve contenere dagli 8 ai 16 caratteri</label>
-                    <app-error-message-label *ngIf="this.userToRegistry.psw !== '' && !this.utils.checkPswHaveCorrectSize(this.userToRegistry.psw)"
+                    <label class="font-light">La password deve contenere dagli 8 ai 16 caratteri</label>
+                    <app-error-message-label
+                        *ngIf="this.userToRegistry.psw !== '' && !this.utils.checkPswHaveCorrectSize(this.userToRegistry.psw)"
                         [errorMessage]="'La password deve essere tra 8 e 16 caratteri'">
                     </app-error-message-label>
                 </div>
 
                 <div *ngSwitchCase="2">
                     <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Dettagli profilo</h3>
-                    <input type="text" placeholder="Nome completo"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Nome
+                    </label>
+                    <input type="text" placeholder="Nome" [(ngModel)]="this.userToRegistry.name"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
-                    <input type="text" placeholder="Telefono"
-                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                    <!--app-error-message-label
+                        *ngIf="this.userToRegistry.name == ''"
+                        [errorMessage]="'Il nome non può essere vuoto'">
+                    </app-error-message-label-->
+
+
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Cognome
+                    </label>
+                    <input type="text" placeholder="Cognome" [(ngModel)]="this.userToRegistry.surname"
+                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
+                    <!--app-error-message-label
+                        *ngIf="this.userToRegistry.surname == ''"
+                        [errorMessage]="'Il cognome non può essere vuoto'">
+                    </app-error-message-label-->
                 </div>
 
                 <div *ngSwitchCase="3">
+                    <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Conti e patrimonio</h3>
+                    <div *ngFor="let bank of userToRegistry.bankAccount; let i = index" class="mb-6 relative">
+                        <div
+                            class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 border dark:border-gray-700 relative">
+
+                            <!-- Bottone X per eliminare -->
+                            <button *ngIf="i !== 0" (click)="removeBankAccount(i)"
+                                class="absolute top-3 right-3 text-gray-400 hover:text-red-600 text-lg font-bold focus:outline-none"
+                                aria-label="Rimuovi conto">
+                                ✕
+                            </button>
+
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                                Conto #{{ i + 1 }}
+                            </h3>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Nome conto
+                                    </label>
+                                    <input type="text" placeholder="Nome conto" [(ngModel)]="bank.name"
+                                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Tipologia di conto
+                                    </label>
+                                    <input type="text" placeholder="Tipologia di conto" [(ngModel)]="bank.type"
+                                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Ammontare iniziale
+                                    </label>
+                                    <input type="number" placeholder="Ammontare iniziale" [(ngModel)]="bank.amount"
+                                        min="0" max="10000000"
+                                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" (click)="addBanckaccount()"
+                        [disabled]="this.userToRegistry.bankAccount.length === 5" class="w-full px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg 
+                            hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+                            dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 focus:outline-none
+                            disabled:bg-blue-300 disabled:cursor-not-allowed dark:disabled:bg-blue-900">
+                        Aggiungi Conto
+                    </button>
+                </div>
+
+                <div *ngSwitchCase="4">
                     <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Conferma e termina</h3>
                     <p class="text-gray-600 dark:text-gray-300">
                         Controlla i dati inseriti e clicca "Conferma" per completare.
                     </p>
+                    <div>
+                        <h2 class="text-xl font-medium text-gray-800 dark:text-white mb-4 mt-4">Informazioni Utente</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <span class="block text-sm text-gray-500 dark:text-gray-400">Nome</span>
+                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.name }}
+                                </p>
+                            </div>
+                            <div>
+                                <span class="block text-sm text-gray-500 dark:text-gray-400">Cognome</span>
+                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.surname
+                                    }}</p>
+                            </div>
+                            <div>
+                                <span class="block text-sm text-gray-500 dark:text-gray-400">Email principale</span>
+                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.mail1 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-medium text-gray-800 dark:text-white mb-4 mt-4">Conti Bancari</h2>
+
+                        <div *ngIf="userToRegistry.bankAccount.length === 0" class="text-gray-600 dark:text-gray-400">
+                            Nessun conto bancario registrato.
+                        </div>
+
+                        <div *ngFor="let back of userToRegistry.bankAccount; let i = index"
+                            class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4 border border-gray-200 dark:border-gray-700">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Conto #{{ i + 1 }}</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <span class="block text-sm text-gray-500 dark:text-gray-400">Nome conto</span>
+                                    <p class="text-base font-medium text-gray-900 dark:text-white">{{ back.name }}</p>
+                                </div>
+                                <div>
+                                    <span class="block text-sm text-gray-500 dark:text-gray-400">Tipologia</span>
+                                    <p class="text-base font-medium text-gray-900 dark:text-white">{{ back.type }}</p>
+                                </div>
+                                <div>
+                                    <span class="block text-sm text-gray-500 dark:text-gray-400">Ammontare</span>
+                                    <p class="text-base font-medium text-gray-900 dark:text-white">€ {{ back.amount }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </ng-container>
         </div>
@@ -90,8 +222,8 @@
             </button>
 
             <button (click)="nextStep()"
-                class="px-6 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
-                [disabled]="!checkStepIsValid(currentStep)">
+                [disabled]="!checkStepIsValid(currentStep)"
+                class="px-6 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed">
                 {{ currentStep < steps.length ? 'Avanti' : 'Fine' }} </button>
         </div>
     </div>

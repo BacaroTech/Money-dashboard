@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BanckAccount } from 'src/app/model/banckAccount';
 import { Register } from 'src/app/model/register';
+import { UserLogService } from 'src/app/services/user-log.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -16,18 +19,25 @@ export class RegisterComponent implements OnInit {
     psw: '',
     name: '',
     surname: '',
-    bankAccount: []
-  }
+    bankAccount: [{
+      name: '',
+      type: '',
+      amount: 0
+    }]
+  };
   currentStep = 1;
   steps = [
     'Account',
+    'Anagrafica',
     'Conti',
     'Conferma'
   ];
 
   constructor(
     private http: HttpClient,
-    public utils: UtilsService
+    public utils: UtilsService,
+    private router: Router,
+    private userLog: UserLogService
   ) { }
 
   ngOnInit(): void {
@@ -46,15 +56,27 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  
+  addBanckaccount(){
+    this.userToRegistry.bankAccount.push({
+      name: '',
+      type: '',
+      amount: 0
+    })
+  }
+
+  removeBankAccount(index: number) {
+    this.userToRegistry.bankAccount.splice(index, 1);
+  }
+
   checkStepIsValid(currentStep: number): boolean{
     if(currentStep === 1){
-      console.log(this.isValidStepOne());
       return this.isValidStepOne();
     } else if(currentStep === 2){
-      return true;
+      return this.isValidStepTwo();
+    } else if(currentStep === 3){
+      return this.isValidStepThree();
     } else {
-      return true;
+      return this.registerUser();
     }
   }
 
@@ -69,4 +91,35 @@ export class RegisterComponent implements OnInit {
       && this.userToRegistry.mail1 === this.userToRegistry.mail2
     );
   }
-}
+
+  private isValidStepTwo(): boolean{
+    return (
+      this.userToRegistry.name !== ''
+      && this.userToRegistry.surname !== ''
+    );
+  }
+
+  private isValidStepThree(): boolean{
+    return (
+      this.userToRegistry.bankAccount.filter(
+        ((singleBankAccount: BanckAccount) => {
+          return (
+            singleBankAccount.amount == 0
+            || singleBankAccount.name == ''
+            || singleBankAccount.type == ''
+          )
+        })
+      )
+    ).length == 0
+  }
+
+  private registerUser(): boolean{
+    return true;
+  }
+
+  private goToHome(){
+    this.router.navigateByUrl('/home');
+    this.userLog.setUuidUser("todo");
+  }
+
+} 
