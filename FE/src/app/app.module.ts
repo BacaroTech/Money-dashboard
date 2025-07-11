@@ -6,9 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { HomeComponent } from './pages/home/home.component';
-import { FormFlowComponent } from './pages/form-flow/form-flow.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CashReviewComponent } from './pages/cash-review/cash-review.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { TableComponent } from './components/table/table.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,8 +29,6 @@ export function initApp(readSetting: ReadSettingService) {
     MenuComponent,
     Error404Component,
     HomeComponent,
-    FormFlowComponent,
-    CashReviewComponent,
     ModalComponent,
     TableComponent,
     LoginComponent,
