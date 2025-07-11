@@ -24,6 +24,10 @@ fun Application.configureUserRouting() {
 
                 if (dto.email != dto.confirmEmail) throw BadRequestException("Email and Confirm email must be equals")
 
+                dto.bankAccountDTO?.forEach {
+                    if (it.amount <= 0) throw BadRequestException("Amount must be positive")
+                }
+
                 val response: UUID = userService.insert(dto)
 
                 return@post call.respond(HttpStatusCode.OK, response.toString())
