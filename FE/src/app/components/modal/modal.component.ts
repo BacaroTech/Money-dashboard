@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,17 +15,36 @@ export class ModalComponent implements OnInit {
   @Input()
   text: string = "";
 
+  @Input()
+  type: "error" | "info" | "warning" | "success" | "" = "";
+
   isOpenModal: boolean = true;
+  mapColor: Map<string, string> = new Map([
+    ["error", "red"],
+    ["info", "blue"],
+    ["warning", "yellow"],
+    ["success", "green"]
+  ]);
 
   constructor(
     private router: Router
   ) { }
 
   ngOnInit(): void {
+
   }
 
   close() {
     this.isOpenModal = false;
   }
 
+  getBackgroundClass(): string {
+    const color = this.mapColor.get(this.type) || 'gray';
+    return `bg-${color}-100`;
+  }
+
+  getIconClass(): string {
+    const color = this.mapColor.get(this.type) || 'gray';
+    return `text-${color}-600`;
+  }
 }

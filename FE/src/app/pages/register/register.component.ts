@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     surname: '',
     bankAccount: []
   };
-  currentStep = 1;
+  currentStep = 3;
   steps = [
     'Account',
     'Anagrafica',
