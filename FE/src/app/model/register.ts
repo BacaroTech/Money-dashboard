@@ -1,10 +1,10 @@
-import { BanckAccount } from "./banckAccount";
+import { BankAccount } from "./bankAccount";
 
 export type Register = {
-    mail: string,
-    confirm_mail: string,
-    psw: string,
-    name: string,
-    surname: string,
-    bankAccount: BanckAccount[];
+    email: string,
+    confirm_email: string,
+    password: string,
+    first_name: string,
+    last_name: string,
+    bank_account: BankAccount[];
 }

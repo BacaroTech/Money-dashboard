@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { BanckAccount } from 'src/app/model/banckAccount';
+import { BankType } from 'src/app/enum/backEnum';
+import { BankAccount } from 'src/app/model/bankAccount';
 import { Register } from 'src/app/model/register';
 import { ProfileProviderService } from 'src/app/provider/profile.provider';
 import { UserLogService } from 'src/app/services/user-log.service';
@@ -15,12 +16,12 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class RegisterComponent implements OnInit {
 
   userToRegistry: Register = {
-    mail: '',
-    confirm_mail: '',
-    psw: '',
-    name: '',
-    surname: '',
-    bankAccount: []
+    email: '',
+    confirm_email: '',
+    password: '',
+    first_name: '',
+    last_name: '',
+    bank_account: []
   };
   currentStep = 1;
   steps = [
@@ -48,7 +49,11 @@ export class RegisterComponent implements OnInit {
   nextStep() {
     if(this.currentStep == 3){
       this.isClick3Step = true;
-      this.isWarning3Modal = this.userToRegistry.bankAccount.length == 0;
+      this.isWarning3Modal = this.userToRegistry.bank_account.length == 0;
+    }
+
+    if(this.currentStep == 4){
+      this.goToRegisterUser();
     }
 
     if (this.currentStep < this.steps.length) {
@@ -62,16 +67,16 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  addBanckaccount(){
-    this.userToRegistry.bankAccount.push({
+  addBankAccount(){
+    this.userToRegistry.bank_account.push({
       name: '',
-      type: '',
+      type: BankType.DIGITAL,
       amount: 0
     })
   }
 
   removeBankAccount(index: number) {
-    this.userToRegistry.bankAccount.splice(index, 1);
+    this.userToRegistry.bank_account.splice(index, 1);
   }
 
   checkStepIsValid(currentStep: number): boolean{
@@ -82,37 +87,37 @@ export class RegisterComponent implements OnInit {
     } else if(currentStep === 3){
       return this.isValidStepThree();
     } else {
-      return this.goToRegisterUser();
+      return true;
     }
   }
 
   private isValidStepOne(): boolean{
     return (
-      this.userToRegistry.mail !== ''
-      && this.userToRegistry.confirm_mail !== '' 
-      && this.userToRegistry.psw !== ''
-      && this.utils.checkPswHaveCorrectSize(this.userToRegistry.psw) 
-      && this.utils.checkMailIsGoodFormated(this.userToRegistry.mail)
-      && this.utils.checkMailIsGoodFormated(this.userToRegistry.confirm_mail)
-      && this.userToRegistry.mail === this.userToRegistry.confirm_mail
+      this.userToRegistry.email !== ''
+      && this.userToRegistry.confirm_email !== '' 
+      && this.userToRegistry.password !== ''
+      && this.utils.checkPswHaveCorrectSize(this.userToRegistry.password) 
+      && this.utils.checkMailIsGoodFormated(this.userToRegistry.email)
+      && this.utils.checkMailIsGoodFormated(this.userToRegistry.confirm_email)
+      && this.userToRegistry.email === this.userToRegistry.confirm_email
     );
   }
 
   private isValidStepTwo(): boolean{
     return (
-      this.userToRegistry.name !== ''
-      && this.userToRegistry.surname !== ''
+      this.userToRegistry.first_name !== ''
+      && this.userToRegistry.last_name !== ''
     );
   }
 
   private isValidStepThree(): boolean{
     return (
-      this.userToRegistry.bankAccount.filter(
-        ((singleBankAccount: BanckAccount) => {
+      this.userToRegistry.bank_account.filter(
+        ((singleBankAccount: BankAccount) => {
           return (
             singleBankAccount.amount == 0
             || singleBankAccount.name == ''
-            || singleBankAccount.type == ''
+            || singleBankAccount.type != BankType.DIGITAL
           )
         })
       )

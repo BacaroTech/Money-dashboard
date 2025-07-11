@@ -42,38 +42,38 @@
                     <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Dati generali</h3>
 
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Mail
+                        email
                     </label>
-                    <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.mail"
+                    <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.email"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
                     <app-error-message-label
-                        *ngIf="this.userToRegistry.mail !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail)"
-                        [errorMessage]="'Mail formattata in modo scorretto o mancante'">
+                        *ngIf="this.userToRegistry.email !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.email)"
+                        [errorMessage]="'email formattata in modo scorretto o mancante'">
                     </app-error-message-label>
 
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Mail di conferma
+                        email di conferma
                     </label>
-                    <input type="email" placeholder="Email di conferma" [(ngModel)]="this.userToRegistry.confirm_mail"
+                    <input type="email" placeholder="Email di conferma" [(ngModel)]="this.userToRegistry.confirm_email"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
                     <app-error-message-label
-                        *ngIf="this.userToRegistry.confirm_mail !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.confirm_mail)"
-                        [errorMessage]="'Mail formattata in modo scorretto o mancante'">
+                        *ngIf="this.userToRegistry.confirm_email !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.confirm_email)"
+                        [errorMessage]="'email formattata in modo scorretto o mancante'">
                     </app-error-message-label>
                     <app-error-message-label
-                        *ngIf="this.userToRegistry.mail !== '' && this.userToRegistry.mail !== this.userToRegistry.confirm_mail"
-                        [errorMessage]="'Le due mail non coincidono'">
+                        *ngIf="this.userToRegistry.email !== '' && this.userToRegistry.email !== this.userToRegistry.confirm_email"
+                        [errorMessage]="'Le due email non coincidono'">
                     </app-error-message-label>
 
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Password
                     </label>
-                    <input type="password" placeholder="Password" [(ngModel)]="this.userToRegistry.psw"
+                    <input type="password" placeholder="Password" [(ngModel)]="this.userToRegistry.password"
                         #pswModel="ngModel"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
                     <label class="font-light">La password deve contenere dagli 8 ai 16 caratteri</label>
                     <app-error-message-label
-                        *ngIf="this.userToRegistry.psw !== '' && !this.utils.checkPswHaveCorrectSize(this.userToRegistry.psw)"
+                        *ngIf="this.userToRegistry.password !== '' && !this.utils.checkPswHaveCorrectSize(this.userToRegistry.password)"
                         [errorMessage]="'La password deve essere tra 8 e 16 caratteri'">
                     </app-error-message-label>
                 </div>
@@ -83,10 +83,10 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Nome
                     </label>
-                    <input type="text" placeholder="Nome" [(ngModel)]="this.userToRegistry.name"
+                    <input type="text" placeholder="Nome" [(ngModel)]="this.userToRegistry.first_name"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
                     <!--app-error-message-label
-                        *ngIf="this.userToRegistry.name == ''"
+                        *ngIf="this.userToRegistry.first_name == ''"
                         [errorMessage]="'Il nome non può essere vuoto'">
                     </app-error-message-label-->
 
@@ -94,17 +94,17 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Cognome
                     </label>
-                    <input type="text" placeholder="Cognome" [(ngModel)]="this.userToRegistry.surname"
+                    <input type="text" placeholder="Cognome" [(ngModel)]="this.userToRegistry.last_name"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
                     <!--app-error-message-label
-                        *ngIf="this.userToRegistry.surname == ''"
+                        *ngIf="this.userToRegistry.last_name == ''"
                         [errorMessage]="'Il cognome non può essere vuoto'">
                     </app-error-message-label-->
                 </div>
 
                 <div *ngSwitchCase="3">
                     <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Conti e patrimonio</h3>
-                    <div *ngFor="let bank of userToRegistry.bankAccount; let i = index" class="mb-6 relative">
+                    <div *ngFor="let bank of userToRegistry.bank_account; let i = index" class="mb-6 relative">
                         <div
                             class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 border dark:border-gray-700 relative">
 
@@ -148,8 +148,8 @@
                         </div>
                     </div>
 
-                    <button type="submit" (click)="addBanckaccount()"
-                        [disabled]="this.userToRegistry.bankAccount.length === 5" class="w-full px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg 
+                    <button type="submit" (click)="addBankAccount()"
+                        [disabled]="this.userToRegistry.bank_account.length === 5" class="w-full px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg 
                             hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
                             dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 focus:outline-none
                             disabled:bg-blue-300 disabled:cursor-not-allowed dark:disabled:bg-blue-900">
@@ -167,17 +167,17 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <span class="block text-sm text-gray-500 dark:text-gray-400">Nome</span>
-                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.name }}
+                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.first_name }}
                                 </p>
                             </div>
                             <div>
                                 <span class="block text-sm text-gray-500 dark:text-gray-400">Cognome</span>
-                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.surname
+                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.last_name
                                     }}</p>
                             </div>
                             <div>
                                 <span class="block text-sm text-gray-500 dark:text-gray-400">Email principale</span>
-                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.mail }}
+                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.email }}
                                 </p>
                             </div>
                         </div>
@@ -185,11 +185,11 @@
                     <div>
                         <h2 class="text-xl font-medium text-gray-800 dark:text-white mb-4 mt-4">Conti Bancari</h2>
 
-                        <div *ngIf="userToRegistry.bankAccount.length === 0" class="text-gray-600 dark:text-gray-400">
+                        <div *ngIf="userToRegistry.bank_account.length === 0" class="text-gray-600 dark:text-gray-400">
                             Nessun conto bancario registrato.
                         </div>
 
-                        <div *ngFor="let back of userToRegistry.bankAccount; let i = index"
+                        <div *ngFor="let back of userToRegistry.bank_account; let i = index"
                             class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4 border border-gray-200 dark:border-gray-700">
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Conto #{{ i + 1 }}</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
