@@ -130,9 +130,7 @@
       "input_headers": [
         "uuid"
       ],
-      "methods": [
-        "DELETE"
-      ],
+      "method": "DELETE",
       "backend": [
         {
           "host": [
@@ -148,9 +146,7 @@
         "Content-Type",
         "uuid"
       ],
-      "methods": [
-        "PUT"
-      ],
+      "method": "PUT",
       "backend": [
         {
           "host": [
