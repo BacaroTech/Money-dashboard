@@ -24,7 +24,7 @@ fun Application.configureUserRouting() {
 
                 if (dto.email != dto.confirmEmail) throw BadRequestException("Email and Confirm email must be equals")
 
-                dto.bankAccountDTO?.forEach {
+                dto.bankAccountsDTO?.forEach {
                     if (it.amount <= 0) throw BadRequestException("Amount must be positive")
                 }
 

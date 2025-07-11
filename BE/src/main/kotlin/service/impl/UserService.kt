@@ -26,7 +26,7 @@ class UserService : IUserService {
                 password = dto.password
             }
 
-            dto.bankAccountDTO?.let {
+            dto.bankAccountsDTO?.let {
                 it.forEach {
                     BankAccountEntity.new {
                         name = it.name

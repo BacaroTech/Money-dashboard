@@ -22,6 +22,6 @@ data class InsertUserDTO(
     @SerialName("password")
     @Required
     val password: String,
-    @SerialName("bank_account")
-    val bankAccountDTO: List<InsertBankAccountDTO>?
+    @SerialName("bank_accounts")
+    val bankAccountsDTO: List<InsertBankAccountDTO>?
 )
