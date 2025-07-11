@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { BanckAccount } from 'src/app/model/banckAccount';
 import { Register } from 'src/app/model/register';
@@ -19,11 +19,7 @@ export class RegisterComponent implements OnInit {
     psw: '',
     name: '',
     surname: '',
-    bankAccount: [{
-      name: '',
-      type: '',
-      amount: 0
-    }]
+    bankAccount: []
   };
   currentStep = 1;
   steps = [
@@ -32,6 +28,8 @@ export class RegisterComponent implements OnInit {
     'Conti',
     'Conferma'
   ];
+  isClick3Step: boolean = false;
+  isWarning3Modal: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -45,6 +43,11 @@ export class RegisterComponent implements OnInit {
   }
 
   nextStep() {
+    if(this.currentStep == 3){
+      this.isClick3Step = true;
+      this.isWarning3Modal = this.userToRegistry.bankAccount.length == 0;
+    }
+
     if (this.currentStep < this.steps.length) {
       this.currentStep++;
     }
@@ -110,7 +113,7 @@ export class RegisterComponent implements OnInit {
           )
         })
       )
-    ).length == 0
+    ).length == 0;
   }
 
   private registerUser(): boolean{

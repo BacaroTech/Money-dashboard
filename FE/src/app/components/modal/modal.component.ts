@@ -15,19 +15,17 @@ export class ModalComponent implements OnInit {
   @Input()
   text: string = "";
 
-  @Input()
-  redirect: string = "";
+  isOpenModal: boolean = true;
 
-  constructor(private router: Router) {
-
-  }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
-  closeAndRedirect() {
-    document.getElementById('myModal')?.classList.add('hidden');
-    this.router.navigate([this.redirect]);
+  close() {
+    this.isOpenModal = false;
   }
 
 }

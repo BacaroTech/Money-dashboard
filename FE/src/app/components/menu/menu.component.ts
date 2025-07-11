@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit {
     }
   ];
 
-  isSidebarOpen: boolean = true;
+  isSidebarOpen: boolean = false;
   activeRoute!: string;
 
   constructor(

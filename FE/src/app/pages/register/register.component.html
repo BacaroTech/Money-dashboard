@@ -109,7 +109,7 @@
                             class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 border dark:border-gray-700 relative">
 
                             <!-- Bottone X per eliminare -->
-                            <button *ngIf="i !== 0" (click)="removeBankAccount(i)"
+                            <button (click)="removeBankAccount(i)"
                                 class="absolute top-3 right-3 text-gray-400 hover:text-red-600 text-lg font-bold focus:outline-none"
                                 aria-label="Rimuovi conto">
                                 ✕
@@ -220,6 +220,13 @@
                 class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 dark:text-white hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
                 Indietro
             </button>
+
+            <div *ngIf="isWarning3Modal && isClick3Step">
+                <app-modal
+                    [title]="'Attenzione: nessun conto inserito'"
+                    [text]="'Se non inserisci nessun conto potrai lo stesso usare il nostro applicativo ma alcune funzionalità sarano bloccate'">
+                </app-modal>
+            </div>
 
             <button (click)="nextStep()"
                 [disabled]="!checkStepIsValid(currentStep)"
