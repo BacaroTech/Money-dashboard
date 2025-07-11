@@ -11,6 +11,7 @@ import { ModifyEndMonthComponent } from './pages/modify-end-month/modify-end-mon
 import { ModifyFlowComponent } from './pages/modify-flow/modify-flow.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "login", pathMatch: "full"},
@@ -18,6 +19,7 @@ const routes: Routes = [
   //user
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
+  {path: "profile", component: ProfileComponent},
   
   //all
   {path: "dashboard", component: HomeComponent},

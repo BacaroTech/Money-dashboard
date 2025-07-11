@@ -1,11 +1,27 @@
 <section>
-    <div id="mydashboard" class="grid grid-cols-12 gap-0" >
-        <!--div class="col-span-2 fixed" *ngIf="this.showMenu">
-            <app-menu></app-menu>
-        </div-->
-        <div id="background" class="sticky left-60" [ngClass]="this.showMenu ? 'col-span-12' : 'col-span-12'">
-            <router-outlet>
-            </router-outlet>
-        </div>
+  <div id="mydashboard" class="grid grid-cols-12 min-h-screen">
+
+    <!-- Sidebar -->
+    <div 
+      id="sidebar"
+      class="hidden lg:block lg:col-span-1 fixed h-full bg-white z-20"
+      *ngIf="showMenu">
+      <app-menu></app-menu>
     </div>
+
+    <!-- Overlay per mobile menu (opzionale) -->
+    <div 
+      class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
+      *ngIf="showMenu"
+      (click)="showMenu = false">
+    </div>
+
+    <!-- Contenuto principale -->
+    <div 
+      id="background"
+      class="col-span-12 lg:col-span-11 lg:col-start-2 p-4 transition-all duration-300">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
 </section>

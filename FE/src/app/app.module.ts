@@ -26,6 +26,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { ReadSettingService } from './services/read-setting.service';
 import { RegisterComponent } from './pages/register/register.component';
 import { ErrorMessageLabelComponent } from './components/error-message-label/error-message-label.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 export function initApp(readSetting: ReadSettingService) {
   return () => readSetting.loadConfig();
@@ -52,7 +53,8 @@ export function initApp(readSetting: ReadSettingService) {
     ModifyFlowComponent,
     LoginComponent,
     RegisterComponent,
-    ErrorMessageLabelComponent
+    ErrorMessageLabelComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

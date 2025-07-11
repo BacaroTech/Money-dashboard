@@ -13,6 +13,9 @@ export class AppComponent implements OnInit {
   title: string = 'My Money Dashboard';
   href: string = ""; 
   showMenu = true;
+  hideMenu: string[] = [
+    "/login", "/register", "/404"
+  ];
 
   constructor(
     private router: Router,
@@ -21,19 +24,11 @@ export class AppComponent implements OnInit {
   
   async ngOnInit() {
     await this.readSettingService.loadConfig();
-
-    this.router.events.subscribe(() => {
-      this.href = this.router.url;
-      //console.log(this.href)
-      if(this.isShowMenu()){
-        this.showMenu = false;
-      } else {
-        this.showMenu = true;
-      }
-    });
+    this.href = this.router.url;
+    this.showMenu = this.isToBeShowMenu();
   }
 
-  isShowMenu(){
-    return this.href === '/login';
+  isToBeShowMenu(): boolean{
+    return !this.hideMenu.includes(this.href);
   }
 }
