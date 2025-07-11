@@ -15,6 +15,7 @@ class BankAccountEntity(id: EntityID<Int>) : IntEntity(id) {
     var uuid: UUID by BankAccountTable.uuid
     var name: String by BankAccountTable.name
     var type: BankAccountType by BankAccountTable.type
+    var amount: Double by BankAccountTable.amount
     var creationDate: LocalDate by BankAccountTable.creationDate
     var lastUpdate: LocalDateTime by BankAccountTable.lastUpdate
     var userEntity by UserEntity referencedOn BankAccountTable.userId

@@ -783,7 +783,7 @@
   "additionalProperties" : false
 };
             defs["InsertUserDTO"] = {
-  "required" : [ "email", "first_name", "last_name", "password" ],
+  "required" : [ "confirm_email", "email", "first_name", "last_name", "password" ],
   "type" : "object",
   "properties" : {
     "first_name" : {
@@ -802,11 +802,32 @@
       "format" : "email",
       "example" : "john.doe@example.com"
     },
+    "confirm_email" : {
+      "type" : "string",
+      "description" : "Email confirmation - must match email field",
+      "format" : "email",
+      "example" : "john.doe@example.com"
+    },
     "password" : {
       "type" : "string",
       "description" : "User's password",
       "format" : "password",
       "example" : "securePassword123"
+    },
+    "bank_account" : {
+      "type" : "array",
+      "description" : "Optional list of bank accounts to create during registration",
+      "nullable" : true,
+      "example" : [ {
+        "name" : "My Savings Account",
+        "type" : "DIGITAL"
+      }, {
+        "name" : "My Cash Account",
+        "type" : "CASH"
+      } ],
+      "items" : {
+        "$ref" : "#/components/schemas/InsertBankAccountDTO"
+      }
     }
   },
   "additionalProperties" : false
@@ -5120,7 +5141,7 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Retrieves all operations for a specific bank account</p>
+                        <p class="marked">Retrieves all operations for a specific bank account with pagination support</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/operations/bank-account/{bankAccountUuid}</span></code></pre>
@@ -5146,7 +5167,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "uuid: [[apiKey]]"\
 -H "Accept: application/json"\
-"http://localhost:8080/operations/bank-account/{bankAccountUuid}"</code></pre>
+"http://localhost:8080/operations/bank-account/{bankAccountUuid}?pageNumber=&pageSize="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Operations-getOperationsByBankAccount-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5171,8 +5192,10 @@ public class OperationsApiExample {
         OperationsApi apiInstance = new OperationsApi();
         UUID uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
         UUID bankAccountUuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Bank account UUID
+        Integer pageNumber = 56; // Integer | Page number for pagination
+        Integer pageSize = 56; // Integer | Number of items per page
         try {
-            array[OperationDTO] result = apiInstance.getOperationsByBankAccount(uuid, bankAccountUuid);
+            array[OperationDTO] result = apiInstance.getOperationsByBankAccount(uuid, bankAccountUuid, pageNumber, pageSize);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OperationsApi#getOperationsByBankAccount");
@@ -5191,8 +5214,10 @@ public class OperationsApiExample {
         OperationsApi apiInstance = new OperationsApi();
         UUID uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
         UUID bankAccountUuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Bank account UUID
+        Integer pageNumber = 56; // Integer | Page number for pagination
+        Integer pageSize = 56; // Integer | Number of items per page
         try {
-            array[OperationDTO] result = apiInstance.getOperationsByBankAccount(uuid, bankAccountUuid);
+            array[OperationDTO] result = apiInstance.getOperationsByBankAccount(uuid, bankAccountUuid, pageNumber, pageSize);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OperationsApi#getOperationsByBankAccount");
@@ -5213,12 +5238,16 @@ public class OperationsApiExample {
 //[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"uuid"];
 UUID *uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // User UUID for authentication
 UUID *bankAccountUuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // Bank account UUID
+Integer *pageNumber = 56; // Page number for pagination (optional) (default to 1)
+Integer *pageSize = 56; // Number of items per page (optional) (default to 10)
 
 OperationsApi *apiInstance = [[OperationsApi alloc] init];
 
 // Get operations for a bank account
 [apiInstance getOperationsByBankAccountWith:uuid
     bankAccountUuid:bankAccountUuid
+    pageNumber:pageNumber
+    pageSize:pageSize
               completionHandler: ^(array[OperationDTO] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -5243,7 +5272,10 @@ UuidAuth.apiKey = "YOUR API KEY"
 var api = new UserApi.OperationsApi()
 var uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} User UUID for authentication
 var bankAccountUuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} Bank account UUID
-
+var opts = { 
+  'pageNumber': 56, // {{Integer}} Page number for pagination
+  'pageSize': 56 // {{Integer}} Number of items per page
+};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -5251,7 +5283,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getOperationsByBankAccount(uuid, bankAccountUuid, callback);
+api.getOperationsByBankAccount(uuid, bankAccountUuid, opts, callback);
 </code></pre>
                             </div>
 
@@ -5280,11 +5312,13 @@ namespace Example
             var apiInstance = new OperationsApi();
             var uuid = new UUID(); // UUID | User UUID for authentication
             var bankAccountUuid = new UUID(); // UUID | Bank account UUID
+            var pageNumber = 56;  // Integer | Page number for pagination (optional)  (default to 1)
+            var pageSize = 56;  // Integer | Number of items per page (optional)  (default to 10)
 
             try
             {
                 // Get operations for a bank account
-                array[OperationDTO] result = apiInstance.getOperationsByBankAccount(uuid, bankAccountUuid);
+                array[OperationDTO] result = apiInstance.getOperationsByBankAccount(uuid, bankAccountUuid, pageNumber, pageSize);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -5309,9 +5343,11 @@ Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('uuid', 'YOUR
 $api_instance = new Swagger\Client\ApiOperationsApi();
 $uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | User UUID for authentication
 $bankAccountUuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Bank account UUID
+$pageNumber = 56; // Integer | Page number for pagination
+$pageSize = 56; // Integer | Number of items per page
 
 try {
-    $result = $api_instance->getOperationsByBankAccount($uuid, $bankAccountUuid);
+    $result = $api_instance->getOperationsByBankAccount($uuid, $bankAccountUuid, $pageNumber, $pageSize);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OperationsApi->getOperationsByBankAccount: ', $e->getMessage(), PHP_EOL;
@@ -5332,9 +5368,11 @@ $WWW::SwaggerClient::Configuration::api_key->{'uuid'} = 'YOUR_API_KEY';
 my $api_instance = WWW::SwaggerClient::OperationsApi->new();
 my $uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | User UUID for authentication
 my $bankAccountUuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | Bank account UUID
+my $pageNumber = 56; # Integer | Page number for pagination
+my $pageSize = 56; # Integer | Number of items per page
 
 eval { 
-    my $result = $api_instance->getOperationsByBankAccount(uuid => $uuid, bankAccountUuid => $bankAccountUuid);
+    my $result = $api_instance->getOperationsByBankAccount(uuid => $uuid, bankAccountUuid => $bankAccountUuid, pageNumber => $pageNumber, pageSize => $pageSize);
     print Dumper($result);
 };
 if ($@) {
@@ -5358,10 +5396,12 @@ swagger_client.configuration.api_key['uuid'] = 'YOUR_API_KEY'
 api_instance = swagger_client.OperationsApi()
 uuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | User UUID for authentication
 bankAccountUuid = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | Bank account UUID
+pageNumber = 56 # Integer | Page number for pagination (optional) (default to 1)
+pageSize = 56 # Integer | Number of items per page (optional) (default to 10)
 
 try: 
     # Get operations for a bank account
-    api_response = api_instance.get_operations_by_bank_account(uuid, bankAccountUuid)
+    api_response = api_instance.get_operations_by_bank_account(uuid, bankAccountUuid, pageNumber=pageNumber, pageSize=pageSize)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling OperationsApi->getOperationsByBankAccount: %s\n" % e)</code></pre>
@@ -5438,6 +5478,51 @@ except ApiException as e:
 
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">pageNumber</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_getOperationsByBankAccount_pageNumber">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    Integer
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Page number for pagination
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                                <tr><td style="width:150px;">pageSize</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_getOperationsByBankAccount_pageSize">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    Integer
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Number of items per page
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - Operations retrieved successfully </h3>
@@ -7893,7 +7978,15 @@ public class UsersApiExample {
   "first_name" : "John",
   "last_name" : "Doe",
   "email" : "john.doe@example.com",
-  "password" : "securePassword123"
+  "confirm_email" : "john.doe@example.com",
+  "password" : "securePassword123",
+  "bank_account" : [ {
+    "name" : "My Savings Account",
+    "type" : "DIGITAL"
+  }, {
+    "name" : "My Cash Account",
+    "type" : "CASH"
+  } ]
 }; // InsertUserDTO | 
         try {
             UUID result = apiInstance.registerUser(body);
@@ -7917,7 +8010,15 @@ public class UsersApiExample {
   "first_name" : "John",
   "last_name" : "Doe",
   "email" : "john.doe@example.com",
-  "password" : "securePassword123"
+  "confirm_email" : "john.doe@example.com",
+  "password" : "securePassword123",
+  "bank_account" : [ {
+    "name" : "My Savings Account",
+    "type" : "DIGITAL"
+  }, {
+    "name" : "My Cash Account",
+    "type" : "CASH"
+  } ]
 }; // InsertUserDTO | 
         try {
             UUID result = apiInstance.registerUser(body);
@@ -7943,7 +8044,15 @@ InsertUserDTO *body = {
   "first_name" : "John",
   "last_name" : "Doe",
   "email" : "john.doe@example.com",
-  "password" : "securePassword123"
+  "confirm_email" : "john.doe@example.com",
+  "password" : "securePassword123",
+  "bank_account" : [ {
+    "name" : "My Savings Account",
+    "type" : "DIGITAL"
+  }, {
+    "name" : "My Cash Account",
+    "type" : "CASH"
+  } ]
 }; // 
 
 UsersApi *apiInstance = [[UsersApi alloc] init];
@@ -7976,7 +8085,15 @@ var body = {
   "first_name" : "John",
   "last_name" : "Doe",
   "email" : "john.doe@example.com",
-  "password" : "securePassword123"
+  "confirm_email" : "john.doe@example.com",
+  "password" : "securePassword123",
+  "bank_account" : [ {
+    "name" : "My Savings Account",
+    "type" : "DIGITAL"
+  }, {
+    "name" : "My Cash Account",
+    "type" : "CASH"
+  } ]
 }; // {{InsertUserDTO}} 
 
 var callback = function(error, data, response) {
@@ -8045,7 +8162,15 @@ $body = {
   "first_name" : "John",
   "last_name" : "Doe",
   "email" : "john.doe@example.com",
-  "password" : "securePassword123"
+  "confirm_email" : "john.doe@example.com",
+  "password" : "securePassword123",
+  "bank_account" : [ {
+    "name" : "My Savings Account",
+    "type" : "DIGITAL"
+  }, {
+    "name" : "My Cash Account",
+    "type" : "CASH"
+  } ]
 }; // InsertUserDTO | 
 
 try {
@@ -8097,7 +8222,15 @@ body = {
   "first_name" : "John",
   "last_name" : "Doe",
   "email" : "john.doe@example.com",
-  "password" : "securePassword123"
+  "confirm_email" : "john.doe@example.com",
+  "password" : "securePassword123",
+  "bank_account" : [ {
+    "name" : "My Savings Account",
+    "type" : "DIGITAL"
+  }, {
+    "name" : "My Cash Account",
+    "type" : "CASH"
+  } ]
 } # InsertUserDTO | 
 
 try: 
@@ -8135,7 +8268,15 @@ except ApiException as e:
         "first_name" : "John",
         "last_name" : "Doe",
         "email" : "john.doe@example.com",
-        "password" : "securePassword123"
+        "confirm_email" : "john.doe@example.com",
+        "password" : "securePassword123",
+        "bank_account" : [ {
+          "name" : "My Savings Account",
+          "type" : "DIGITAL"
+        }, {
+          "name" : "My Cash Account",
+          "type" : "CASH"
+        } ]
       }
     }
   },
@@ -8218,7 +8359,7 @@ except ApiException as e:
                                 </div>
                             </div>
 
-                            <h3> Status: 400 - Invalid request data </h3>
+                            <h3> Status: 400 - Invalid request data or email confirmation mismatch </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
@@ -8233,11 +8374,20 @@ except ApiException as e:
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Invalid request data",
+  "description" : "Invalid request data or email confirmation mismatch",
   "content" : {
     "application/json" : {
       "schema" : {
         "$ref" : "#/components/schemas/Error"
+      },
+      "examples" : {
+        "validation_error" : {
+          "summary" : "Validation error",
+          "value" : {
+            "message" : "Email and Confirm email must be equals",
+            "code" : 400
+          }
+        }
       }
     }
   }

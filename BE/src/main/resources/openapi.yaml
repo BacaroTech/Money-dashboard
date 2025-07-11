@@ -31,7 +31,13 @@ paths:
               first_name: "John"
               last_name: "Doe"
               email: "john.doe@example.com"
+              confirm_email: "john.doe@example.com"
               password: "securePassword123"
+              bank_account:
+                - name: "My Savings Account"
+                  type: "DIGITAL"
+                - name: "My Cash Account"
+                  type: "CASH"
       responses:
         '200':
           description: User successfully registered
@@ -43,11 +49,17 @@ paths:
                 description: UUID of the created user
               example: "550e8400-e29b-41d4-a716-446655440000"
         '400':
-          description: Invalid request data
+          description: Invalid request data or email confirmation mismatch
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+              examples:
+                validation_error:
+                  summary: Validation error
+                  value:
+                    message: "Email and Confirm email must be equals"
+                    code: 400
         '409':
           description: User already exists
           content:
@@ -1050,6 +1062,7 @@ components:
         - first_name
         - last_name
         - email
+        - confirm_email
         - password
       properties:
         first_name:
@@ -1065,11 +1078,27 @@ components:
           format: email
           description: User's email address
           example: "john.doe@example.com"
+        confirm_email:
+          type: string
+          format: email
+          description: Email confirmation - must match email field
+          example: "john.doe@example.com"
         password:
           type: string
           format: password
           description: User's password
           example: "securePassword123"
+        bank_account:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsertBankAccountDTO'
+          nullable: true
+          description: Optional list of bank accounts to create during registration
+          example:
+            - name: "My Savings Account"
+              type: "DIGITAL"
+            - name: "My Cash Account"
+              type: "CASH"
       additionalProperties: false
 
     UpdateUserDTO:

@@ -5,6 +5,7 @@ import mft.dev.dto.user.InsertUserDTO
 import mft.dev.dto.user.LoginDTO
 import mft.dev.dto.user.UpdateUserDTO
 import mft.dev.dto.user.UserDTO
+import mft.dev.entity.BankAccountEntity
 import mft.dev.entity.UserEntity
 import mft.dev.mapper.toUserDTO
 import mft.dev.service.IUserService
@@ -18,12 +19,25 @@ import java.util.*
 class UserService : IUserService {
     override suspend fun insert(dto: InsertUserDTO): UUID =
         dbQuery {
-            UserEntity.new {
+            val insertedUserEntity: UserEntity = UserEntity.new {
                 firstName = dto.firstName
                 lastName = dto.lastName
                 email = dto.email
                 password = dto.password
-            }.uuid
+            }
+
+            dto.bankAccountDTO?.let {
+                it.forEach {
+                    BankAccountEntity.new {
+                        name = it.name
+                        type = it.type
+                        amount = it.amount
+                        userEntity = insertedUserEntity
+                    }
+                }
+            }
+
+            return@dbQuery insertedUserEntity.uuid
         }
 
     override suspend fun login(dto: LoginDTO): UUID? =

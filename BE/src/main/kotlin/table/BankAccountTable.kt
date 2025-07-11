@@ -17,6 +17,7 @@ object BankAccountTable : IntIdTable(name = "bank_accounts")  {
     val uuid: Column<UUID> = uuid(name = "uuid").autoGenerate().uniqueIndex()
     val name: Column<String> = varchar(name = "name", length = 128)
     val type: Column<BankAccountType> = enumerationByName(name = "type", length = 128)
+    val amount: Column<Double> = double(name = "amount")
     val creationDate: Column<LocalDate> = date(name = "creation_date").defaultExpression(CurrentDate)
     val lastUpdate: Column<LocalDateTime> = datetime(name = "last_update").defaultExpression(CurrentDateTime)
     val userId: Column<EntityID<Int>> = reference("user_id", UserTable, onDelete = ReferenceOption.CASCADE)

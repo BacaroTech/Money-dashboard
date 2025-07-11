@@ -25,6 +25,7 @@ class BankAccountService(private val userService: UserService) : IBankAccountSer
                 BankAccountEntity.new {
                     name = dto.name
                     type = dto.type
+                    amount = dto.amount
                     userEntity = user
                 }.uuid
             }
@@ -67,6 +68,7 @@ class BankAccountService(private val userService: UserService) : IBankAccountSer
                 BankAccountEntity.findSingleByAndUpdate(BankAccountTable.uuid eq uuid) { bankAccount ->
                     dto.name?.let { bankAccount.name = it }
                     dto.type?.let { bankAccount.type = it }
+                    dto.amount?.let { bankAccount.amount = it }
                     bankAccount.lastUpdate = LocalDateTime.now()
                 }?.toBankAccountDTO()
             }

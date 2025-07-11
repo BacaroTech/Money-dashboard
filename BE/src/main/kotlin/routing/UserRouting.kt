@@ -22,6 +22,8 @@ fun Application.configureUserRouting() {
             post("/register") {
                 val dto: InsertUserDTO = call.receive<InsertUserDTO>()
 
+                if (dto.email != dto.confirmEmail) throw BadRequestException("Email and Confirm email must be equals")
+
                 val response: UUID = userService.insert(dto)
 
                 return@post call.respond(HttpStatusCode.OK, response.toString())

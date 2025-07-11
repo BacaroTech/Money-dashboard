@@ -15,5 +15,8 @@ data class BankAccountDTO(
     val name: String,
     @SerialName("type")
     @Required
-    val type: BankAccountType
+    val type: BankAccountType,
+    @SerialName("amount")
+    @Required
+    val amount: Double
 )
