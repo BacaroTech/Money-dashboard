@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Login } from 'src/app/model/loginCredenzial';
+import { Login } from 'src/app/model/login';
+import { ProfileProviderService } from 'src/app/provider/profile.provider';
+import { UserLogService } from 'src/app/services/user-log.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -16,12 +18,25 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    public utils: UtilsService
+    public utils: UtilsService,
+    private profileProvider: ProfileProviderService,
+    private userLogService: UserLogService
   ) {}
 
   goToLogin() {
-    // A questo punto il form è già validato da Angular Template-driven
-    this.router.navigateByUrl('dashboard');
+    this.profileProvider.loginUser(this.loginCredenzial)
+    .subscribe(
+      {
+        next: (uuid) => {
+          this.userLogService.setUuidUser(uuid);
+          console.log("Login avvenuto con successo");
+          this.router.navigateByUrl('dashboard');
+        }, 
+        error: (err) => {
+          console.error("Si è verirficato un errore durante la login: ", err);
+        }
+      }
+    )
   }
 
   goToRegister() {

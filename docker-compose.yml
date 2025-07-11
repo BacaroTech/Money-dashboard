@@ -42,16 +42,16 @@ services:
       - back
 
   # Frontend Angular
-  moneydashboard_frontend:
-    container_name: moneydashboard_frontend
-    build:
-      context: ./FE
-    ports:
-      - 80:80
-    depends_on:
-      - moneydashboard_krakend
-    networks:
-      - back
+  #  moneydashboard_frontend:
+  #    container_name: moneydashboard_frontend
+  #    build:
+  #      context: ./FE
+  #    ports:
+  #      - 80:80
+  #    depends_on:
+  #      - moneydashboard_krakend
+  #    networks:
+  #      - back
 
 volumes:
   moneydashboard_postgres_data:

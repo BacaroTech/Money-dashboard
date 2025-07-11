@@ -3,6 +3,7 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { BanckAccount } from 'src/app/model/banckAccount';
 import { Register } from 'src/app/model/register';
+import { ProfileProviderService } from 'src/app/provider/profile.provider';
 import { UserLogService } from 'src/app/services/user-log.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -21,7 +22,7 @@ export class RegisterComponent implements OnInit {
     surname: '',
     bankAccount: []
   };
-  currentStep = 3;
+  currentStep = 1;
   steps = [
     'Account',
     'Anagrafica',
@@ -35,7 +36,9 @@ export class RegisterComponent implements OnInit {
     private http: HttpClient,
     public utils: UtilsService,
     private router: Router,
-    private userLog: UserLogService
+    private userLog: UserLogService,
+    private profileProvider: ProfileProviderService,
+    private userLogService: UserLogService
   ) { }
 
   ngOnInit(): void {
@@ -121,8 +124,21 @@ export class RegisterComponent implements OnInit {
   }
 
   private goToHome(){
-    this.router.navigateByUrl('/home');
-    this.userLog.setUuidUser("todo");
+    //this.router.navigateByUrl('/home');
+    //this.userLog.setUuidUser("todo");
+    this.profileProvider.registerUser(this.userToRegistry)
+    .subscribe(
+      {
+        next: (uuid) => {
+          this.userLogService.setUuidUser(uuid);
+          console.log("Registrazione avvenuta con successo");
+          this.router.navigateByUrl('dashboard');
+        }, 
+        error: (err) => {
+          console.error("Si è verirficato un errore durante la registrazione: ", err);
+        }
+      }
+    )
   }
 
 } 
