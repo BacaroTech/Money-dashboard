@@ -15,8 +15,8 @@ export class ProfileProviderService {
     private readEnvFile: ReadSettingService
   ) { }
 
-  registerUser(regUser: Register): Observable<string> {
-    return this.http.post<string>(this.readEnvFile.getKrakend()+'/users/register', regUser);
+  registerUser(regUser: Register): Observable<any> {
+    return this.http.post<any>(this.readEnvFile.getKrakend()+'/users/register', regUser);
   }
 
   loginUser(loginUser: Login): Observable<string> {

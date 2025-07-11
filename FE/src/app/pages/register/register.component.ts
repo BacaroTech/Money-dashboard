@@ -129,10 +129,10 @@ export class RegisterComponent implements OnInit {
     .subscribe(
       {
         next: (uuid) => {
-          this.userLogService.setUuidUser(uuid);
+          //this.userLogService.setUuidUser(uuid);
           console.log("Registrazione avvenuta con successo");
           this.router.navigateByUrl('/dashboard');
-          this.userLog.setUuidUser(uuid);
+          //this.userLog.setUuidUser(uuid);
         }, 
         error: (err) => {
           console.error("Si è verirficato un errore durante la registrazione: ", err);
