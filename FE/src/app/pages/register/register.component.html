@@ -44,24 +44,24 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Mail
                     </label>
-                    <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.mail1"
+                    <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.mail"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
                     <app-error-message-label
-                        *ngIf="this.userToRegistry.mail1 !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail1)"
+                        *ngIf="this.userToRegistry.mail !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail)"
                         [errorMessage]="'Mail formattata in modo scorretto o mancante'">
                     </app-error-message-label>
 
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Mail di conferma
                     </label>
-                    <input type="email" placeholder="Email di conferma" [(ngModel)]="this.userToRegistry.mail2"
+                    <input type="email" placeholder="Email di conferma" [(ngModel)]="this.userToRegistry.confirm_mail"
                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
                     <app-error-message-label
-                        *ngIf="this.userToRegistry.mail2 !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.mail2)"
+                        *ngIf="this.userToRegistry.confirm_mail !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.confirm_mail)"
                         [errorMessage]="'Mail formattata in modo scorretto o mancante'">
                     </app-error-message-label>
                     <app-error-message-label
-                        *ngIf="this.userToRegistry.mail1 !== '' && this.userToRegistry.mail1 !== this.userToRegistry.mail2"
+                        *ngIf="this.userToRegistry.mail !== '' && this.userToRegistry.mail !== this.userToRegistry.confirm_mail"
                         [errorMessage]="'Le due mail non coincidono'">
                     </app-error-message-label>
 
@@ -177,7 +177,7 @@
                             </div>
                             <div>
                                 <span class="block text-sm text-gray-500 dark:text-gray-400">Email principale</span>
-                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.mail1 }}
+                                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.mail }}
                                 </p>
                             </div>
                         </div>

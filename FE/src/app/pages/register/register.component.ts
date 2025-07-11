@@ -14,8 +14,8 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class RegisterComponent implements OnInit {
 
   userToRegistry: Register = {
-    mail1: '',
-    mail2: '',
+    mail: '',
+    confirm_mail: '',
     psw: '',
     name: '',
     surname: '',
@@ -85,13 +85,13 @@ export class RegisterComponent implements OnInit {
 
   private isValidStepOne(): boolean{
     return (
-      this.userToRegistry.mail1 !== ''
-      && this.userToRegistry.mail2 !== '' 
+      this.userToRegistry.mail !== ''
+      && this.userToRegistry.confirm_mail !== '' 
       && this.userToRegistry.psw !== ''
       && this.utils.checkPswHaveCorrectSize(this.userToRegistry.psw) 
-      && this.utils.checkMailIsGoodFormated(this.userToRegistry.mail1)
-      && this.utils.checkMailIsGoodFormated(this.userToRegistry.mail2)
-      && this.userToRegistry.mail1 === this.userToRegistry.mail2
+      && this.utils.checkMailIsGoodFormated(this.userToRegistry.mail)
+      && this.utils.checkMailIsGoodFormated(this.userToRegistry.confirm_mail)
+      && this.userToRegistry.mail === this.userToRegistry.confirm_mail
     );
   }
 

@@ -1,8 +1,8 @@
 import { BanckAccount } from "./banckAccount";
 
 export type Register = {
-    mail1: string,
-    mail2: string,
+    mail: string,
+    confirm_mail: string,
     psw: string,
     name: string,
     surname: string,
