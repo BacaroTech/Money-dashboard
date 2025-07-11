@@ -12,7 +12,7 @@ import { ReadSettingService } from './services/read-setting.service';
 export class AppComponent implements OnInit {
   title: string = 'My Money Dashboard';
   href: string = ""; 
-  showMenu = true;
+  private showMenu = true;
   hideMenu: string[] = [
     "/login", "/register", "/404"
   ];
@@ -30,5 +30,13 @@ export class AppComponent implements OnInit {
 
   isToBeShowMenu(): boolean{
     return !this.hideMenu.includes(this.href);
+  }
+
+  getShowMenu(): boolean{
+    return this.showMenu;
+  }
+
+  setShowMenu(newState: boolean): void{
+    this.showMenu = newState;
   }
 }
