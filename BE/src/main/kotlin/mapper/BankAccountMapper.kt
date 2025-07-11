@@ -7,6 +7,7 @@ fun BankAccountEntity.toBankAccountDTO(): BankAccountDTO {
     return BankAccountDTO(
         uuid = uuid.toString(),
         name = name,
-        type = type
+        type = type,
+        amount = amount
     )
 }
