@@ -3,12 +3,13 @@ package mft.dev.service
 import mft.dev.dto.operation.InsertOperationDTO
 import mft.dev.dto.operation.OperationDTO
 import mft.dev.dto.operation.UpdateOperationDTO
+import mft.dev.dto.utils.PaginationDTO
 import java.util.UUID
 
 interface IOperationService {
     suspend fun insert(userUuid: UUID, bankAccountUuid: UUID, dto: InsertOperationDTO): UUID?
 
-    suspend fun getByBankAccountUuid(userUuid: UUID, bankAccountUuid: UUID): List<OperationDTO>?
+    suspend fun getByBankAccountUuid(userUuid: UUID, bankAccountUuid: UUID, pageNumber: Int, pageSize: Int): PaginationDTO<OperationDTO>?
 
     suspend fun getByUuid(userUuid: UUID, bankAccountUuid: UUID, uuid: UUID): OperationDTO?
 

@@ -165,6 +165,10 @@
       "input_headers": [
         "uuid"
       ],
+      "input_query_strings": [
+        "pageNumber",
+        "pageSize"
+      ],
       "method": "GET",
       "backend": [
         {

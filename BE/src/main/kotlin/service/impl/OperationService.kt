@@ -1,9 +1,11 @@
 package mft.dev.service.impl
 
+import io.ktor.server.plugins.*
 import kotlinx.coroutines.Dispatchers
 import mft.dev.dto.operation.InsertOperationDTO
 import mft.dev.dto.operation.OperationDTO
 import mft.dev.dto.operation.UpdateOperationDTO
+import mft.dev.dto.utils.PaginationDTO
 import mft.dev.entity.BankAccountEntity
 import mft.dev.entity.OperationEntity
 import mft.dev.mapper.toOperationDTO
@@ -31,14 +33,33 @@ class OperationService(private val bankAccountService: BankAccountService) : IOp
             }
         }
 
-    override suspend fun getByBankAccountUuid(userUuid: UUID, bankAccountUuid: UUID): List<OperationDTO>? =
+    override suspend fun getByBankAccountUuid(userUuid: UUID, bankAccountUuid: UUID, pageNumber: Int, pageSize: Int): PaginationDTO<OperationDTO>? =
         dbQuery {
             val bankAccount: BankAccountEntity? = bankAccountService.getBankAccountByUuid(userUuid, bankAccountUuid)
 
             bankAccount?.let {
-                OperationEntity.find {
+                val totalCount = OperationEntity.find {
                     OperationTable.bankAccountId eq bankAccount.id
-                }.map { it.toOperationDTO() }
+                }.count()
+
+                val offset = (pageNumber - 1) * pageSize
+
+                val items = OperationEntity.find {
+                    OperationTable.bankAccountId eq bankAccount.id
+                }.limit(pageSize).offset(offset.toLong()).map { it.toOperationDTO() }
+
+                val totalPages = (totalCount + pageSize - 1) / pageSize
+
+                if (pageNumber > totalPages || pageSize > totalCount) throw BadRequestException("Invalid page number / page size")
+
+
+                PaginationDTO(
+                    items = items,
+                    totalCount = totalCount,
+                    pageNumber = pageNumber,
+                    pageSize = pageSize,
+                    totalPages = totalPages.toInt()
+                )
             }
         }
 

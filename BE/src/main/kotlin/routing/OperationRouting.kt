@@ -9,6 +9,7 @@ import io.ktor.server.routing.*
 import mft.dev.dto.operation.InsertOperationDTO
 import mft.dev.dto.operation.OperationDTO
 import mft.dev.dto.operation.UpdateOperationDTO
+import mft.dev.dto.utils.PaginationDTO
 import mft.dev.service.impl.OperationService
 import org.koin.ktor.ext.inject
 import java.util.*
@@ -44,8 +45,12 @@ fun Application.configureOperationRouting() {
             get("/bank-account/{bankAccountUuid}") {
                 val authHeader = call.request.headers["uuid"] ?: throw BadRequestException("Missing uuid")
                 val pathVariable = call.pathParameters["bankAccountUuid"] ?: throw BadRequestException("Missing uuid")
+                val pageNumberString = call.queryParameters["pageNumber"] ?: "1"
+                val pageSizeString = call.queryParameters["pageSize"] ?: "10"
                 val userUuid: UUID
                 val bankAccountUuid: UUID
+                val pageNumber: Int
+                val pageSize: Int
 
                 try {
                     userUuid = UUID.fromString(authHeader)
@@ -54,7 +59,14 @@ fun Application.configureOperationRouting() {
                     throw BadRequestException("Invalid uuid")
                 }
 
-                val response: List<OperationDTO>? = operationService.getByBankAccountUuid(userUuid, bankAccountUuid)
+                try {
+                    pageNumber = pageNumberString.toInt()
+                    pageSize = pageSizeString.toInt()
+                } catch (e: NumberFormatException) {
+                    throw BadRequestException("Invalid page number / page size")
+                }
+
+                val response: PaginationDTO<OperationDTO>? = operationService.getByBankAccountUuid(userUuid, bankAccountUuid, pageNumber, pageSize)
 
                 return@get response?.let {
                     call.respond(HttpStatusCode.OK, it)
