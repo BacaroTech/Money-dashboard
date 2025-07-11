@@ -209,7 +209,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </ng-container>
         </div>
@@ -224,7 +223,8 @@
             <div *ngIf="isWarning3Modal && isClick3Step">
                 <app-modal
                     [title]="'Attenzione: nessun conto inserito'"
-                    [text]="'Se non inserisci nessun conto potrai lo stesso usare il nostro applicativo ma alcune funzionalità sarano bloccate'">
+                    [text]="'Se non inserisci nessun conto potrai lo stesso usare il nostro applicativo ma alcune funzionalità sarano bloccate'"
+                    [type]="'warning'">
                 </app-modal>
             </div>
 
