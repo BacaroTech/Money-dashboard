@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReadSettingService } from '../services/read-setting.service';
 import { Observable } from 'rxjs';
@@ -20,6 +20,7 @@ export class ProfileProviderService {
   }
 
   loginUser(loginUser: Login): Observable<string> {
+    //const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=UTF-8');
     return this.http.post<string>(this.readEnvFile.getKrakend()+'/users/login', loginUser);
   }
 }

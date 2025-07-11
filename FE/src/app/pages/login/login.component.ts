@@ -12,8 +12,8 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class LoginComponent {
   loginCredenzial: Login = {
-    mail: '',
-    psw: ''
+    email: '',
+    password: ''
   };
 
   constructor(
@@ -45,11 +45,10 @@ export class LoginComponent {
 
   activeLogin(){
     return(
-      this.utils.checkPswHaveCorrectSize(this.loginCredenzial.psw) 
-      && this.utils.checkMailIsGoodFormated(this.loginCredenzial.mail) 
-      && this.loginCredenzial.mail !== ''
-      && this.loginCredenzial.psw !== ''
-  
+      this.utils.checkPswHaveCorrectSize(this.loginCredenzial.password) 
+      && this.utils.checkMailIsGoodFormated(this.loginCredenzial.email) 
+      && this.loginCredenzial.email !== ''
+      && this.loginCredenzial.password !== ''
     )
   }
 }

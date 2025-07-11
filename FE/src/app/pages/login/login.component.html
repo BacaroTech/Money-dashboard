@@ -19,14 +19,14 @@
           name="email"
           id="email"
           required
-          [(ngModel)]="loginCredenzial.mail"
+          [(ngModel)]="loginCredenzial.email"
           #emailModel="ngModel"
           placeholder="name@company.com"
           class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
                  dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
         <app-error-message-label
-          *ngIf="this.loginCredenzial.mail !== '' && !this.utils.checkMailIsGoodFormated(this.loginCredenzial.mail)"
+          *ngIf="this.loginCredenzial.email !== '' && !this.utils.checkMailIsGoodFormated(this.loginCredenzial.email)"
           [errorMessage]="'Mail formattata in modo scorretto o mancante'">
         </app-error-message-label>
       </div>
@@ -43,14 +43,14 @@
           required
           minlength="8"
           maxlength="16"
-          [(ngModel)]="loginCredenzial.psw"
+          [(ngModel)]="loginCredenzial.password"
           #pswModel="ngModel"
           placeholder="••••••••"
           class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
                  dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
         <app-error-message-label
-          *ngIf="this.loginCredenzial.psw !== '' && !this.utils.checkPswHaveCorrectSize(this.loginCredenzial.psw)"
+          *ngIf="this.loginCredenzial.password !== '' && !this.utils.checkPswHaveCorrectSize(this.loginCredenzial.password)"
           [errorMessage]="'La password deve essere tra 8 e 16 caratteri'">
         </app-error-message-label>
       </div>

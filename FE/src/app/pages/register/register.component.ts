@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit {
     } else if(currentStep === 3){
       return this.isValidStepThree();
     } else {
-      return this.registerUser();
+      return this.goToRegisterUser();
     }
   }
 
@@ -119,20 +119,15 @@ export class RegisterComponent implements OnInit {
     ).length == 0;
   }
 
-  private registerUser(): boolean{
-    return true;
-  }
-
-  private goToHome(){
-    //this.router.navigateByUrl('/home');
-    //this.userLog.setUuidUser("todo");
+  private goToRegisterUser(): any{
     this.profileProvider.registerUser(this.userToRegistry)
     .subscribe(
       {
         next: (uuid) => {
           this.userLogService.setUuidUser(uuid);
           console.log("Registrazione avvenuta con successo");
-          this.router.navigateByUrl('dashboard');
+          this.router.navigateByUrl('/dashboard');
+          this.userLog.setUuidUser(uuid);
         }, 
         error: (err) => {
           console.error("Si è verirficato un errore durante la registrazione: ", err);
@@ -140,5 +135,4 @@ export class RegisterComponent implements OnInit {
       }
     )
   }
-
 } 
