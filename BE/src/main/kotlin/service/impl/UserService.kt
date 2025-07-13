@@ -11,8 +11,8 @@ import mft.dev.mapper.toUserDTO
 import mft.dev.service.IUserService
 import mft.dev.table.UserTable
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.mindrot.jbcrypt.BCrypt
 import java.time.LocalDateTime
 import java.util.*
 
@@ -23,7 +23,7 @@ class UserService : IUserService {
                 firstName = dto.firstName
                 lastName = dto.lastName
                 email = dto.email
-                password = dto.password
+                password = BCrypt.hashpw(dto.password, BCrypt.gensalt())
             }
 
             dto.bankAccountsDTO?.let {
@@ -42,9 +42,18 @@ class UserService : IUserService {
 
     override suspend fun login(dto: LoginDTO): UUID? =
         dbQuery {
-            UserEntity.find {
-                (UserTable.email eq dto.email) and (UserTable.password eq dto.password)
-            }.singleOrNull()?.uuid
+            val userFound: UserEntity? = UserEntity.find {
+                (UserTable.email eq dto.email)
+            }.singleOrNull()
+
+            return@dbQuery userFound?.let {
+                if (BCrypt.checkpw(dto.password, it.password)) {
+                    it.uuid
+                }
+                else {
+                    null
+                }
+            }
         }
 
     override suspend fun get(uuid: UUID): UserDTO? =
