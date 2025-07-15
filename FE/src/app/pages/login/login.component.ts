@@ -11,6 +11,8 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  isLoading: boolean = false;
+  isError: boolean = false;
   loginCredenzial: Login = {
     email: '',
     password: ''

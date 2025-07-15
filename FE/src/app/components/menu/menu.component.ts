@@ -36,7 +36,7 @@ export class MenuComponent implements OnInit {
     },
     {
       name: 'Aggiungi operazione',
-      url: '/addFlow',
+      url: '/addOperation',
       active: false,
       icon: this.sanitizer.bypassSecurityTrustHtml(`
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

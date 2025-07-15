@@ -8,7 +8,6 @@ import { Error404Component } from './pages/error404/error404.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './components/modal/modal.component';
-import { TableComponent } from './components/table/table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
@@ -17,6 +16,9 @@ import { ReadSettingService } from './services/read-setting.service';
 import { RegisterComponent } from './pages/register/register.component';
 import { ErrorMessageLabelComponent } from './components/error-message-label/error-message-label.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { AddOperationComponent } from './pages/add-operation/add-operation.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { ReviewComponent } from './pages/review/review.component';
 
 export function initApp(readSetting: ReadSettingService) {
   return () => readSetting.loadConfig();
@@ -30,11 +32,13 @@ export function initApp(readSetting: ReadSettingService) {
     Error404Component,
     HomeComponent,
     ModalComponent,
-    TableComponent,
     LoginComponent,
     RegisterComponent,
     ErrorMessageLabelComponent,
-    ProfileComponent
+    ProfileComponent,
+    AddOperationComponent,
+    LoaderComponent,
+    ReviewComponent
   ],
   imports: [
     BrowserModule,

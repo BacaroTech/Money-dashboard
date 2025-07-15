@@ -1,0 +1,6 @@
+<app-loader *ngIf="this.isLoading && !this.isError"></app-loader>
+<app-error-message-label *ngIf="!this.isLoading && this.isError"
+  [errorMessage]="'errore durante il caricamento della pagina'"></app-error-message-label>
+<section *ngIf="!this.isLoading && !this.isError" class="home min-h-screen dark:bg-gray-900 py-6">
+  <h1 class="text-5xl font-bold mb-6 dark:text-white">Aggiungi operazione</h1>
+</section>

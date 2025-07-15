@@ -33,6 +33,8 @@ export class RegisterComponent implements OnInit {
   types: string[] = ['DIGITAL','CASH'];
   isClick3Step: boolean = false;
   isWarning3Modal: boolean = false;
+  isError: boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     public utils: UtilsService,

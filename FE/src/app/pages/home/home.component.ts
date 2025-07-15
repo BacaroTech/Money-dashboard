@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit {
   datasBilancioLabelX: String[] = [];
   datasFlowValue: number[] = [];
   datasFlowLabelX: String[] = [];
-  isLoadingBalance: boolean = true;
-  isLoadingDocument: boolean = true;
+  isLoading: boolean = false;
+  isError: boolean = false;
 
   constructor(
     private balance: BalanceProviderService, 
@@ -26,17 +26,17 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.balance.getAllDocument()
+    /*this.balance.getAllDocument()
     .subscribe({
       next: (data: Documents[]) => {     
         this.datasBilancioValue = [];
         this.datasBilancioLabelX = [];
         this.normalizationDocumentForChar(data);
-        this.isLoadingBalance = false;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error(error);
-        this.isLoadingBalance = false;
+        this.isLoading = false;
       }
     }) 
 
@@ -46,13 +46,13 @@ export class HomeComponent implements OnInit {
         this.datasFlowValue = [];
         this.datasFlowLabelX = [];
         this.normalizationHomeFlow(data);
-        this.isLoadingDocument = false;     
+        this.isLoading = false;     
       },
       error: (error) => {
         console.error(error);
-        this.isLoadingDocument = false;
+        this.isLoading = false;
       }
-    }) 
+    })*/ 
   }
 
   private normalizationDocumentForChar(datas: Documents[]){
