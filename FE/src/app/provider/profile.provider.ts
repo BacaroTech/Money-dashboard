@@ -16,11 +16,20 @@ export class ProfileProviderService {
   ) { }
 
   registerUser(regUser: Register): Observable<any> {
-    return this.http.post<any>(this.readEnvFile.getKrakend()+'/users/register', regUser);
+    return this.http.post(
+      this.readEnvFile.getKrakend() + '/users/register', 
+      regUser,
+      { responseType: 'text' }
+    );
   }
 
   loginUser(loginUser: Login): Observable<string> {
-    //const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=UTF-8');
-    return this.http.post<string>(this.readEnvFile.getKrakend()+'/users/login', loginUser);
+    return this.http.post(
+      this.readEnvFile.getKrakend() + '/users/login',
+      loginUser,
+      { responseType: 'text' }
+    );
   }
+
+
 }

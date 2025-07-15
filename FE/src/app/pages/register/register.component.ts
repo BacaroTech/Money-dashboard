@@ -30,16 +30,14 @@ export class RegisterComponent implements OnInit {
     'Conti',
     'Conferma'
   ];
+  types: string[] = ['DIGITAL','CASH'];
   isClick3Step: boolean = false;
   isWarning3Modal: boolean = false;
 
   constructor(
-    private http: HttpClient,
     public utils: UtilsService,
     private router: Router,
-    private userLog: UserLogService,
     private profileProvider: ProfileProviderService,
-    private userLogService: UserLogService
   ) { }
 
   ngOnInit(): void {
@@ -117,7 +115,7 @@ export class RegisterComponent implements OnInit {
           return (
             singleBankAccount.amount == 0
             || singleBankAccount.name == ''
-            || singleBankAccount.type != BankType.DIGITAL
+            || (singleBankAccount.type != BankType.DIGITAL && singleBankAccount.type != BankType.CASH)
           )
         })
       )

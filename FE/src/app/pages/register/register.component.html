@@ -106,7 +106,7 @@
                     <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Conti e patrimonio</h3>
                     <div *ngFor="let bank of userToRegistry.bank_account; let i = index" class="mb-6 relative">
                         <div
-                            class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 border dark:border-gray-700 relative">
+                            class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border dark:border-gray-700 relative">
 
                             <!-- Bottone X per eliminare -->
                             <button (click)="removeBankAccount(i)"
@@ -128,12 +128,30 @@
                                         class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
                                 </div>
 
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <div class="w-full">
+                                    <label for="type"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Tipologia di conto
                                     </label>
-                                    <input type="text" placeholder="Tipologia di conto" [(ngModel)]="bank.type"
-                                        class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                                    <div class="relative">
+                                        <select id="type" [(ngModel)]="bank.type" name="type"
+                                            class="w-full appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
+
+                                            <option *ngFor="let option of types" [value]="option">
+                                                {{ option }}
+                                            </option>
+                                        </select>
+
+                                        <div
+                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 dark:text-gray-400">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div>
@@ -189,21 +207,21 @@
                             Nessun conto bancario registrato.
                         </div>
 
-                        <div *ngFor="let back of userToRegistry.bank_account; let i = index"
+                        <div *ngFor="let bank of userToRegistry.bank_account; let i = index"
                             class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4 border border-gray-200 dark:border-gray-700">
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Conto #{{ i + 1 }}</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <span class="block text-sm text-gray-500 dark:text-gray-400">Nome conto</span>
-                                    <p class="text-base font-medium text-gray-900 dark:text-white">{{ back.name }}</p>
+                                    <p class="text-base font-medium text-gray-900 dark:text-white">{{ bank.name }}</p>
                                 </div>
                                 <div>
                                     <span class="block text-sm text-gray-500 dark:text-gray-400">Tipologia</span>
-                                    <p class="text-base font-medium text-gray-900 dark:text-white">{{ back.type }}</p>
+                                    <p class="text-base font-medium text-gray-900 dark:text-white">{{ bank.type }}</p>
                                 </div>
                                 <div>
                                     <span class="block text-sm text-gray-500 dark:text-gray-400">Ammontare</span>
-                                    <p class="text-base font-medium text-gray-900 dark:text-white">€ {{ back.amount }}
+                                    <p class="text-base font-medium text-gray-900 dark:text-white">€ {{ bank.amount }}
                                     </p>
                                 </div>
                             </div>
@@ -221,15 +239,13 @@
             </button>
 
             <div *ngIf="isWarning3Modal && isClick3Step">
-                <app-modal
-                    [title]="'Attenzione: nessun conto inserito'"
+                <app-modal [title]="'Attenzione: nessun conto inserito'"
                     [text]="'Se non inserisci nessun conto potrai lo stesso usare il nostro applicativo ma alcune funzionalità sarano bloccate'"
                     [type]="'warning'">
                 </app-modal>
             </div>
 
-            <button (click)="nextStep()"
-                [disabled]="!checkStepIsValid(currentStep)"
+            <button (click)="nextStep()" [disabled]="!checkStepIsValid(currentStep)"
                 class="px-6 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed">
                 {{ currentStep < steps.length ? 'Avanti' : 'Fine' }} </button>
         </div>
