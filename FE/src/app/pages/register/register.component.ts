@@ -109,13 +109,15 @@ export class RegisterComponent implements OnInit {
   }
 
   private isValidStepThree(): boolean{
+    console.log( this.userToRegistry.bank_account);
+
     return (
       this.userToRegistry.bank_account.filter(
         ((singleBankAccount: BankAccount) => {
           return (
             singleBankAccount.amount == 0
             || singleBankAccount.name == ''
-            || (singleBankAccount.type != BankType.DIGITAL && singleBankAccount.type != BankType.CASH)
+            || (singleBankAccount.type == 0)
           )
         })
       )
