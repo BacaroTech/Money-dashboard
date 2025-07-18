@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     password: '',
     first_name: '',
     last_name: '',
-    bank_account: []
+    bank_accounts: []
   };
   currentStep = 1;
   steps = [
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
   nextStep() {
     if(this.currentStep == 3){
       this.isClick3Step = true;
-      this.isWarning3Modal = this.userToRegistry.bank_account.length == 0;
+      this.isWarning3Modal = this.userToRegistry.bank_accounts.length == 0;
     }
 
     if(this.currentStep == 4){
@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit {
   }
 
   addBankAccount(){
-    this.userToRegistry.bank_account.push({
+    this.userToRegistry.bank_accounts.push({
       name: '',
       type: BankType.DIGITAL,
       amount: 0
@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit {
   }
 
   removeBankAccount(index: number) {
-    this.userToRegistry.bank_account.splice(index, 1);
+    this.userToRegistry.bank_accounts.splice(index, 1);
   }
 
   checkStepIsValid(currentStep: number): boolean{
@@ -111,10 +111,10 @@ export class RegisterComponent implements OnInit {
   }
 
   private isValidStepThree(): boolean{
-    console.log( this.userToRegistry.bank_account);
+    console.log( this.userToRegistry.bank_accounts);
 
     return (
-      this.userToRegistry.bank_account.filter(
+      this.userToRegistry.bank_accounts.filter(
         ((singleBankAccount: BankAccount) => {
           return (
             singleBankAccount.amount == 0

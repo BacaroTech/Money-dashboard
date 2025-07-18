@@ -6,5 +6,5 @@ export type Register = {
     password: string,
     first_name: string,
     last_name: string,
-    bank_account: BankAccount[];
+    bank_accounts: BankAccount[];
 }
