@@ -4,12 +4,17 @@ import { CashFlow } from 'src/app/model/cashFlow';
 import { Documents } from 'src/app/model/document';
 import { BalanceProviderService } from 'src/app/provider/balance.provider';
 import { FlowProviderService } from 'src/app/provider/flow.provider';
+import { DashboardComponent } from "src/app/components/dashboard/dashboard.component";
+import { ErrorMessageLabelComponent } from "src/app/components/error-message-label/error-message-label.component";
+import { LoaderComponent } from "src/app/components/loader/loader.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  standalone: false
+  standalone: true,
+  imports: [DashboardComponent, ErrorMessageLabelComponent, LoaderComponent, CommonModule]
 })
 export class HomeComponent implements OnInit {
 

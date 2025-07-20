@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
@@ -6,14 +7,15 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, ɵEmptyOutletComponent } from '@angular/router';
 import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, RouterLink]
 })
 export class MenuComponent implements OnInit {
 

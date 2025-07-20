@@ -10,7 +10,7 @@ import {
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  standalone: false
+  standalone: true
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
 

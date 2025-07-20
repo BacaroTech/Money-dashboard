@@ -4,12 +4,17 @@ import { Login } from 'src/app/model/login';
 import { ProfileProviderService } from 'src/app/provider/profile.provider';
 import { UserLogService } from 'src/app/services/user-log.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ErrorMessageLabelComponent } from "src/app/components/error-message-label/error-message-label.component";
+import { LoaderComponent } from "src/app/components/loader/loader.component";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [ErrorMessageLabelComponent, LoaderComponent, ErrorMessageLabelComponent, CommonModule, FormsModule]
 })
 export class LoginComponent {
   isLoading: boolean = false;

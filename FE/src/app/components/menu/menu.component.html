@@ -27,7 +27,7 @@
     <nav class="px-3 py-4 overflow-y-auto">
       <ul class="space-y-2 font-medium">
         <li *ngFor="let menu of menus">
-          <a class="flex items-center p-2 rounded-lg transition-colors duration-200 group" [routerLink]="menu.url"
+          <ng-container class="flex items-center p-2 rounded-lg transition-colors duration-200 group" [routerLink]="menu.url"
            (click)="toggleSidebar()"
             [ngClass]="{
                 'bg-blue-600 text-white hover:bg-blue-700': menu.active,
@@ -35,7 +35,7 @@
               }">
             <span class="w-5 h-5 mr-2" [innerHTML]="menu.icon"></span>
             {{ menu.name }}
-          </a>
+          </ng-container>
         </li>
       </ul>
     </nav>

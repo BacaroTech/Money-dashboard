@@ -1,12 +1,25 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ReadSettingService } from './app/services/read-setting.service';
+import { APP_INITIALIZER } from '@angular/core';
+import { appRoutes } from './app/app-routing.module';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-  enableProdMode();
+export function initApp(readSetting: ReadSettingService) {
+  return () => readSetting.loadConfig();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(appRoutes),
+    provideHttpClient(withInterceptorsFromDi()),
+    ReadSettingService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      deps: [ReadSettingService],
+      multi: true
+    }
+  ]
+}).catch(err => console.error(err));

@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MenuComponent } from "./components/menu/menu.component";
 import { ReadSettingService } from './services/read-setting.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  standalone: false
+  imports: [MenuComponent, RouterOutlet, CommonModule]
 })
 export class AppComponent implements OnInit {
-  title: string = 'My Money Dashboard';
-  href: string = ""; 
+  title = 'My Money Dashboard';
+  href = ""; 
   private showMenu = true;
-  hideMenu: string[] = [
-    "/login", "/register", "/404"
-  ];
+  hideMenu: string[] = ["/login", "/register", "/404"];
 
   constructor(
     private router: Router,
@@ -28,15 +28,15 @@ export class AppComponent implements OnInit {
     this.showMenu = this.isToBeShowMenu();
   }
 
-  isToBeShowMenu(): boolean{
+  isToBeShowMenu(): boolean {
     return !this.hideMenu.includes(this.href);
   }
 
-  getShowMenu(): boolean{
+  getShowMenu(): boolean {
     return this.showMenu;
   }
 
-  setShowMenu(newState: boolean): void{
+  setShowMenu(newState: boolean): void {
     this.showMenu = newState;
   }
 }

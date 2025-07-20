@@ -4,7 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
     selector: 'app-error-message-label',
     templateUrl: './error-message-label.component.html',
     styleUrls: ['./error-message-label.component.css'],
-    standalone: false
+    standalone: true
 })
 export class ErrorMessageLabelComponent implements OnInit {
 

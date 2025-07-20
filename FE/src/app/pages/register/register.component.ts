@@ -7,12 +7,18 @@ import { Register } from 'src/app/model/register';
 import { ProfileProviderService } from 'src/app/provider/profile.provider';
 import { UserLogService } from 'src/app/services/user-log.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ErrorMessageLabelComponent } from "src/app/components/error-message-label/error-message-label.component";
+import { LoaderComponent } from "src/app/components/loader/loader.component";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ModalComponent } from "src/app/components/modal/modal.component";
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, FormsModule, ModalComponent]
 })
 export class RegisterComponent implements OnInit {
 
