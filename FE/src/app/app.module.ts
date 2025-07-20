@@ -8,7 +8,7 @@ import { Error404Component } from './pages/error404/error404.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './components/modal/modal.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { APP_INITIALIZER } from '@angular/core';
@@ -24,38 +24,32 @@ export function initApp(readSetting: ReadSettingService) {
   return () => readSetting.loadConfig();
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    MenuComponent,
-    Error404Component,
-    HomeComponent,
-    ModalComponent,
-    LoginComponent,
-    RegisterComponent,
-    ErrorMessageLabelComponent,
-    ProfileComponent,
-    AddOperationComponent,
-    LoaderComponent,
-    ReviewComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule
-  ],
-  providers: [
-    ReadSettingService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initApp,
-      deps: [ReadSettingService],
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        DashboardComponent,
+        MenuComponent,
+        Error404Component,
+        HomeComponent,
+        ModalComponent,
+        LoginComponent,
+        RegisterComponent,
+        ErrorMessageLabelComponent,
+        ProfileComponent,
+        AddOperationComponent,
+        LoaderComponent,
+        ReviewComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule], providers: [
+        ReadSettingService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initApp,
+            deps: [ReadSettingService],
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
