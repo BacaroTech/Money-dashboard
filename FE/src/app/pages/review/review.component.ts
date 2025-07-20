@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-review',
-  templateUrl: './review.component.html',
-  styleUrls: ['./review.component.css']
+    selector: 'app-review',
+    templateUrl: './review.component.html',
+    styleUrls: ['./review.component.css'],
+    standalone: false
 })
 export class ReviewComponent implements OnInit {
   isError: boolean = false;

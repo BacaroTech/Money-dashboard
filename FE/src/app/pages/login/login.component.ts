@@ -6,9 +6,10 @@ import { UserLogService } from 'src/app/services/user-log.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: false
 })
 export class LoginComponent {
   isLoading: boolean = false;
