@@ -6,11 +6,12 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AddOperationComponent } from './pages/add-operation/add-operation.component';
 import { ReviewComponent } from './pages/review/review.component';
+import { loginGuard } from './guard/login.guard';
 
 export const appRoutes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
-  { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
+  { path: "login", component: LoginComponent, canActivate: [loginGuard]},
+  { path: "register", component: RegisterComponent, canActivate: [loginGuard] },
   { path: "profile", component: ProfileComponent },
   { path: "dashboard", component: HomeComponent },
   { path: "addOperation", component: AddOperationComponent },
