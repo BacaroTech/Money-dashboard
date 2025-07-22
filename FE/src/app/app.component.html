@@ -1,20 +1,20 @@
 <section class="bg-gray-50">
   <div id="mydashboard" class="grid grid-cols-12 min-h-screen">
 
+    @if (getShowMenu()) {
     <!-- Sidebar -->
     <div 
       id="sidebar"
-      class="hidden lg:block lg:col-span-1 fixed h-full bg-white z-20"
-      *ngIf="getShowMenu()">
+      class="hidden lg:block lg:col-span-1 fixed h-full bg-white z-20">
       <app-menu></app-menu>
     </div>
 
     <!-- Overlay per mobile menu (opzionale) -->
     <div 
       class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
-      *ngIf="getShowMenu()"
       (click)="setShowMenu(false)">
     </div>
+    }
 
     <!-- Contenuto principale -->
     <div 

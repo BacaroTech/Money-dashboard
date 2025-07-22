@@ -12,8 +12,8 @@
   </button>
 
   <!-- Sidebar -->
-  <aside *ngIf="isSidebarOpen"
-    class="fixed top-0 left-0 z-50 w-64 h-screen bg-gray-50 dark:bg-gray-800 shadow-lg transition-transform duration-300 ease-in-out transform translate-x-0 lg:translate-x-0">
+  @if (isSidebarOpen) {
+  <aside class="fixed top-0 left-0 z-50 w-64 h-screen bg-gray-50 dark:bg-gray-800 shadow-lg transition-transform duration-300 ease-in-out transform translate-x-0 lg:translate-x-0">
 
     <!-- Header con titolo + bottone chiusura -->
     <div class="relative bg-blue-500 text-white py-4 px-4 flex items-center justify-between">
@@ -26,10 +26,10 @@
     <!-- Navigazione -->
     <nav class="px-3 py-4 overflow-y-auto">
       <ul class="space-y-2 font-medium">
-        <li *ngFor="let menu of menus">
-          <ng-container class="flex items-center p-2 rounded-lg transition-colors duration-200 group" [routerLink]="menu.url"
-           (click)="toggleSidebar()"
-            [ngClass]="{
+        @for (menu of menus; track $index) {
+        <li>
+          <ng-container class="flex items-center p-2 rounded-lg transition-colors duration-200 group"
+            [routerLink]="menu.url" (click)="toggleSidebar()" [ngClass]="{
                 'bg-blue-600 text-white hover:bg-blue-700': menu.active,
                 'text-gray-900 hover:bg-blue-100 dark:text-white dark:hover:bg-blue-400': !menu.active
               }">
@@ -37,7 +37,9 @@
             {{ menu.name }}
           </ng-container>
         </li>
+        }
       </ul>
     </nav>
   </aside>
+  }
 </ng-container>
