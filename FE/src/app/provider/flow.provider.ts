@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CashFlow } from '../model/cashFlow';
 import { Observable } from 'rxjs';
 import { ReadSettingService } from '../services/read-setting.service';
@@ -10,10 +10,10 @@ import { ReadSettingService } from '../services/read-setting.service';
 })
 export class FlowProviderService {
 
-  constructor(
-    private http: HttpClient,
-    private readEnvFile: ReadSettingService
-  ) { }
+  private http: HttpClient = inject(HttpClient);
+  private readEnvFile: ReadSettingService = inject(ReadSettingService);
+
+  constructor() { }
 
   getAllFlow(): Observable<CashFlow[]> {
     return this.http.get<CashFlow[]>(this.readEnvFile.getKrakend()+'/flow/getAll');

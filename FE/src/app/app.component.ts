@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { MenuComponent } from "./components/menu/menu.component";
 import { ReadSettingService } from './services/read-setting.service';
@@ -12,15 +12,15 @@ import { CommonModule } from '@angular/common';
   imports: [MenuComponent, RouterOutlet, CommonModule]
 })
 export class AppComponent implements OnInit {
-  title = 'My Money Dashboard';
-  href = ""; 
-  private showMenu = true;
+  title: string = 'My Money Dashboard';
+  href: string = ""; 
+  private showMenu: boolean = true;
   hideMenu: string[] = ["/login", "/register", "/404"];
 
-  constructor(
-    private router: Router,
-    private readSettingService: ReadSettingService
-  ){ }
+  private router: Router = inject(Router);
+  private readSettingService: ReadSettingService = inject(ReadSettingService);
+
+  constructor(){ }
   
   async ngOnInit() {
     await this.readSettingService.loadConfig();

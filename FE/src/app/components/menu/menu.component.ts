@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  inject,
   Input,
   OnChanges,
   OnInit,
@@ -18,6 +19,13 @@ import { filter, map } from 'rxjs';
   imports: [CommonModule, RouterLink]
 })
 export class MenuComponent implements OnInit {
+
+  isSidebarOpen: boolean = false;
+  activeRoute!: string;
+
+  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
+  private sanitizer: DomSanitizer = inject(DomSanitizer);
 
   readonly menus: Array<{
     name: string;
@@ -69,14 +77,7 @@ export class MenuComponent implements OnInit {
     }
   ];
 
-  isSidebarOpen: boolean = false;
-  activeRoute!: string;
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private sanitizer: DomSanitizer
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.router.events.pipe(

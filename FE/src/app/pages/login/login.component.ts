@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/model/login';
 import { ProfileProviderService } from 'src/app/provider/profile.provider';
@@ -24,14 +24,16 @@ export class LoginComponent {
     password: ''
   };
 
-  constructor(
-    private router: Router,
-    public utils: UtilsService,
-    private profileProvider: ProfileProviderService,
-    private userLogService: UserLogService
-  ) {}
+  private router: Router = inject(Router);
+  public utils: UtilsService = inject(UtilsService);
+  private profileProvider: ProfileProviderService = inject(ProfileProviderService);
+  private userLogService: UserLogService = inject(UserLogService);
+
+  constructor() { }
 
   goToLogin() {
+    this.isLoading = true;
+    this.isError = false;
     this.profileProvider.loginUser(this.loginCredenzial)
     .subscribe(
       {
@@ -39,9 +41,13 @@ export class LoginComponent {
           this.userLogService.setUuidUser(uuid);
           console.log("Login avvenuto con successo");
           this.router.navigateByUrl('dashboard');
+          this.isError = false;
+          this.isLoading = false;
         }, 
         error: (err) => {
           console.error("Si è verirficato un errore durante la login: ", err);
+          this.isError = true;
+          this.isLoading = false;
         }
       }
     )

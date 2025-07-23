@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { BankType } from 'src/app/enum/backEnum';
 import { BankAccount } from 'src/app/model/bankAccount';
@@ -43,11 +43,11 @@ export class RegisterComponent implements OnInit {
   isError: boolean = false;
   isLoading: boolean = false;
 
-  constructor(
-    public utils: UtilsService,
-    private router: Router,
-    private profileProvider: ProfileProviderService,
-  ) { }
+  public utils: UtilsService = inject(UtilsService);
+  private router: Router = inject(Router);
+  private profileProvider: ProfileProviderService = inject(ProfileProviderService);
+
+  constructor() { }
 
   ngOnInit(): void {
 

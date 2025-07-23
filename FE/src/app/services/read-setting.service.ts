@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { inject, Injectable, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -7,9 +7,8 @@ import { firstValueFrom } from 'rxjs';
 export class ReadSettingService {
   private krakend!: string;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  private http: HttpClient = inject(HttpClient);
+  constructor() { }
 
   async loadConfig() {
     console.group("LETTURA FILE CONFIGURAZIONE");

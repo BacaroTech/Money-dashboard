@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -29,9 +29,9 @@ export class ModalComponent implements OnInit {
     ["success", "green"]
   ]);
 
-  constructor(
-    private router: Router
-  ) { }
+  private router: Router = inject(Router);
+
+  constructor() { }
 
   ngOnInit(): void {
 

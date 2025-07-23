@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import convertToName from 'src/app/common/mappingMonth';
 import { CashFlow } from 'src/app/model/cashFlow';
 import { Documents } from 'src/app/model/document';
@@ -25,10 +25,10 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = false;
   isError: boolean = false;
 
-  constructor(
-    private balance: BalanceProviderService, 
-    private flow: FlowProviderService
-  ) {}
+  private balance: BalanceProviderService = inject(BalanceProviderService);
+  private flow: FlowProviderService = inject(FlowProviderService);
+
+  constructor() { }
 
   ngOnInit(): void {
     /*this.balance.getAllDocument()
