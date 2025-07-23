@@ -12,9 +12,7 @@ import { CommonModule } from '@angular/common';
   imports: [MenuComponent, RouterOutlet, CommonModule]
 })
 export class AppComponent implements OnInit {
-  title: string = 'Money Dashboard';
-  href: string = ""; 
-  private showMenu: boolean = true;
+  title: string = 'Money Dashboard'; 
   hideMenu: string[] = ["/login", "/register", "/404"];
 
   private router: Router = inject(Router);
@@ -24,19 +22,9 @@ export class AppComponent implements OnInit {
   
   async ngOnInit() {
     await this.readSettingService.loadConfig();
-    this.href = this.router.url;
-    this.showMenu = this.isToBeShowMenu();
   }
 
   isToBeShowMenu(): boolean {
-    return !this.hideMenu.includes(this.href);
-  }
-
-  getShowMenu(): boolean {
-    return this.showMenu;
-  }
-
-  setShowMenu(newState: boolean): void {
-    this.showMenu = newState;
+    return !this.hideMenu.includes(this.router.url);
   }
 }
