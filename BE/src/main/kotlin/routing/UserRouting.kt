@@ -6,10 +6,13 @@ import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import mft.dev.dto.response.BaseResponse
 import mft.dev.dto.user.InsertUserDTO
 import mft.dev.dto.user.LoginDTO
 import mft.dev.dto.user.UpdateUserDTO
 import mft.dev.dto.user.UserDTO
+import mft.dev.response.respondError
+import mft.dev.response.respondSuccess
 import mft.dev.service.impl.UserService
 import org.koin.ktor.ext.inject
 import java.util.UUID
@@ -36,11 +39,11 @@ fun Application.configureUserRouting() {
             post("/login") {
                 val dto: LoginDTO = call.receive<LoginDTO>()
 
-                val response: UUID? = userService.login(dto)
+                val content: UUID? = userService.login(dto)
 
-                return@post response?.let {
-                    call.respond(HttpStatusCode.OK, it.toString())
-                } ?: call.respond(HttpStatusCode.Forbidden, "Authentication failed")
+                return@post content?.let {
+                    call.respondSuccess("Login succeeded", it.toString())
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Authentication Failed")
             }
 
             get {
