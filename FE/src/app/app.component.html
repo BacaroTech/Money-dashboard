@@ -1,26 +1,27 @@
-<section class="bg-gray-50">
-  <div id="mydashboard" class="grid grid-cols-12 min-h-screen">
+<section class="bg-gray-50 min-h-screen">
+  <div id="mydashboard" class="min-h-screen flex flex-col md:grid md:grid-cols-12">
 
+    <!-- SIDEBAR -->
     @if (getShowMenu()) {
-    <!-- Sidebar -->
-    <div 
-      id="sidebar"
-      class="hidden lg:block lg:col-span-1 fixed h-full bg-white z-20">
-      <app-menu></app-menu>
-    </div>
+      <!-- Desktop: sidebar laterale -->
+      <div 
+        id="sidebar" 
+        class="hidden md:block md:col-span-1 h-full bg-white z-20 fixed md:static">
+        <app-menu></app-menu>
+      </div>
 
-    <!-- Overlay per mobile menu (opzionale) -->
-    <div 
-      class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
-      (click)="setShowMenu(false)">
-    </div>
+      <!-- Mobile: menu in alto -->
+      <div 
+        id="sidebar-mobile" 
+        class="block md:hidden w-full bg-white z-20">
+        <app-menu></app-menu>
+      </div>
     }
 
-    <!-- Contenuto principale -->
+    <!-- CONTENUTO PRINCIPALE -->
     <div 
       id="background"
-      class="col-span-12 transition-all duration-300"
-      [ngClass]="{'lg:col-start-2 lg:col-span-11': getShowMenu()}">
+      class="flex-1 md:col-span-11 transition-all duration-300 ml-0">
       <router-outlet></router-outlet>
     </div>
 

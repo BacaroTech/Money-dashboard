@@ -2,83 +2,83 @@
   <app-loader></app-loader>
 } @else if (!this.isLoading && this.isError) {
   <app-error-message-label [errorMessage]="'errore durante il caricamento della pagina'"></app-error-message-label>
-} @else {
-  <section class="home min-h-screen dark:bg-gray-900 py-6">
-    <h1 class="text-5xl font-bold mb-6 dark:text-white">Revisione dei conti</h1>
-
-    <!-- filter table -->
-    <form class="space-y-6 mt-5">
-      <h2 class="text-3xl font-bold mb-6 dark:text-white">Filtra i risultati</h2>
-
-      <!-- Prima riga -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mr-5">
-        <div>
-          <label for="startdate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Data di inizio
-          </label>
-          <input type="date" id="startdate" name="startdate" [(ngModel)]="formData.startdate"
-            class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
-                   dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-        </div>
-
-        <div>
-          <label for="enddate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Data di fine
-          </label>
-          <input type="date" id="enddate" name="enddate" [(ngModel)]="formData.enddate"
-            class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
-                   dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-        </div>
-
-        <div>
-          <label for="typeBankAccount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Tipo di conto
-          </label>
-          <select id="type" [(ngModel)]="formData.typeBankAccount" name="type"
-            class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
-                   dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
-            @for (option of types; track $index) {
-              <option [value]="option">{{ option }}</option>
-            }
-          </select>
-        </div>
-      </div>
-    </form>
-
-    <!-- table -->
-    <div class="relative overflow-x-auto mt-5">
-      <h3 class="text-3xl font-bold mb-6 dark:text-white">Risultati</h3>
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="px-6 py-3">Id</th>
-            <th scope="col" class="px-6 py-3">Categoria</th>
-            <th scope="col" class="px-6 py-3">Ammontare</th>
-            <th scope="col" class="px-6 py-3">Descrizione</th>
-            <th scope="col" class="px-6 py-3">Conto di prelievo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <!-- ID -->
-            </th>
-            <td class="px-6 py-4">
-              <!-- Categoria -->
-            </td>
-            <td class="px-6 py-4">
-              <!-- Ammontare -->
-            </td>
-            <td class="px-6 py-4">
-              <!-- Descrizione -->
-            </td>
-            <td class="px-6 py-4">
-              <!-- Conto -->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
 }
+<section class="min-h-screen dark:bg-gray-900 mx-5">
+  <h1 class="text-5xl font-bold mb-6 dark:text-white mt-16 md:mt-5">Revisione dei conti</h1>
+
+  <!-- filter table -->
+  <form class="space-y-6 mt-5">
+    <h2 class="text-3xl font-bold mb-6 dark:text-white">Filtra i risultati</h2>
+
+    <!-- Prima riga -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label for="startdate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Data di inizio
+        </label>
+        <input type="date" id="startdate" name="startdate" [(ngModel)]="formData.startdate"
+          class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
+                  dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+      </div>
+
+      <div>
+        <label for="enddate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Data di fine
+        </label>
+        <input type="date" id="enddate" name="enddate" [(ngModel)]="formData.enddate"
+          class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
+                  dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+      </div>
+
+      <div>
+        <label for="typeBankAccount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Tipo di conto
+        </label>
+        <select id="type" [(ngModel)]="formData.typeBankAccount" name="type"
+          class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
+                  dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+          @for (option of types; track $index) {
+            <option [value]="option">{{ option }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <!-- table -->
+  <div class="relative overflow-x-auto mt-5">
+    <h3 class="text-3xl font-bold mb-6 dark:text-white">Risultati</h3>
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">Id</th>
+          <th scope="col" class="px-6 py-3">Categoria</th>
+          <th scope="col" class="px-6 py-3">Ammontare</th>
+          <th scope="col" class="px-6 py-3">Descrizione</th>
+          <th scope="col" class="px-6 py-3">Conto di prelievo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <!-- ID -->
+          </th>
+          <td class="px-6 py-4">
+            <!-- Categoria -->
+          </td>
+          <td class="px-6 py-4">
+            <!-- Ammontare -->
+          </td>
+          <td class="px-6 py-4">
+            <!-- Descrizione -->
+          </td>
+          <td class="px-6 py-4">
+            <!-- Conto -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+

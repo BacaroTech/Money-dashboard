@@ -118,8 +118,6 @@ export class RegisterComponent implements OnInit {
   }
 
   private isValidStepThree(): boolean{
-    console.log( this.userToRegistry.bank_accounts);
-
     return (
       this.userToRegistry.bank_accounts.filter(
         ((singleBankAccount: BankAccount) => {

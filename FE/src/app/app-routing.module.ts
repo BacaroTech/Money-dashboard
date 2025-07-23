@@ -8,6 +8,7 @@ import { AddOperationComponent } from './pages/add-operation/add-operation.compo
 import { ReviewComponent } from './pages/review/review.component';
 import { loginGuard } from './guard/login.guard';
 import { unknowUserGuard } from './guard/unknow-user.guard';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 export const appRoutes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
@@ -17,6 +18,7 @@ export const appRoutes: Routes = [
   { path: "dashboard", component: HomeComponent, canActivate: [unknowUserGuard] },
   { path: "addOperation", component: AddOperationComponent, canActivate: [unknowUserGuard] },
   { path: "review", component: ReviewComponent, canActivate: [unknowUserGuard] },
+  { path: "logout", component: LogoutComponent, canActivate: [unknowUserGuard] },
   { path: "404", component: Error404Component },
   { path: "**", redirectTo: "404" }
 ];

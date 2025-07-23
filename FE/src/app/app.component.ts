@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   imports: [MenuComponent, RouterOutlet, CommonModule]
 })
 export class AppComponent implements OnInit {
-  title: string = 'My Money Dashboard';
+  title: string = 'Money Dashboard';
   href: string = ""; 
   private showMenu: boolean = true;
   hideMenu: string[] = ["/login", "/register", "/404"];

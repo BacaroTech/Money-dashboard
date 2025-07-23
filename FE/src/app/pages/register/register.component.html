@@ -1,92 +1,263 @@
 @if (this.isLoading && !this.isError) {
-  <app-loader></app-loader>
+<app-loader></app-loader>
 } @else if (!this.isLoading && this.isError) {
-  <app-error-message-label [errorMessage]="'errore durante il caricamento della pagina'"></app-error-message-label>
+<app-error-message-label [errorMessage]="'errore durante il caricamento della pagina'"></app-error-message-label>
 } @else {
-  <section class="dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center">
-    <div class="w-full max-w-md text-center mb-8">
-      <h1 class="text-4xl font-semibold text-gray-900 dark:text-white">MoneyDashboard</h1>
-      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-2">
-        Gestione delle Finanze Personali 💰
-      </h2>
+<section class="dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center">
+  <div class="w-full max-w-md text-center mb-8">
+    <h1 class="text-4xl font-semibold text-gray-900 dark:text-white">MoneyDashboard</h1>
+    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-2">
+      Gestione delle Finanze Personali 💰
+    </h2>
+  </div>
+
+  <div class="w-full max-w-3xl bg-white dark:bg-gray-800 rounded-lg shadow p-8 space-y-8">
+    <!-- Intestazione Onboarding -->
+    <div class="flex items-center justify-between">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Onboarding</h2>
+      <span class="text-sm text-gray-500 dark:text-gray-400">Step {{ currentStep }} di 4</span>
     </div>
 
-    <div class="w-full max-w-3xl bg-white dark:bg-gray-800 rounded-lg shadow p-8 space-y-8">
-      <!-- Intestazione Onboarding -->
-      <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Onboarding</h2>
-        <span class="text-sm text-gray-500 dark:text-gray-400">Step {{ currentStep }} di 4</span>
-      </div>
-
-      <!-- Tabs -->
-      <div class="flex justify-between items-center">
-        <div class="flex items-center space-x-4 w-full">
-          @for (step of steps; track $index) {
-            <ng-container>
-              <div class="flex-1 flex items-center">
-                <div [class]="
+    <!-- Tabs -->
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-4 w-full">
+        @for (step of steps; track $index) {
+        <ng-container>
+          <div class="flex-1 flex items-center">
+            <div [class]="
                   'flex items-center justify-center w-8 h-8 rounded-full border-2 text-sm font-medium ' +
                   ($index + 1 <= currentStep
                   ? 'bg-blue-600 border-blue-600 text-white'
                   : 'border-gray-300 text-gray-400')">
-                  {{ $index + 1 }}
-                </div>
-                @if ($index < steps.length - 1) {
-                  <div class="flex-auto border-t-2"
-                       [class.border-blue-600]="$index + 1 < currentStep"
-                       [class.border-gray-300]="$index + 1 >= currentStep">
-                  </div>
-                }
-              </div>
-            </ng-container>
-          }
-        </div>
-      </div>
+              {{ $index + 1 }}
+            </div>
 
-      <!-- Tab content -->
-      <div class="mt-8">
-        <ng-container [ngSwitch]="currentStep">
-          <!-- Step 1 -->
-          <div *ngSwitchCase="1">
-            ...
-          </div>
+            <div class="flex-auto border-t-2" [class.border-blue-600]="$index + 1 < currentStep"
+              [class.border-gray-300]="$index + 1 >= currentStep">
+            </div>
 
-          <!-- Step 2 -->
-          <div *ngSwitchCase="2">
-            ...
-          </div>
-
-          <!-- Step 3 -->
-          <div *ngSwitchCase="3">
-            ...
-          </div>
-
-          <!-- Step 4 -->
-          <div *ngSwitchCase="4">
-            ...
           </div>
         </ng-container>
-      </div>
-
-      <!-- Navigation buttons -->
-      <div class="flex justify-between">
-        <button (click)="previousStep()" [disabled]="currentStep === 1"
-          class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 dark:text-white hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-          Indietro
-        </button>
-
-        @if (isWarning3Modal && isClick3Step) {
-          <app-modal [title]="'Attenzione: nessun conto inserito'"
-                     [text]="'Se non inserisci nessun conto potrai lo stesso usare il nostro applicativo ma alcune funzionalità sarano bloccate'"
-                     [type]="'warning'">
-          </app-modal>
         }
-
-        <button (click)="nextStep()" [disabled]="!checkStepIsValid(currentStep)"
-          class="px-6 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed">
-          {{ currentStep < steps.length ? 'Avanti' : 'Fine' }}
-        </button>
       </div>
     </div>
-  </section>
+
+    <!-- Tab content -->
+    <div class="mt-8">
+      <ng-container [ngSwitch]="currentStep">
+        <!-- Step 1 -->
+        <div *ngSwitchCase="1">
+          <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Dati generali</h3>
+
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            email
+          </label>
+          <input type="email" placeholder="Email" [(ngModel)]="this.userToRegistry.email"
+            class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
+
+          @if(this.userToRegistry.email !== '' && !this.utils.checkMailIsGoodFormated(this.userToRegistry.email)){
+          <app-error-message-label [errorMessage]="'email formattata in modo scorretto o mancante'">
+          </app-error-message-label>
+          }
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            email di conferma
+          </label>
+          <input type="email" placeholder="Email di conferma" [(ngModel)]="this.userToRegistry.confirm_email"
+            class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
+          @if (userToRegistry.confirm_email !== '' && !utils.checkMailIsGoodFormated(userToRegistry.confirm_email)) {
+          <app-error-message-label [errorMessage]="'email formattata in modo scorretto o mancante'">
+          </app-error-message-label>
+          }
+
+          @if (userToRegistry.email !== '' && userToRegistry.email !== userToRegistry.confirm_email) {
+          <app-error-message-label [errorMessage]="'Le due email non coincidono'">
+          </app-error-message-label>
+          }
+
+
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Password
+          </label>
+          <input type="password" placeholder="Password" [(ngModel)]="this.userToRegistry.password" #pswModel="ngModel"
+            class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+          <label class="font-light">La password deve contenere dagli 8 ai 16 caratteri</label>
+          @if (userToRegistry.password !== '' && !utils.checkPswHaveCorrectSize(userToRegistry.password)) {
+          <app-error-message-label [errorMessage]="'La password deve essere tra 8 e 16 caratteri'">
+          </app-error-message-label>
+          }
+        </div>
+
+        <!-- Step 2 -->
+        <div *ngSwitchCase="2">
+          <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Dettagli profilo</h3>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Nome
+          </label>
+          <input type="text" placeholder="Nome" [(ngModel)]="this.userToRegistry.first_name"
+            class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
+
+
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Cognome
+          </label>
+          <input type="text" placeholder="Cognome" [(ngModel)]="this.userToRegistry.last_name"
+            class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4" />
+
+        </div>
+
+        <!-- Step 3 -->
+        <div *ngSwitchCase="3">
+          <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Conti e patrimonio</h3>
+
+          @for(bank of userToRegistry.bank_accounts; track $index){
+          <div class="mb-6 relative">
+            <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border dark:border-gray-700 relative">
+
+              <!-- Bottone X per eliminare -->
+              <button (click)="removeBankAccount($index)"
+                class="absolute top-3 right-3 text-gray-400 hover:text-red-600 text-lg font-bold focus:outline-none"
+                aria-label="Rimuovi conto">
+                ✕
+              </button>
+
+              <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                Conto #{{ $index + 1 }}
+              </h3>
+
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Nome conto
+                  </label>
+                  <input type="text" placeholder="Nome conto" [(ngModel)]="bank.name"
+                    class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div class="w-full">
+                  <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Tipologia di conto
+                  </label>
+
+                  <div class="relative">
+                    <select id="type" [(ngModel)]="bank.type" name="type"
+                      class="w-full appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
+
+                      @for(option of types; track $index){
+                      <option [value]="option">
+                        {{ option }}
+                      </option>
+                      }
+                    </select>
+
+                    <div
+                      class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 dark:text-gray-400">
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Ammontare iniziale
+                  </label>
+                  <input type="number" placeholder="Ammontare iniziale" [(ngModel)]="bank.amount" min="0" max="10000000"
+                    class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+
+          <button type="submit" (click)="addBankAccount()" [disabled]="this.userToRegistry.bank_accounts.length === 5"
+            class="w-full px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg 
+                            hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+                            dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 focus:outline-none
+                            disabled:bg-blue-300 disabled:cursor-not-allowed dark:disabled:bg-blue-900">
+            Aggiungi Conto
+          </button>
+        </div>
+
+        <!-- Step 4 -->
+        <div *ngSwitchCase="4">
+          <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">Conferma e termina</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Controlla i dati inseriti e clicca "Conferma" per completare.
+          </p>
+          <div>
+            <h2 class="text-xl font-medium text-gray-800 dark:text-white mb-4 mt-4">Informazioni Utente</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <span class="block text-sm text-gray-500 dark:text-gray-400">Nome</span>
+                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.first_name }}
+                </p>
+              </div>
+              <div>
+                <span class="block text-sm text-gray-500 dark:text-gray-400">Cognome</span>
+                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.last_name
+                  }}</p>
+              </div>
+              <div>
+                <span class="block text-sm text-gray-500 dark:text-gray-400">Email principale</span>
+                <p class="text-lg text-gray-900 dark:text-white">{{ userToRegistry.email }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-xl font-medium text-gray-800 dark:text-white mb-4 mt-4">Conti Bancari</h2>
+
+            @if (userToRegistry.bank_accounts.length === 0) {
+            <div class="text-gray-600 dark:text-gray-400">
+              Nessun conto bancario registrato.
+            </div>
+            }
+
+
+            @for(bank of userToRegistry.bank_accounts; track $index){
+            <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4 border border-gray-200 dark:border-gray-700">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Conto #{{ $index + 1 }}</h3>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <span class="block text-sm text-gray-500 dark:text-gray-400">Nome conto</span>
+                  <p class="text-base font-medium text-gray-900 dark:text-white">{{ bank.name }}</p>
+                </div>
+                <div>
+                  <span class="block text-sm text-gray-500 dark:text-gray-400">Tipologia</span>
+                  <p class="text-base font-medium text-gray-900 dark:text-white">{{ bank.type }}</p>
+                </div>
+                <div>
+                  <span class="block text-sm text-gray-500 dark:text-gray-400">Ammontare</span>
+                  <p class="text-base font-medium text-gray-900 dark:text-white">€ {{ bank.amount }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="flex justify-between">
+      <button (click)="previousStep()" [disabled]="currentStep === 1"
+        class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 dark:text-white hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+        Indietro
+      </button>
+
+      @if (isWarning3Modal && isClick3Step) {
+      <app-modal [title]="'Attenzione: nessun conto inserito'"
+        [text]="'Se non inserisci nessun conto potrai lo stesso usare il nostro applicativo ma alcune funzionalità sarano bloccate'"
+        [type]="'warning'">
+      </app-modal>
+      }
+
+      <button (click)="nextStep()" [disabled]="!checkStepIsValid(currentStep)"
+        class="px-6 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed">
+        {{ currentStep < steps.length ? 'Avanti' : 'Fine' }} </button>
+    </div>
+  </div>
+</section>
 }

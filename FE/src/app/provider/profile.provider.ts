@@ -4,6 +4,7 @@ import { ReadSettingService } from '../services/read-setting.service';
 import { Observable } from 'rxjs';
 import { Register } from '../model/register';
 import { Login } from '../model/login';
+import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,15 @@ export class ProfileProviderService {
     );
   }
 
-
+  getUser(uuid: string): Observable<User>{
+    const headers = new HttpHeaders({
+      'accept': 'application/json',
+      'uuid': uuid
+    });
+    
+    return this.http.get<User>(
+      this.readEnvFile.getKrakend() + '/users',
+      {headers: headers}
+    );
+  }
 }

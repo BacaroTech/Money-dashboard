@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CashFlow } from '../model/cashFlow';
 import { Observable } from 'rxjs';
 import { ReadSettingService } from '../services/read-setting.service';
+import { CashFlow } from '../model/cashFlow';
 
 
 @Injectable({
