@@ -1,6 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import convertToName from 'src/app/common/mappingMonth';
-import { FlowProviderService } from 'src/app/provider/flow.provider';
 import { DashboardComponent } from "src/app/components/dashboard/dashboard.component";
 import { ErrorMessageLabelComponent } from "src/app/components/error-message-label/error-message-label.component";
 import { LoaderComponent } from "src/app/components/loader/loader.component";

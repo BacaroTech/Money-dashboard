@@ -50,7 +50,7 @@
           <select id="type" [(ngModel)]="formData.typeBankAccount" name="type"
             class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
                     dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            @for (option of types; track $index) {
+            @for (option of bankAccountTypeService.getTypes(); track $index) {
               <option [value]="option">{{ option }}</option>
             }
           </select>

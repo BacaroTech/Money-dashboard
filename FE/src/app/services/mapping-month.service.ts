@@ -1,5 +1,10 @@
-function convertToName(numberMonth: string): string {
-    const months = new Map([
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MappingMonthService {
+  private months = new Map([
         ["01", "gennaio"],
         ["02", "febbraio"],
         ["03", "marzo"],
@@ -13,7 +18,8 @@ function convertToName(numberMonth: string): string {
         ["11", "novembre"],
         ["12", "dicembre"],
     ]);
-    return months.get(numberMonth) as string;
-}
 
-export default convertToName
+  convertToName(numberMonth: string): string {
+    return this.months.get(numberMonth) as string;
+}
+}

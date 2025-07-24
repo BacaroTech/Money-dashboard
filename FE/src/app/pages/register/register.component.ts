@@ -12,13 +12,14 @@ import { LoaderComponent } from "src/app/components/loader/loader.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from "src/app/components/modal/modal.component";
+import { BankListComponent } from "src/app/components/bank-list/bank-list.component";
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css'],
     standalone: true,
-    imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, FormsModule, ModalComponent]
+    imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, FormsModule, ModalComponent, BankListComponent]
 })
 export class RegisterComponent implements OnInit {
 
@@ -37,7 +38,6 @@ export class RegisterComponent implements OnInit {
     'Conti',
     'Conferma'
   ];
-  types: string[] = ['DIGITAL','CASH'];
   isClick3Step: boolean = false;
   isWarning3Modal: boolean = false;
   isError: boolean = false;

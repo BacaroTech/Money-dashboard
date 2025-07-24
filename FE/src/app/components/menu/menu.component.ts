@@ -55,7 +55,7 @@ export class MenuComponent implements OnInit {
       `) as string
     },
     {
-      name: 'Analisi',
+      name: 'Revisione dei conti',
       url: '/review',
       active: false,
       icon: this.sanitizer.bypassSecurityTrustHtml(`

@@ -37,8 +37,8 @@ export class ModalComponent implements OnInit {
   }
 
   getBackgroundClass(): string {
-    const color = this.mapColor.get(this.type);
-    return `bg-${color}-600 hover:bg-${color}-400`;
+    return this.mapColor.get(this.type) + "";
+    //return `bg-${color}-600 hover:bg-${color}-400`;
   }
 
   execute() {

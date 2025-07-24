@@ -10,13 +10,14 @@ import { User } from 'src/app/model/user';
 import { BackAccountProviderService } from 'src/app/provider/back-account.provider';
 import { ProfileProviderService } from 'src/app/provider/profile.provider';
 import { UserLogService } from 'src/app/services/user-log.service';
+import { BankListComponent } from "src/app/components/bank-list/bank-list.component";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
   standalone: true,
-  imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, ModalComponent, FormsModule]
+  imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, ModalComponent, FormsModule, BankListComponent]
 })
 export class ProfileComponent implements OnInit {
 
@@ -30,7 +31,7 @@ export class ProfileComponent implements OnInit {
 
   private userLog = inject(UserLogService);
   private profileProviderService = inject(ProfileProviderService);
-  private backAccountService = inject(BackAccountProviderService);
+  private backAccountProviderService = inject(BackAccountProviderService);
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -50,13 +51,14 @@ export class ProfileComponent implements OnInit {
     this.isEdit = false;
     this.isError = false;
     this.isLoading = true;
+    console.log(this.currentUser)
     const onlyBiografyUser: User = {
       first_name: this.currentUser.first_name,
       last_name: this.currentUser.last_name
     }
     this.profileProviderService.updateUser(this.userLog.getUuidUser(), onlyBiografyUser).subscribe({
       next: ((newUserRecovered: User) => {
-        console.log('Usetente aggiornato con successo:', newUserRecovered);
+        console.log('Utente aggiornato con successo:', newUserRecovered);
         this.isError = false;
         this.isLoading = false;
       }),
@@ -66,6 +68,20 @@ export class ProfileComponent implements OnInit {
         this.isLoading = false;
       })
     })
+
+    //todo by backend
+    /*this.backAccountService.massiveUpdateBankAccountByUser(this.userLog.getUuidUser(), this.currentUser.bank_accounts as BankAccount[]).subscribe({
+      next: ((newBankAccountRecovered: BankAccount[]) => {
+        console.log('Conti bancari aggiornati con successo:', newBankAccountRecovered);
+        this.isError = false;
+        this.isLoading = false;
+      }),
+      error: (err => {
+        console.error('Si è verificato un errore durante l\'aggiornamento dei conti bancari dell\' utente:', err);
+        this.isError = true;
+        this.isLoading = false;
+      })
+    })*/
   }
 
   // Arrow function - può essere usata come lambda
@@ -95,7 +111,7 @@ export class ProfileComponent implements OnInit {
       next: (userRecovered: User) => {
         console.log('Utente recuperato con successo:', userRecovered);
         this.currentUser = userRecovered;
-        this.recoverBanckAccountsByUser();
+        this.recoverBankAccountsByUser();
       },
       error: (err) => {
         console.error('Si è verificato un errore durante il recupero delle informazioni:', err);
@@ -105,11 +121,11 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  private recoverBanckAccountsByUser() {
-    this.backAccountService.getBanckAccountByUser(this.userLog.getUuidUser()).subscribe({
+  private recoverBankAccountsByUser() {
+    this.backAccountProviderService.getBankAccountByUser(this.userLog.getUuidUser()).subscribe({
       next: (banksAccountRecovered: BankAccount[]) => {
         console.log('Bank account recuperato:', banksAccountRecovered);
-        this.currentUser.banks_account = banksAccountRecovered;
+        this.currentUser.bank_accounts = banksAccountRecovered;
         this.isLoading = false;
         this.isError = false;
       },
@@ -119,13 +135,5 @@ export class ProfileComponent implements OnInit {
         this.isError = true;
       }
     });
-  }
-
-  addBankAccount(){
-    this.currentUser.banks_account?.push({
-      name: '',
-      type: BankType.CASH,
-      amount: 0
-    })
   }
 }

@@ -11,7 +11,12 @@
 
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div class="sm:flex sm:items-start">
-                <div [ngClass]="getBackgroundClass()"
+                <div [ngClass]="
+                  getBackgroundClass() === 'yellow' ? 'bg-yellow-600': 
+                  getBackgroundClass() === 'red' ? 'bg-red-600': 
+                  getBackgroundClass() === 'green' ? 'bg-green-600': 
+                  getBackgroundClass() === 'blue' ? 'bg-blue-600': ''
+                  "
                   class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full sm:mx-0 sm:size-10">
                   <svg class="size-6" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
@@ -44,7 +49,12 @@
             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
               @if(action){
               <button type="button" id="cancelBtn" (click)="execute()"
-                [ngClass]="getBackgroundClass()"
+                [ngClass]="
+                  getBackgroundClass() === 'yellow' ? 'bg-yellow-600 hover:bg-yellow-500': 
+                  getBackgroundClass() === 'red' ? 'bg-red-600 hover:bg-red-500': 
+                  getBackgroundClass() === 'green' ? 'bg-green-600 hover:bg-green-500': 
+                  getBackgroundClass() === 'blue' ? 'bg-blue-600 hover:bg-blue-500': ''
+                "
                 class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset sm:mt-0 sm:w-auto">
                 Esegui
               </button>
