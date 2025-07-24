@@ -14,5 +14,5 @@ data class SuccessResponse<T>(
     override val message: String,
     @SerialName("content")
     @Required
-    val content: T
+    val content: T?
 ) : BaseResponse

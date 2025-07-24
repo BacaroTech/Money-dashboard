@@ -33,7 +33,7 @@ fun Application.configureUserRouting() {
 
                 val response: UUID = userService.insert(dto)
 
-                return@post call.respond(HttpStatusCode.OK, response.toString())
+                return@post call.respondSuccess("Register succeeded", response.toString())
             }
 
             post("/login") {
@@ -56,8 +56,8 @@ fun Application.configureUserRouting() {
                 val response: UserDTO? = userService.get(uuid)
 
                 return@get response?.let {
-                    call.respond(HttpStatusCode.OK, it)
-                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+                    call.respondSuccess("Find user succeeded", it)
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
 
             delete {
@@ -70,9 +70,9 @@ fun Application.configureUserRouting() {
                 val response: Int = userService.delete(uuid)
 
                 return@delete if (response == 1) {
-                    call.respond(HttpStatusCode.OK, "User deleted")
+                    call.respondSuccess<Unit>("Delete user succeeded")
                 } else {
-                    call.respond(HttpStatusCode.Forbidden, "Access denied")
+                    call.respondError(HttpStatusCode.Forbidden, "Access denied")
                 }
             }
 
@@ -89,8 +89,8 @@ fun Application.configureUserRouting() {
                 val response: UserDTO? = userService.update(uuid, dto)
 
                 return@put response?.let {
-                    call.respond(HttpStatusCode.OK, it)
-                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+                    call.respondSuccess("Update user succeeded", it)
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
         }
     }
