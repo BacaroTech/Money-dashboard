@@ -10,14 +10,14 @@ import {
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  standalone: true
+  standalone: true,
+  inputs: ['datas', 'label', 'description', 'type'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-
-  @Input() datas!: any[];
-  @Input() label!: any[];
-  @Input() description!: string;
-  @Input() type!: string;
+  datas!: any[];
+  label!: any[];
+  description!: string;
+  type!: string;
   @ViewChild('dynamicElement') element!: ElementRef;
 
   constructor() {

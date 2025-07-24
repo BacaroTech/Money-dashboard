@@ -26,4 +26,9 @@ export class ReviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isFiltersOpen: boolean = false;
+
+  toggleFilters(): void {
+    this.isFiltersOpen = !this.isFiltersOpen;
+  }
 }

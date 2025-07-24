@@ -8,18 +8,15 @@ import { Router } from '@angular/router';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
   imports: [CommonModule, FormsModule],
-  standalone: true
+  standalone: true,
+  inputs: ['title', 'text', 'type', 'action']
 })
 export class ModalComponent implements OnInit {
 
-  @Input()
-  title: string = "";
-
-  @Input()
-  text: string = "";
-
-  @Input()
-  type: "error" | "info" | "warning" | "success" | "" = "";
+  title!: string;
+  text!: string;
+  type!: "error" | "info" | "warning" | "success";
+  action!: Function;
 
   isOpenModal: boolean = true;
   mapColor: Map<string, string> = new Map([
@@ -28,8 +25,6 @@ export class ModalComponent implements OnInit {
     ["warning", "yellow"],
     ["success", "green"]
   ]);
-
-  private router: Router = inject(Router);
 
   constructor() { }
 
@@ -42,12 +37,11 @@ export class ModalComponent implements OnInit {
   }
 
   getBackgroundClass(): string {
-    const color = this.mapColor.get(this.type) || 'gray';
-    return `bg-${color}-100`;
+    const color = this.mapColor.get(this.type);
+    return `bg-${color}-600 hover:bg-${color}-400`;
   }
 
-  getIconClass(): string {
-    const color = this.mapColor.get(this.type) || 'gray';
-    return `text-${color}-600`;
+  execute() {
+    this.action();
   }
 }

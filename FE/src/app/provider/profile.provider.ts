@@ -18,7 +18,7 @@ export class ProfileProviderService {
 
   registerUser(regUser: Register): Observable<any> {
     return this.http.post(
-      this.readEnvFile.getKrakend() + '/users/register', 
+      this.readEnvFile.getKrakend() + '/users/register',
       regUser,
       { responseType: 'text' }
     );
@@ -32,15 +32,42 @@ export class ProfileProviderService {
     );
   }
 
-  getUser(uuid: string): Observable<User>{
+  getUser(uuid: string): Observable<User> {
     const headers = new HttpHeaders({
       'accept': 'application/json',
       'uuid': uuid
     });
-    
+
     return this.http.get<User>(
       this.readEnvFile.getKrakend() + '/users',
-      {headers: headers}
+      { headers: headers }
+    );
+  }
+
+  updateUser(uuid: string, user: User): Observable<User> {
+    const headers = new HttpHeaders({
+      'accept': 'application/json',
+      'uuid': uuid
+    });
+
+    return this.http.put<User>(
+      this.readEnvFile.getKrakend() + '/users',
+      user,
+      { headers: headers }
+    );
+  }
+
+  deleteUser(uuid: string): Observable<string> {
+    const headers = new HttpHeaders({
+      'uuid': uuid
+    });
+
+    return this.http.delete(
+      this.readEnvFile.getKrakend() + '/users',
+      {
+        headers: headers,
+        responseType: 'text'
+      }
     );
   }
 }
