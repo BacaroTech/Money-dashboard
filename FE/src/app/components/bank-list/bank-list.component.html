@@ -6,17 +6,22 @@
 } @else if(!isLoading && !isError){
 <section>
     @if (currentUser?.bank_accounts?.length === 0) {
-    <h2 class="text-base text-gray-800 dark:text-white mb-4 mt-4">Nesssun conto inserito, vai in modifica per inserirne uno</h2>
+    <h2 class="text-base text-gray-800 dark:text-white mb-4 mt-4">
+        Nesssun conto inserito, vai in modifica per inserirne uno
+    </h2>
     }
     @for (bankAccount of currentUser?.bank_accounts; track $index) {
     <div class="mb-6 relative">
-        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4 border border-gray-200 dark:border-gray-700">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg mb-4 border border-gray-200 dark:border-gray-700">
 
-            <button (click)="removeBankAccount($index)"
+            @if (isEdit) {
+            <button 
+                (click)="removeBankAccount($index)"
                 class="absolute top-3 right-3 text-gray-400 hover:text-red-600 text-lg font-bold focus:outline-none"
                 aria-label="Rimuovi conto">
                 ✕
             </button>
+            }
             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Conto #{{$index+1}}</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -26,7 +31,7 @@
                     }
                     @else {
                     <input [(ngModel)]="bankAccount.name" placeholder="inserisci nome del conto" type="text"
-                        class="w-full mt-2">
+                        class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid">
                     }
                 </div>
                 <div>
@@ -53,7 +58,7 @@
                     }
                     @else {
                     <input [(ngModel)]="bankAccount.amount" placeholder="inserisci l'ammontare iniziale del conto"
-                        type="number" min="0" class="w-full mt-2">
+                        type="number" min="0" class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid" [disabled]="true">
                     }
                 </div>
             </div>

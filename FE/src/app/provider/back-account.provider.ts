@@ -49,7 +49,7 @@ export class BackAccountProviderService {
       this.readEnvFile.getKrakend() + '/bank-account/' + uuid_bankAccount,
       {
         headers: headers,
-        responseType: 'text' as 'text'  // Questo va nelle opzioni, non negli headers
+        responseType: 'text' as 'text' 
       }
     );
   }

@@ -1,19 +1,19 @@
 <section class="bg-gray-50 min-h-screen">
-  <div id="mydashboard" class="min-h-screen flex flex-col md:grid md:grid-cols-12">
+  <div id="mydashboard" class="min-h-screen flex flex-col md:grid md:grid-cols-12 bg-gray-50">
 
     <!-- SIDEBAR -->
     @if (isToBeShowMenu()) {
       <!-- Desktop: sidebar laterale -->
       <div 
         id="sidebar" 
-        class="hidden md:block md:col-span-1 h-full bg-white z-20 fixed md:static">
+        class="hidden md:block md:col-span-1 h-full bg-gray-50 z-20 fixed md:static">
         <app-menu></app-menu>
       </div>
 
       <!-- Mobile: menu in alto -->
       <div 
         id="sidebar-mobile" 
-        class="block md:hidden w-full bg-white z-20">
+        class="block md:hidden w-full bg-gray-50 z-20">
         <app-menu></app-menu>
       </div>
     }
@@ -21,7 +21,7 @@
     <!-- CONTENUTO PRINCIPALE -->
     <div 
       id="background"
-      class="flex-1 md:col-span-11 transition-all duration-300 ml-0">
+      class="flex-1 md:col-span-11 transition-all duration-300 ml-0 bg-gray-50">
       <router-outlet></router-outlet>
     </div>
 

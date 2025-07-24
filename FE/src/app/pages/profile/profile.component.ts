@@ -40,11 +40,11 @@ export class ProfileComponent implements OnInit {
   }
 
   goToDelete(): void {
-    this.isShowModal = true;
+    this.isShowModal = !this.isShowModal;
   }
 
   goToEdit(): void {
-    this.isEdit = true;
+    this.isEdit = !this.isEdit;
   }
 
   goToSave(): void {
