@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ReadSettingService } from '../services/read-setting.service';
 import { BankAccount } from '../model/bankAccount';
 import { Observable } from 'rxjs';
+import { UserLogService } from '../services/user-log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,14 @@ import { Observable } from 'rxjs';
 export class BackAccountProviderService {
   private http: HttpClient = inject(HttpClient);
   private readEnvFile: ReadSettingService = inject(ReadSettingService);
+  private userLog = inject(UserLogService);
 
   constructor() { }
 
-  getBankAccountByUser(uuid: string): Observable<BankAccount[]> {
+  getBankAccountByUser(): Observable<BankAccount[]> {
     const headers = new HttpHeaders({
       'accept': 'application/json',
-      'uuid': uuid
+      'uuid': this.userLog.getUuidUser()
     });
 
     return this.http.get<BankAccount[]>(
@@ -25,28 +27,30 @@ export class BackAccountProviderService {
     );
   }
 
-  massiveUpdateBankAccountByUser(uuid_user: string, bank_accounts: BankAccount[]): Observable<BankAccount[]>{
+  massiveUpdateBankAccountByUser(bank_accounts: BankAccount[]): Observable<BankAccount[]> {
     const headers = new HttpHeaders({
       'accept': 'application/json',
-      'uuid': uuid_user
+      'uuid': this.userLog.getUuidUser()
     });
 
     return this.http.put<BankAccount[]>(
-      this.readEnvFile.getKrakend() + '/bank-account/'+uuid_user,
+      this.readEnvFile.getKrakend() + '/bank-account/',
       bank_accounts,
       { headers: headers }
     );
   }
 
-  deleteBankAccount(uuid_user: string, uuid_bankAccount: string): Observable<string>{
+  deleteBankAccount(uuid_bankAccount: string): Observable<string> {
     const headers = new HttpHeaders({
-      responseType: 'text',
-      'uuid': uuid_user
+      'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.delete<string>(
-      this.readEnvFile.getKrakend() + '/bank-account/'+uuid_bankAccount,
-      { headers: headers }
+    return this.http.delete(
+      this.readEnvFile.getKrakend() + '/bank-account/' + uuid_bankAccount,
+      {
+        headers: headers,
+        responseType: 'text' as 'text'  // Questo va nelle opzioni, non negli headers
+      }
     );
   }
 }

@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit {
       first_name: this.currentUser.first_name,
       last_name: this.currentUser.last_name
     }
-    this.profileProviderService.updateUser(this.userLog.getUuidUser(), onlyBiografyUser).subscribe({
+    this.profileProviderService.updateUser(onlyBiografyUser).subscribe({
       next: ((newUserRecovered: User) => {
         console.log('Utente aggiornato con successo:', newUserRecovered);
         this.isError = false;
@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
     })
 
     //todo by backend
-    /*this.backAccountService.massiveUpdateBankAccountByUser(this.userLog.getUuidUser(), this.currentUser.bank_accounts as BankAccount[]).subscribe({
+    /*this.backAccountService.massiveUpdateBankAccountByUser(this.currentUser.bank_accounts as BankAccount[]).subscribe({
       next: ((newBankAccountRecovered: BankAccount[]) => {
         console.log('Conti bancari aggiornati con successo:', newBankAccountRecovered);
         this.isError = false;
@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit {
     this.isLoading = true;
     this.isError = false;
 
-    this.profileProviderService.deleteUser(this.userLog.getUuidUser()).subscribe({
+    this.profileProviderService.deleteUser().subscribe({
       next: (uuidDelete: string) => {
         console.log('Utente cancellato con successo:', uuidDelete);
         this.isError = false;
@@ -107,7 +107,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private recoverUserInfo(){
-    this.profileProviderService.getUser(this.userLog.getUuidUser()).subscribe({
+    this.profileProviderService.getUser().subscribe({
       next: (userRecovered: User) => {
         console.log('Utente recuperato con successo:', userRecovered);
         this.currentUser = userRecovered;
@@ -122,7 +122,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private recoverBankAccountsByUser() {
-    this.backAccountProviderService.getBankAccountByUser(this.userLog.getUuidUser()).subscribe({
+    this.backAccountProviderService.getBankAccountByUser().subscribe({
       next: (banksAccountRecovered: BankAccount[]) => {
         console.log('Bank account recuperato:', banksAccountRecovered);
         this.currentUser.bank_accounts = banksAccountRecovered;

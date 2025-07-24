@@ -22,7 +22,6 @@ export class BankListComponent {
   isLoading: boolean = false;
   isError: boolean = false;
 
-  private userLog = inject(UserLogService);
   private backAccountProviderService = inject(BackAccountProviderService);
   public bankAccountTypeService = inject(BankAccountTypeService);
 
@@ -31,23 +30,22 @@ export class BankListComponent {
       if(this.currentUser.bank_accounts[index].uuid){
         this.isLoading = true;
         this.isError = false;
-        this.backAccountProviderService.deleteBankAccount(this.userLog.getUuidUser(), this.currentUser.bank_accounts[index].uuid).subscribe(
+        this.backAccountProviderService.deleteBankAccount(this.currentUser.bank_accounts[index].uuid).subscribe(
           {
             next: ((uuidBankAccountDeleted: string) => {
-              console.error("Cancellazione del conto corrente avvenuta con successo", uuidBankAccountDeleted);
+              console.log("Cancellazione del conto corrente avvenuta con successo", uuidBankAccountDeleted);
               this.isError = false;
-              this.isLoading = true;
+              this.isLoading = false;
             }),
             error:((err) => {
               console.error("Errore durante l\'eliminazione del conto corrente:", err);
               this.isError = true;
-              this.isLoading = true;
+              this.isLoading = false;
             })
           }
         )
-      }else{
-        this.currentUser?.bank_accounts?.splice(index, 1);
       }
+      this.currentUser?.bank_accounts?.splice(index, 1);
     }
   }
 

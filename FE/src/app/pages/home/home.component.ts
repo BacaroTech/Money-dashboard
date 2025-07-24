@@ -25,15 +25,13 @@ export class HomeComponent implements OnInit {
   currentUser!: User;
 
   private user: ProfileProviderService = inject(ProfileProviderService);
-  private userLog: UserLogService = inject(UserLogService);
 
   constructor() { }
 
   ngOnInit(): void {
     this.isLoading = true;
     this.isError = false;
-    const uuid = this.userLog.getUuidUser();
-    this.user.getUser(uuid).
+    this.user.getUser().
     subscribe(
       {
         next: (user: User) => {

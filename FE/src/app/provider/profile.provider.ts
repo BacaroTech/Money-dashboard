@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Register } from '../model/register';
 import { Login } from '../model/login';
 import { User } from '../model/user';
+import { UserLogService } from '../services/user-log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class ProfileProviderService {
 
   private http: HttpClient = inject(HttpClient);
   private readEnvFile: ReadSettingService = inject(ReadSettingService);
+  private userLog = inject(UserLogService);
 
   constructor() { }
 
@@ -32,10 +34,10 @@ export class ProfileProviderService {
     );
   }
 
-  getUser(uuid: string): Observable<User> {
+  getUser(): Observable<User> {
     const headers = new HttpHeaders({
       'accept': 'application/json',
-      'uuid': uuid
+      'uuid': this.userLog.getUuidUser()
     });
 
     return this.http.get<User>(
@@ -44,10 +46,10 @@ export class ProfileProviderService {
     );
   }
 
-  updateUser(uuid: string, user: User): Observable<User> {
+  updateUser(user: User): Observable<User> {
     const headers = new HttpHeaders({
       'accept': 'application/json',
-      'uuid': uuid
+      'uuid': this.userLog.getUuidUser()
     });
 
     return this.http.put<User>(
@@ -57,16 +59,16 @@ export class ProfileProviderService {
     );
   }
 
-  deleteUser(uuid: string): Observable<string> {
+  deleteUser(): Observable<string> {
     const headers = new HttpHeaders({
-      'uuid': uuid
+      'uuid': this.userLog.getUuidUser()
     });
 
     return this.http.delete(
       this.readEnvFile.getKrakend() + '/users',
       {
         headers: headers,
-        responseType: 'text'
+        responseType: 'text' as 'text'
       }
     );
   }
