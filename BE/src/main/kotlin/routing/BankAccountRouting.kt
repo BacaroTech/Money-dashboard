@@ -9,6 +9,8 @@ import io.ktor.server.routing.*
 import mft.dev.dto.bankaccount.BankAccountDTO
 import mft.dev.dto.bankaccount.InsertBankAccountDTO
 import mft.dev.dto.bankaccount.UpdateBankAccountDTO
+import mft.dev.response.respondError
+import mft.dev.response.respondSuccess
 import mft.dev.service.impl.BankAccountService
 import org.koin.ktor.ext.inject
 import java.util.*
@@ -31,8 +33,8 @@ fun Application.configureBankAccountRouting() {
                 val response: UUID? = bankAccountService.insert(userUuid, dto)
 
                 return@post response?.let {
-                    call.respond(HttpStatusCode.OK, it.toString())
-                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+                    call.respondSuccess("Insert bank account succeeded", it.toString())
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
 
             get {
@@ -46,8 +48,8 @@ fun Application.configureBankAccountRouting() {
                 val response: List<BankAccountDTO>? = bankAccountService.getByUserUuid(userUuid)
 
                 return@get response?.let {
-                    call.respond(HttpStatusCode.OK, it)
-                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+                    call.respondSuccess("Find bank account succeeded", it)
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
 
             delete("/{uuid}") {
@@ -67,12 +69,12 @@ fun Application.configureBankAccountRouting() {
 
                 return@delete response?.let {
                     if (it == 1) {
-                        call.respond(HttpStatusCode.OK, "Bank Account deleted")
+                        call.respondSuccess<Unit>( "Bank Account deleted")
                     }
                     else {
-                        call.respond(HttpStatusCode.NotFound, "Bank Account not found")
+                        call.respondError(HttpStatusCode.NotFound, "Bank Account not found")
                     }
-                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
         }
 
@@ -94,8 +96,8 @@ fun Application.configureBankAccountRouting() {
             val response: BankAccountDTO? = bankAccountService.update(userUuid, bankAccountUuid, dto)
 
             return@put response?.let {
-                call.respond(HttpStatusCode.OK, it)
-            } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+                call.respondSuccess("Update bank account succeded", it)
+            } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
         }
     }
 }

@@ -6,10 +6,13 @@ import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import mft.dev.dto.response.BaseResponse
 import mft.dev.dto.user.InsertUserDTO
 import mft.dev.dto.user.LoginDTO
 import mft.dev.dto.user.UpdateUserDTO
 import mft.dev.dto.user.UserDTO
+import mft.dev.response.respondError
+import mft.dev.response.respondSuccess
 import mft.dev.service.impl.UserService
 import org.koin.ktor.ext.inject
 import java.util.UUID
@@ -30,17 +33,17 @@ fun Application.configureUserRouting() {
 
                 val response: UUID = userService.insert(dto)
 
-                return@post call.respond(HttpStatusCode.OK, response.toString())
+                return@post call.respondSuccess("Register succeeded", response.toString())
             }
 
             post("/login") {
                 val dto: LoginDTO = call.receive<LoginDTO>()
 
-                val response: UUID? = userService.login(dto)
+                val content: UUID? = userService.login(dto)
 
-                return@post response?.let {
-                    call.respond(HttpStatusCode.OK, it.toString())
-                } ?: call.respond(HttpStatusCode.Forbidden, "Authentication failed")
+                return@post content?.let {
+                    call.respondSuccess("Login succeeded", it.toString())
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Authentication Failed")
             }
 
             get {
@@ -53,8 +56,8 @@ fun Application.configureUserRouting() {
                 val response: UserDTO? = userService.get(uuid)
 
                 return@get response?.let {
-                    call.respond(HttpStatusCode.OK, it)
-                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+                    call.respondSuccess("Find user succeeded", it)
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
 
             delete {
@@ -67,9 +70,9 @@ fun Application.configureUserRouting() {
                 val response: Int = userService.delete(uuid)
 
                 return@delete if (response == 1) {
-                    call.respond(HttpStatusCode.OK, "User deleted")
+                    call.respondSuccess<Unit>("Delete user succeeded")
                 } else {
-                    call.respond(HttpStatusCode.Forbidden, "Access denied")
+                    call.respondError(HttpStatusCode.Forbidden, "Access denied")
                 }
             }
 
@@ -86,8 +89,8 @@ fun Application.configureUserRouting() {
                 val response: UserDTO? = userService.update(uuid, dto)
 
                 return@put response?.let {
-                    call.respond(HttpStatusCode.OK, it)
-                } ?: call.respond(HttpStatusCode.Forbidden, "Access denied")
+                    call.respondSuccess("Update user succeeded", it)
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
         }
     }
