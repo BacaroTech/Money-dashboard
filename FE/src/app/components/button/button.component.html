@@ -1,0 +1,6 @@
+<button type="button" (click)="onClickFoo()"
+    [ngClass]="'text-white bg-' + buttonBackgroundColor + '-700 hover:bg-' + buttonBackgroundColor + '-800 focus:ring-4 focus:outline-none focus:ring-' + buttonBackgroundColor + '-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-' + buttonBackgroundColor + '-600 dark:hover:bg-' + buttonBackgroundColor + '-700 dark:focus:ring-' + buttonBackgroundColor + '-800'">
+    <div [innerHTML]="buttonIconSVG" class="mr-2" style="width: 1.5rem; height: 1.5rem;"></div>
+
+    {{buttonText}}
+</button>

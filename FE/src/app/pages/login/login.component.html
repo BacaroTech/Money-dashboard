@@ -1,7 +1,7 @@
 @if (isLoading && !isError) {
 <app-loader></app-loader>
 } @else if (!isLoading && isError) {
-<app-error-message-label [errorMessage]="'Errore durante la fase di login, credenziali errate'">
+<app-error-message-label [errorMessage]="'Errore durante la fase di login, credenziali errate o utente insesistente'">
 </app-error-message-label>
 }
 <section class="dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center">
