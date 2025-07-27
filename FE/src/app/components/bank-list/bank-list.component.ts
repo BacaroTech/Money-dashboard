@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BankType } from 'src/app/enum/backEnum';
 import { User } from 'src/app/model/user';
@@ -8,6 +8,7 @@ import { UserLogService } from 'src/app/services/user-log.service';
 import { ErrorMessageLabelComponent } from "../error-message-label/error-message-label.component";
 import { LoaderComponent } from "../loader/loader.component";
 import { BankAccountTypeService } from 'src/app/services/bank-account-type.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bank-list',
@@ -16,14 +17,22 @@ import { BankAccountTypeService } from 'src/app/services/bank-account-type.servi
   imports: [CommonModule, FormsModule, ErrorMessageLabelComponent, LoaderComponent],
   inputs: ['currentUser', 'isEdit']
 })
-export class BankListComponent {
+export class BankListComponent implements OnInit {
   currentUser?: User;
   isEdit: boolean = false;
   isLoading: boolean = false;
   isError: boolean = false;
+  isRegister: boolean = false;
 
   private backAccountProviderService = inject(BackAccountProviderService);
   public bankAccountTypeService = inject(BankAccountTypeService);
+  private router = inject(Router);
+
+  ngOnInit(): void {
+    if(this.router.url.includes('register')){
+      this.isRegister = true;
+    }
+  }
 
   removeBankAccount(index: number){
     if(this.currentUser?.bank_accounts){

@@ -58,7 +58,8 @@
                     }
                     @else {
                     <input [(ngModel)]="bankAccount.amount" placeholder="inserisci l'ammontare iniziale del conto"
-                        type="number" min="0" class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid" [disabled]="true">
+                        type="number" min="0" class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid" 
+                        [disabled]="!isRegister">
                     }
                 </div>
             </div>
