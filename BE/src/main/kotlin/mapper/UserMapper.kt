@@ -6,6 +6,7 @@ import mft.dev.entity.UserEntity
 fun UserEntity.toUserDTO(): UserDTO {
     return UserDTO(
         firstName,
-        lastName
+        lastName,
+        email
     )
 }

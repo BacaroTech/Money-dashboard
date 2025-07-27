@@ -11,5 +11,8 @@ data class UserDTO(
     val firstName: String,
     @SerialName("last_name")
     @Required
-    val lastName: String
+    val lastName: String,
+    @SerialName("email")
+    @Required
+    val email: String
 )
