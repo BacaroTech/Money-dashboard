@@ -6,10 +6,10 @@ import mft.dev.enums.BankAccountType
 
 @Serializable
 data class UpdateBankAccountDTO(
+    @SerialName("uuid")
+    val uuid: String?,
     @SerialName("name")
     val name: String?,
     @SerialName("type")
-    val type: BankAccountType?,
-    @SerialName("amount")
-    val amount: Double?
+    val type: BankAccountType?
 )

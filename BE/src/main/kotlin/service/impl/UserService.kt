@@ -6,13 +6,16 @@ import mft.dev.dto.user.LoginDTO
 import mft.dev.dto.user.UpdateUserDTO
 import mft.dev.dto.user.UserDTO
 import mft.dev.entity.BankAccountEntity
+import mft.dev.entity.OperationEntity
 import mft.dev.entity.UserEntity
+import mft.dev.enums.OperationCategory
 import mft.dev.mapper.toUserDTO
 import mft.dev.service.IUserService
 import mft.dev.table.UserTable
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.mindrot.jbcrypt.BCrypt
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -28,11 +31,18 @@ class UserService : IUserService {
 
             dto.bankAccountsDTO?.let {
                 it.forEach {
-                    BankAccountEntity.new {
+                    val bankAccount = BankAccountEntity.new {
                         name = it.name
                         type = it.type
-                        amount = it.amount
                         userEntity = insertedUserEntity
+                    }
+
+                    OperationEntity.new {
+                        category = OperationCategory.INCOMING
+                        amount = it.amount
+                        description = "Versamento iniziale"
+                        date = LocalDate.now()
+                        bankAccountEntity = bankAccount
                     }
                 }
             }
