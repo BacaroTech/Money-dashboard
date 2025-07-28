@@ -13,985 +13,71 @@ servers:
   - url: http://localhost:8081/moneydashboard/api/v1/
     description: Docker server
 
-paths:
-  /users/register:
-    post:
-      summary: Register a new user
-      description: Creates a new user account with the provided information
-      operationId: registerUser
-      tags:
-        - Users
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InsertUserDTO'
-            example:
-              first_name: "John"
-              last_name: "Doe"
-              email: "john.doe@example.com"
-              confirm_email: "john.doe@example.com"
-              password: "securePassword123"
-              bank_account:
-                - name: "My Savings Account"
-                  type: "DIGITAL"
-                - name: "My Cash Account"
-                  type: "CASH"
-      responses:
-        '200':
-          description: User successfully registered
-          content:
-            application/json:
-              schema:
-                type: string
-                format: uuid
-                description: UUID of the created user
-              example: "550e8400-e29b-41d4-a716-446655440000"
-        '400':
-          description: Invalid request data or email confirmation mismatch
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-              examples:
-                validation_error:
-                  summary: Validation error
-                  value:
-                    message: "Email and Confirm email must be equals"
-                    code: 400
-        '409':
-          description: User already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /users/login:
-    post:
-      summary: Authenticate user credentials
-      description: Validates user credentials and returns a UUID for authentication
-      operationId: loginUser
-      tags:
-        - Users
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginDTO'
-            example:
-              email: "john.doe@example.com"
-              password: "securePassword123"
-      responses:
-        '200':
-          description: Login successful
-          content:
-            application/json:
-              schema:
-                type: string
-                format: uuid
-                description: User UUID for authentication
-              example: "550e8400-e29b-41d4-a716-446655440000"
-        '400':
-          description: Invalid request data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '403':
-          description: Authentication failed
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Authentication failed"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /users:
-    get:
-      summary: Get current user information
-      description: Retrieves user information based on the UUID provided in the header
-      operationId: getCurrentUser
-      tags:
-        - Users
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-      responses:
-        '200':
-          description: User information retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDTO'
-              example:
-                first_name: "John"
-                last_name: "Doe"
-        '400':
-          description: Invalid UUID format or missing UUID header
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied - invalid or missing UUID
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    put:
-      summary: Update user information
-      description: Updates the authenticated user's information
-      operationId: updateUser
-      tags:
-        - Users
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateUserDTO'
-            example:
-              first_name: "Jane"
-              last_name: "Smith"
-      responses:
-        '200':
-          description: User updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDTO'
-              example:
-                first_name: "Jane"
-                last_name: "Smith"
-        '400':
-          description: Invalid request data or UUID format
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    delete:
-      summary: Delete user account
-      description: Deletes the authenticated user's account
-      operationId: deleteUser
-      tags:
-        - Users
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-      responses:
-        '200':
-          description: User deleted successfully
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Success message
-              example: "User deleted"
-        '400':
-          description: Invalid UUID format or missing UUID header
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /bank-account:
-    post:
-      summary: Create a new bank account
-      description: Creates a new bank account for the authenticated user
-      operationId: createBankAccount
-      tags:
-        - Bank Accounts
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InsertBankAccountDTO'
-            example:
-              name: "My Savings Account"
-              type: "DIGITAL"
-      responses:
-        '200':
-          description: Bank account successfully created
-          content:
-            application/json:
-              schema:
-                type: string
-                format: uuid
-                description: UUID of the created bank account
-              example: "123e4567-e89b-12d3-a456-426614174000"
-        '400':
-          description: Invalid request data or UUID format
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    get:
-      summary: Get user's bank accounts
-      description: Retrieves all bank accounts for the authenticated user
-      operationId: getUserBankAccounts
-      tags:
-        - Bank Accounts
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-      responses:
-        '200':
-          description: Bank accounts retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BankAccountDTO'
-              example:
-                - uuid: "123e4567-e89b-12d3-a456-426614174000"
-                  name: "My Savings Account"
-                  type: "DIGITAL"
-                - uuid: "987fcdeb-51d2-43a8-b123-123456789abc"
-                  name: "My Cash Account"
-                  type: "CASH"
-        '400':
-          description: Invalid UUID format or missing UUID header
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /bank-account/{uuid}:
-    put:
-      summary: Update a bank account
-      description: Updates a specific bank account owned by the authenticated user
-      operationId: updateBankAccount
-      tags:
-        - Bank Accounts
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-        - name: uuid
-          in: path
-          required: true
-          description: Bank account UUID to update
-          schema:
-            type: string
-            format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateBankAccountDTO'
-            example:
-              name: "Updated Savings Account"
-              type: "CASH"
-      responses:
-        '200':
-          description: Bank account updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BankAccountDTO'
-              example:
-                uuid: "123e4567-e89b-12d3-a456-426614174000"
-                name: "Updated Savings Account"
-                type: "CASH"
-        '400':
-          description: Invalid request data or UUID format
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    delete:
-      summary: Delete a bank account
-      description: Deletes a specific bank account owned by the authenticated user
-      operationId: deleteBankAccount
-      tags:
-        - Bank Accounts
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-        - name: uuid
-          in: path
-          required: true
-          description: Bank account UUID to delete
-          schema:
-            type: string
-            format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-      responses:
-        '200':
-          description: Bank account deleted successfully
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Success message
-              example: "Bank Account deleted"
-        '400':
-          description: Invalid UUID format or missing UUID
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access denied"
-        '404':
-          description: Bank account not found
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Bank Account not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /operations/bank-account/{bankAccountUuid}:
-    post:
-      summary: Create a new operation
-      description: Creates a new operation for a specific bank account
-      operationId: createOperation
-      tags:
-        - Operations
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-        - name: bankAccountUuid
-          in: path
-          required: true
-          description: Bank account UUID
-          schema:
-            type: string
-            format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InsertOperationDTO'
-            example:
-              amount: 10050
-              description: "Monthly salary"
-              category: "INCOMING"
-              date: "2024-01-15"
-      responses:
-        '200':
-          description: Operation successfully created
-          content:
-            application/json:
-              schema:
-                type: string
-                format: uuid
-                description: UUID of the created operation
-              example: "789e4567-e89b-12d3-a456-426614174000"
-        '400':
-          description: Invalid request data or UUID format
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access Denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    get:
-      summary: Get operations for a bank account
-      description: Retrieves all operations for a specific bank account with pagination support
-      operationId: getOperationsByBankAccount
-      tags:
-        - Operations
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-        - name: bankAccountUuid
-          in: path
-          required: true
-          description: Bank account UUID
-          schema:
-            type: string
-            format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-        - name: pageNumber
-          in: query
-          required: false
-          description: Page number for pagination
-          schema:
-            type: integer
-            minimum: 1
-            default: 1
-          example: 1
-        - name: pageSize
-          in: query
-          required: false
-          description: Number of items per page
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-            default: 10
-          example: 10
-      responses:
-        '200':
-          description: Operations retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OperationDTO'
-              example:
-                - uuid: "789e4567-e89b-12d3-a456-426614174000"
-                  amount: 10050
-                  description: "Monthly salary"
-                  category: "INCOMING"
-                  date: "2024-01-15"
-                - uuid: "456e7890-e89b-12d3-a456-426614174000"
-                  amount: 5000
-                  description: "Grocery shopping"
-                  category: "OUTCOMING"
-                  date: "2024-01-16"
-        '400':
-          description: Invalid UUID format or missing UUID header
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access Denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /operations/{uuid}/bank-account/{bankAccountUuid}:
-    get:
-      summary: Get a specific operation
-      description: Retrieves a specific operation by its UUID
-      operationId: getOperationByUuid
-      tags:
-        - Operations
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-        - name: uuid
-          in: path
-          required: true
-          description: Operation UUID
-          schema:
-            type: string
-            format: uuid
-          example: "789e4567-e89b-12d3-a456-426614174000"
-        - name: bankAccountUuid
-          in: path
-          required: true
-          description: Bank account UUID
-          schema:
-            type: string
-            format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-      responses:
-        '200':
-          description: Operation retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OperationDTO'
-              example:
-                uuid: "789e4567-e89b-12d3-a456-426614174000"
-                amount: 10050
-                description: "Monthly salary"
-                category: "INCOMING"
-                date: "2024-01-15"
-        '400':
-          description: Invalid UUID format or missing UUID header
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access Denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    put:
-      summary: Update an operation
-      description: Updates a specific operation
-      operationId: updateOperation
-      tags:
-        - Operations
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-        - name: uuid
-          in: path
-          required: true
-          description: Operation UUID
-          schema:
-            type: string
-            format: uuid
-          example: "789e4567-e89b-12d3-a456-426614174000"
-        - name: bankAccountUuid
-          in: path
-          required: true
-          description: Bank account UUID
-          schema:
-            type: string
-            format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateOperationDTO'
-            example:
-              amount: 15075
-              description: "Updated monthly salary"
-              category: "INCOMING"
-              date: "2024-01-15"
-      responses:
-        '200':
-          description: Operation updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OperationDTO'
-              example:
-                uuid: "789e4567-e89b-12d3-a456-426614174000"
-                amount: 15075
-                description: "Updated monthly salary"
-                category: "INCOMING"
-                date: "2024-01-15"
-        '400':
-          description: Invalid request data or UUID format
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access Denied"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    delete:
-      summary: Delete an operation
-      description: Deletes a specific operation
-      operationId: deleteOperation
-      tags:
-        - Operations
-      parameters:
-        - name: uuid
-          in: header
-          required: true
-          description: User UUID for authentication
-          schema:
-            type: string
-            format: uuid
-          example: "550e8400-e29b-41d4-a716-446655440000"
-        - name: uuid
-          in: path
-          required: true
-          description: Operation UUID
-          schema:
-            type: string
-            format: uuid
-          example: "789e4567-e89b-12d3-a456-426614174000"
-        - name: bankAccountUuid
-          in: path
-          required: true
-          description: Bank account UUID
-          schema:
-            type: string
-            format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-      responses:
-        '200':
-          description: Operation deleted successfully
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Success message
-              example: "Operation deleted"
-        '400':
-          description: Invalid UUID format or missing UUID header
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Invalid uuid"
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Access Denied"
-        '404':
-          description: Operation not found
-          content:
-            application/json:
-              schema:
-                type: string
-                description: Error message
-              example: "Operation not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
 components:
   schemas:
-    BankAccountDTO:
+    BaseResponse:
       type: object
       required:
-        - uuid
-        - name
-        - type
+        - status_code
+        - message
       properties:
-        uuid:
-          type: string
-          format: uuid
-          description: Bank account UUID
-          example: "123e4567-e89b-12d3-a456-426614174000"
-        name:
-          type: string
-          description: Bank account name
-          example: "My Savings Account"
-        type:
-          $ref: '#/components/schemas/BankAccountType'
-      additionalProperties: false
-
-    InsertBankAccountDTO:
-      type: object
-      required:
-        - name
-        - type
-      properties:
-        name:
-          type: string
-          description: Bank account name
-          example: "My Savings Account"
-        type:
-          $ref: '#/components/schemas/BankAccountType'
-      additionalProperties: false
-
-    UpdateBankAccountDTO:
-      type: object
-      properties:
-        name:
-          type: string
-          nullable: true
-          description: Bank account name
-          example: "Updated Savings Account"
-        type:
-          allOf:
-            - $ref: '#/components/schemas/BankAccountType'
-            - nullable: true
-          description: Type of bank account
-      additionalProperties: false
-
-    BankAccountType:
-      type: string
-      enum:
-        - DIGITAL
-        - CASH
-      description: Type of bank account
-      example: "DIGITAL"
-
-    OperationDTO:
-      type: object
-      required:
-        - uuid
-        - category
-        - amount
-        - date
-      properties:
-        uuid:
-          type: string
-          format: uuid
-          description: Operation UUID
-          example: "789e4567-e89b-12d3-a456-426614174000"
-        category:
-          $ref: '#/components/schemas/OperationCategory'
-        amount:
+        status_code:
           type: integer
-          description: Operation amount in cents
-          example: 10050
-        description:
+          description: HTTP status code
+        message:
           type: string
-          nullable: true
-          description: Operation description
-          example: "Monthly salary"
-        date:
-          type: string
-          format: date
-          description: Operation date
-          example: "2024-01-15"
-      additionalProperties: false
+          description: Descriptive response message
 
-    InsertOperationDTO:
+    ErrorResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+
+    UserDTO:
       type: object
-      required:
-        - category
-        - amount
-        - date
+      required: [first_name, last_name, email]
       properties:
-        category:
-          $ref: '#/components/schemas/OperationCategory'
-        amount:
-          type: integer
-          description: Operation amount in cents
-          example: 10050
-        description:
+        first_name:
           type: string
-          nullable: true
-          description: Operation description
-          example: "Monthly salary"
-        date:
+        last_name:
           type: string
-          format: date
-          description: Operation date
-          example: "2024-01-15"
-      additionalProperties: false
+        email:
+          type: string
+
+    UpdateUserDTO:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+
+    LoginDTO:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    InsertUserDTO:
+      type: object
+      required: [first_name, last_name, email, confirm_email, password]
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        confirm_email:
+          type: string
+        password:
+          type: string
+        bank_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsertBankAccountDTO'
 
     UpdateOperationDTO:
       type: object
@@ -999,143 +85,223 @@ components:
         category:
           $ref: '#/components/schemas/OperationCategory'
         amount:
-          type: integer
-          description: Operation amount in cents
-          example: 15075
+          type: number
         description:
           type: string
-          nullable: true
-          description: Operation description
-          example: "Updated monthly salary"
         date:
           type: string
           format: date
-          description: Operation date
-          example: "2024-01-15"
-      additionalProperties: false
+
+    OperationDTO:
+      type: object
+      required: [uuid, category, amount, date]
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        category:
+          $ref: '#/components/schemas/OperationCategory'
+        amount:
+          type: number
+        description:
+          type: string
+        date:
+          type: string
+          format: date
+
+    InsertOperationDTO:
+      type: object
+      required: [category, amount, date]
+      properties:
+        category:
+          $ref: '#/components/schemas/OperationCategory'
+        amount:
+          type: number
+        description:
+          type: string
+        date:
+          type: string
+          format: date
+
+    UpdateBankAccountDTO:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/BankAccountType'
+        amount:
+          type: number
+
+    InsertBankAccountDTO:
+      type: object
+      required: [name, type, amount]
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/BankAccountType'
+        amount:
+          type: number
+
+    BankAccountDTO:
+      type: object
+      required: [uuid, name, type, amount]
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/BankAccountType'
+        amount:
+          type: number
 
     OperationCategory:
       type: string
-      enum:
-        - INCOMING
-        - OUTCOMING
-      description: Category of operation
-      example: "INCOMING"
+      enum: [INCOMING, OUTCOMING]
 
-    UserDTO:
+    BankAccountType:
+      type: string
+      enum: [CASH, DIGITAL]
+
+    SuccessResponseString:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              type: string
+              nullable: true
+              description: Result content
+
+    SuccessResponseUserDTO:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              $ref: '#/components/schemas/UserDTO'
+
+    SuccessResponseUUID:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              type: string
+              format: uuid
+              description: UUID result
+
+    SuccessResponseUnit:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              nullable: true
+              description: No content
+
+    SuccessResponseUserList:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserDTO'
+
+    SuccessResponseBankAccountDTO:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              $ref: '#/components/schemas/BankAccountDTO'
+
+    SuccessResponseBankAccountList:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/BankAccountDTO'
+
+    SuccessResponseOperationDTO:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              $ref: '#/components/schemas/OperationDTO'
+
+    SuccessResponseOperationList:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/OperationDTO'
+
+    SuccessResponsePaginatedOperations:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              $ref: '#/components/schemas/PaginationDTO'
+
+    PaginationDTO:
       type: object
       required:
-        - first_name
-        - last_name
+        - items
+        - totalPages
+        - totalElements
       properties:
-        first_name:
-          type: string
-          description: User's first name
-          example: "John"
-        last_name:
-          type: string
-          description: User's last name
-          example: "Doe"
-      additionalProperties: false
-
-    LoginDTO:
-      type: object
-      required:
-        - email
-        - password
-      properties:
-        email:
-          type: string
-          format: email
-          description: User's email address
-          example: "john.doe@example.com"
-        password:
-          type: string
-          format: password
-          description: User's password
-          example: "securePassword123"
-      additionalProperties: false
-
-    InsertUserDTO:
-      type: object
-      required:
-        - first_name
-        - last_name
-        - email
-        - confirm_email
-        - password
-      properties:
-        first_name:
-          type: string
-          description: User's first name
-          example: "John"
-        last_name:
-          type: string
-          description: User's last name
-          example: "Doe"
-        email:
-          type: string
-          format: email
-          description: User's email address
-          example: "john.doe@example.com"
-        confirm_email:
-          type: string
-          format: email
-          description: Email confirmation - must match email field
-          example: "john.doe@example.com"
-        password:
-          type: string
-          format: password
-          description: User's password
-          example: "securePassword123"
-        bank_account:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/InsertBankAccountDTO'
-          nullable: true
-          description: Optional list of bank accounts to create during registration
-          example:
-            - name: "My Savings Account"
-              type: "DIGITAL"
-            - name: "My Cash Account"
-              type: "CASH"
-      additionalProperties: false
-
-    UpdateUserDTO:
-      type: object
-      properties:
-        first_name:
-          type: string
-          nullable: true
-          description: User's first name
-          example: "Jane"
-        last_name:
-          type: string
-          nullable: true
-          description: User's last name
-          example: "Smith"
-      additionalProperties: false
-
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: "An error occurred"
-        code:
+            $ref: '#/components/schemas/OperationDTO'
+        totalPages:
           type: integer
-          description: Error code
-          example: 400
-      required:
-        - message
+        totalElements:
+          type: integer
 
-  securitySchemes:
-    UuidAuth:
-      type: apiKey
-      in: header
-      name: uuid
-      description: UUID-based authentication
+securitySchemes:
+  UuidAuth:
+    type: apiKey
+    in: header
+    name: uuid
+    description: UUID-based authentication
 
 security:
   - UuidAuth: []
@@ -1147,3 +313,325 @@ tags:
     description: Bank account management operations
   - name: Operations
     description: Financial operation management
+
+paths:
+  /users/register:
+    post:
+      tags: [Users]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertUserDTO'
+      responses:
+        '200':
+          description: Register succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUUID'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/login:
+    post:
+      tags: [Users]
+      summary: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDTO'
+      responses:
+        '200':
+          description: Login succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUUID'
+        '403':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users:
+    get:
+      tags: [Users]
+      summary: Get user info
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUserDTO'
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags: [Users]
+      summary: Delete user
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUnit'
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags: [Users]
+      summary: Update user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDTO'
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUserDTO'
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /bank-accounts:
+    post:
+      tags: [Bank Accounts]
+      summary: Create new bank account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertBankAccountDTO'
+      responses:
+        '200':
+          description: Insert succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUUID'
+    get:
+      tags: [Bank Accounts]
+      summary: Get all bank accounts for user
+      responses:
+        '200':
+          description: Bank accounts found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseBankAccountList'
+    put:
+      tags: [Bank Accounts]
+      summary: Bulk update bank accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBankAccountDTO'
+      responses:
+        '200':
+          description: Update succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseBankAccountList'
+
+  /bank-accounts/{uuid}:
+    delete:
+      tags: [Bank Accounts]
+      summary: Delete a bank account
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Bank account deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUnit'
+    put:
+      tags: [Bank Accounts]
+      summary: Update a bank account
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBankAccountDTO'
+      responses:
+        '200':
+          description: Bank account updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseBankAccountDTO'
+
+  /operations/bank-account/{bankAccountUuid}:
+    post:
+      tags: [Operations]
+      summary: Add a new operation to a bank account
+      parameters:
+        - in: path
+          name: bankAccountUuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertOperationDTO'
+      responses:
+        '200':
+          description: Insert operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUUID'
+    get:
+      tags: [Operations]
+      summary: Get paginated operations for a bank account
+      parameters:
+        - in: path
+          name: bankAccountUuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: pageNumber
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Operations fetched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponsePaginatedOperations'
+
+  /operations/{uuid}/bank-account/{bankAccountUuid}:
+    get:
+      tags: [Operations]
+      summary: Get operation by UUID
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: path
+          name: bankAccountUuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Operation found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseOperationDTO'
+    put:
+      tags: [Operations]
+      summary: Update operation by UUID
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: path
+          name: bankAccountUuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOperationDTO'
+      responses:
+        '200':
+          description: Operation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseOperationDTO'
+    delete:
+      tags: [Operations]
+      summary: Delete operation by UUID
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: path
+          name: bankAccountUuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Operation deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponseUnit'
