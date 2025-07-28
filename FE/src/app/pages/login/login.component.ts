@@ -23,6 +23,7 @@ export class LoginComponent {
     email: '',
     password: ''
   };
+  errorMessage: string = "";
 
   private router: Router = inject(Router);
   public utils: UtilsService = inject(UtilsService);
@@ -45,7 +46,8 @@ export class LoginComponent {
           this.isLoading = false;
         }, 
         error: (err) => {
-          console.error("Si è verirficato un errore durante la login: ", err);
+          this.errorMessage = "Si è verirficato un errore durante la login";
+          console.error(this.errorMessage+":", err);
           this.isError = true;
           this.isLoading = false;
         }

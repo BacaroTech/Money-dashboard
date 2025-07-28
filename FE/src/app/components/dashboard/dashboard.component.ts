@@ -5,6 +5,7 @@ import {
   ChartItem, Decimation, DoughnutController, Filler, Legend, LineController, LineElement,
   LinearScale, PointElement, PolarAreaController, RadialLinearScale, Title, Tooltip, registerables
 } from 'chart.js';
+import { ErrorMessageLabelComponent } from "../error-message-label/error-message-label.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +13,7 @@ import {
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
   inputs: ['datas', 'label', 'description', 'type'],
+  imports: [ErrorMessageLabelComponent],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   datas!: any[];
@@ -19,6 +21,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   description!: string;
   type!: string;
   @ViewChild('dynamicElement') element!: ElementRef;
+  errorMessage: string = ""
 
   constructor() {
     Chart.register(
@@ -47,7 +50,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.buildChart(ctx, 'doughnut');
         break;
       default:
-        console.error('questo grafico non è presente');
+        this.errorMessage = "Il grafico selezionato non è presente";
+        console.error(this.errorMessage);
         break;
     }
   }

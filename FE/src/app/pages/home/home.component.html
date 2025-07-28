@@ -1,7 +1,7 @@
 @if (isLoading && !isError) {
 <app-loader></app-loader>
 } @else if (!isLoading && isError) {
-<app-error-message-label [errorMessage]="'errore durante il caricamento della pagina'">
+<app-error-message-label [errorMessage]="errorMessage">
 </app-error-message-label>
 }
 <section class="min-h-screen dark:bg-gray-900 mx-5">

@@ -1,7 +1,7 @@
 @if (this.isLoading && !this.isError) {
 <app-loader></app-loader>
 } @else if (!this.isLoading && this.isError) {
-<app-error-message-label [errorMessage]="'errore durante il caricamento della pagina'"></app-error-message-label>
+<app-error-message-label [errorMessage]="errorMessage"></app-error-message-label>
 } @else {
 <section class="dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center">
   <div class="w-full max-w-md text-center mb-8">
@@ -186,7 +186,7 @@
       @if (isWarning3Modal && isClick3Step) {
       <app-modal [title]="'Attenzione: nessun conto inserito'"
         [text]="'Se non inserisci nessun conto potrai lo stesso usare il nostro applicativo ma alcune funzionalità sarano bloccate'"
-        [type]="'warning'">
+        [type]="IconsSVGEnum.warning">
       </app-modal>
       }
 

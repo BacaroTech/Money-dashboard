@@ -23,6 +23,7 @@ export class BankListComponent implements OnInit {
   isLoading: boolean = false;
   isError: boolean = false;
   isRegister: boolean = false;
+  errorMessage: string = "";
 
   private backAccountProviderService = inject(BackAccountProviderService);
   public bankAccountTypeService = inject(BankAccountTypeService);
@@ -47,7 +48,8 @@ export class BankListComponent implements OnInit {
               this.isLoading = false;
             }),
             error:((err) => {
-              console.error("Errore durante l\'eliminazione del conto corrente:", err);
+              this.errorMessage = "Errore durante l\'eliminazione del conto corrente";
+              console.error(this.errorMessage+":", err);
               this.isError = true;
               this.isLoading = false;
             })

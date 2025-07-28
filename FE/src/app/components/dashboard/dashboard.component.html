@@ -1,1 +1,6 @@
-<canvas #dynamicElement [id]="type"></canvas>
+@if (errorMessage !== "") {
+    <app-error-message-label [errorMessage]="errorMessage"></app-error-message-label>
+}
+@else {
+    <canvas #dynamicElement [id]="type"></canvas>
+}
