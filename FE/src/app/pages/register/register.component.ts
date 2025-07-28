@@ -13,13 +13,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from "src/app/components/modal/modal.component";
 import { BankListComponent } from "src/app/components/bank-list/bank-list.component";
+import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
 
 @Component({
-    selector: 'app-register',
-    templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css'],
-    standalone: true,
-    imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, FormsModule, ModalComponent, BankListComponent]
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
+  standalone: true,
+  imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, FormsModule, ModalComponent, BankListComponent]
 })
 export class RegisterComponent implements OnInit {
 
@@ -42,6 +43,8 @@ export class RegisterComponent implements OnInit {
   isWarning3Modal: boolean = false;
   isError: boolean = false;
   isLoading: boolean = false;
+  IconsSVGEnum = IconsSVGEnum;
+  errorMessage: string = "";
 
   public utils: UtilsService = inject(UtilsService);
   private router: Router = inject(Router);
@@ -54,12 +57,12 @@ export class RegisterComponent implements OnInit {
   }
 
   nextStep() {
-    if(this.currentStep == 3){
+    if (this.currentStep == 3) {
       this.isClick3Step = true;
       this.isWarning3Modal = this.userToRegistry.bank_accounts.length == 0;
     }
 
-    if(this.currentStep == 4){
+    if (this.currentStep == 4) {
       this.goToRegisterUser();
     }
 
@@ -74,7 +77,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  addBankAccount(){
+  addBankAccount() {
     this.userToRegistry.bank_accounts.push({
       name: '',
       type: BankType.DIGITAL,
@@ -86,38 +89,38 @@ export class RegisterComponent implements OnInit {
     this.userToRegistry.bank_accounts.splice(index, 1);
   }
 
-  checkStepIsValid(currentStep: number): boolean{
-    if(currentStep === 1){
+  checkStepIsValid(currentStep: number): boolean {
+    if (currentStep === 1) {
       return this.isValidStepOne();
-    } else if(currentStep === 2){
+    } else if (currentStep === 2) {
       return this.isValidStepTwo();
-    } else if(currentStep === 3){
+    } else if (currentStep === 3) {
       return this.isValidStepThree();
     } else {
       return true;
     }
   }
 
-  private isValidStepOne(): boolean{
+  private isValidStepOne(): boolean {
     return (
       this.userToRegistry.email !== ''
-      && this.userToRegistry.confirm_email !== '' 
+      && this.userToRegistry.confirm_email !== ''
       && this.userToRegistry.password !== ''
-      && this.utils.checkPswHaveCorrectSize(this.userToRegistry.password) 
+      && this.utils.checkPswHaveCorrectSize(this.userToRegistry.password)
       && this.utils.checkMailIsGoodFormated(this.userToRegistry.email)
       && this.utils.checkMailIsGoodFormated(this.userToRegistry.confirm_email)
       && this.userToRegistry.email === this.userToRegistry.confirm_email
     );
   }
 
-  private isValidStepTwo(): boolean{
+  private isValidStepTwo(): boolean {
     return (
       this.userToRegistry.first_name !== ''
       && this.userToRegistry.last_name !== ''
     );
   }
 
-  private isValidStepThree(): boolean{
+  private isValidStepThree(): boolean {
     return (
       this.userToRegistry.bank_accounts.filter(
         ((singleBankAccount: BankAccount) => {
@@ -131,18 +134,18 @@ export class RegisterComponent implements OnInit {
     ).length == 0;
   }
 
-  private goToRegisterUser(): any{
-    this.profileProvider.registerUser(this.userToRegistry)
-    .subscribe(
+  private goToRegisterUser(): any {
+    this.profileProvider.registerUser(this.userToRegistry).subscribe(
       {
         next: (uuid) => {
           //this.userLogService.setUuidUser(uuid);
           console.log("Registrazione avvenuta con successo");
           this.router.navigateByUrl('/dashboard');
           //this.userLog.setUuidUser(uuid);
-        }, 
+        },
         error: (err) => {
-          console.error("Si è verirficato un errore durante la registrazione: ", err);
+          this.errorMessage = "Si è verirficato un errore durante la registrazione dell\'utente";
+          console.error(this.errorMessage + ':', err);
         }
       }
     )

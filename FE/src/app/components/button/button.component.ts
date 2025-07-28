@@ -36,7 +36,6 @@ export class ButtonComponent {
   }
 
   onClickFoo(){
-    console.log(this.buttonIconSVG)
     this.actionArrowFunction();
   }
 }

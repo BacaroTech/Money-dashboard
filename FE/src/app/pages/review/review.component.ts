@@ -4,6 +4,8 @@ import { ErrorMessageLabelComponent } from "src/app/components/error-message-lab
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BankAccountTypeService } from 'src/app/services/bank-account-type.service';
+import { IconsSVGService } from 'src/app/services/icons-svg.service';
+import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
 
 @Component({
     selector: 'app-review',
@@ -22,6 +24,9 @@ export class ReviewComponent implements OnInit {
   };
 
   public bankAccountTypeService = inject(BankAccountTypeService);
+  private iconsSVGService: IconsSVGService = inject(IconsSVGService);
+
+  arrowIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.arrow);
 
   constructor() { }
 

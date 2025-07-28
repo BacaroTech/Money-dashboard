@@ -24,8 +24,9 @@ export class MenuComponent implements OnInit {
 
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
-  private sanitizer: DomSanitizer = inject(DomSanitizer);
   private iconsSVGService: IconsSVGService = inject(IconsSVGService);
+
+  menuIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.menu);
 
   readonly menus: Array<{
     name: string;

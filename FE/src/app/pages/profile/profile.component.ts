@@ -24,9 +24,6 @@ import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
   imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, ModalComponent, FormsModule, BankListComponent, ButtonComponent]
 })
 export class ProfileComponent implements OnInit {
-
-  private sanitizer: DomSanitizer = inject(DomSanitizer);
-
   constructor() { }
 
   isEdit: boolean = false;
@@ -34,7 +31,7 @@ export class ProfileComponent implements OnInit {
   isError: boolean = false;
   isShowModal: boolean = false;
   currentUser!: User;
-
+  errorMessage: string = "";
 
   private userLog = inject(UserLogService);
   private profileProviderService = inject(ProfileProviderService);
@@ -44,7 +41,7 @@ export class ProfileComponent implements OnInit {
   checkIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.check);
   trashIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.trash);
   editIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.edit);
-
+  IconsSVGEnum = IconsSVGEnum;
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -53,7 +50,7 @@ export class ProfileComponent implements OnInit {
   }
 
   goToDelete: Function = () => {
-    this.isShowModal = !this.isShowModal;
+    this.isShowModal = true;
   }
 
   goToEdit: Function = () => {
@@ -76,7 +73,8 @@ export class ProfileComponent implements OnInit {
         this.isLoading = false;
       }),
       error: (err => {
-        console.error('Si è verificato un errore durante l\'aggiornamento dell\'utente:', err);
+        this.errorMessage = "Si è verificato un errore durante l\'aggiornamento dell\'utente";
+        console.error(this.errorMessage+':', err);
         this.isError = true;
         this.isLoading = false;
       })
@@ -112,11 +110,16 @@ export class ProfileComponent implements OnInit {
         window.location.reload();
       },
       error: (err) => {
-        console.error('Si è verificato un errore durante la fase di eliminazione:', err);
+        this.errorMessage = "Si è verificato un errore durante l\'eliminazione dell\'utente";
+        console.error(this.errorMessage+':', err);
         this.isError = true;
         this.isLoading = false;
       }
     });
+  }
+
+  onCloseModal:Function = () => {
+    this.isShowModal = false;
   }
 
   private recoverUserInfo() {
@@ -127,7 +130,8 @@ export class ProfileComponent implements OnInit {
         this.recoverBankAccountsByUser();
       },
       error: (err) => {
-        console.error('Si è verificato un errore durante il recupero delle informazioni:', err);
+        this.errorMessage = "Si è verificato un errore durante il recupero delle informazioni dell\'utente";
+        console.error(this.errorMessage+':', err);
         this.isLoading = false;
         this.isError = true;
       }
@@ -143,7 +147,8 @@ export class ProfileComponent implements OnInit {
         this.isError = false;
       },
       error: (err) => {
-        console.error('Errore recupero bank account:', err);
+        this.errorMessage = "Si è verificato un errore il recupero dei conti dell\'utente";
+        console.error(this.errorMessage+':', err);
         this.isLoading = false;
         this.isError = true;
       }

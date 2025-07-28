@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = false;
   isError: boolean = false;
   currentUser!: User;
+  errorMessage: string = "";
 
   private user: ProfileProviderService = inject(ProfileProviderService);
 
@@ -40,7 +41,8 @@ export class HomeComponent implements OnInit {
           this.isError = false;
         }, 
         error: (err) => {
-          console.log("Si è verificato un errore, riprovare: ", err);
+          this.errorMessage = "Si è verificato un errore durante il caricamento della home, riprovare";
+          console.error(this.errorMessage + ':', err);
           this.isLoading = false;
           this.isError = true;
         }

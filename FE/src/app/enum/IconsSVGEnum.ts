@@ -8,5 +8,9 @@ export enum IconsSVGEnum {
   'menu',
   'arrow',
   'check',
-  'trash'
+  'trash',
+  'error',
+  'success',
+  'info',
+  'warning'
 }

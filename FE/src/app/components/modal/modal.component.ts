@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
+import { IconsSVGService } from 'src/app/services/icons-svg.service';
 
 @Component({
   selector: 'app-modal',
@@ -9,39 +11,46 @@ import { Router } from '@angular/router';
   styleUrls: ['./modal.component.css'],
   imports: [CommonModule, FormsModule],
   standalone: true,
-  inputs: ['title', 'text', 'type', 'action']
+  inputs: ['title', 'text', 'type', 'action', 'back']
 })
 export class ModalComponent implements OnInit {
 
   title!: string;
   text!: string;
-  type!: "error" | "info" | "warning" | "success";
+  type!: IconsSVGEnum.error | IconsSVGEnum.info | IconsSVGEnum.warning | IconsSVGEnum.success;
   action!: Function;
+  back!: Function;
 
   isOpenModal: boolean = true;
-  mapColor: Map<string, string> = new Map([
-    ["error", "red"],
-    ["info", "blue"],
-    ["warning", "yellow"],
-    ["success", "green"]
+  mapColor: Map<IconsSVGEnum, string> = new Map([
+    [IconsSVGEnum.error, "red"],
+    [IconsSVGEnum.info, "blue"],
+    [IconsSVGEnum.warning, "yellow"],
+    [IconsSVGEnum.success, "green"]
   ]);
+
+  private iconsSVGService: IconsSVGService = inject(IconsSVGService);
+  
+  modalIconSVG!: string;
 
   constructor() { }
 
   ngOnInit(): void {
-
+    this.modalIconSVG = this.iconsSVGService.getMapIcons(this.type)
   }
 
   close() {
+    if(this.back){
+      this.back();
+    }
     this.isOpenModal = false;
   }
 
   getBackgroundClass(): string {
     return this.mapColor.get(this.type) + "";
-    //return `bg-${color}-600 hover:bg-${color}-400`;
   }
 
-  execute() {
+  executeOnClick() {
     this.action();
   }
 }

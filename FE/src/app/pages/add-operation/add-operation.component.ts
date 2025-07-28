@@ -22,6 +22,7 @@ import { IconsSVGService } from 'src/app/services/icons-svg.service';
 export class AddOperationComponent implements OnInit {
   isLoading: boolean = false;
   isError: boolean = false;
+  errorMessage: string = "";
   
   newOperation: Operation = {
     amount: 0,

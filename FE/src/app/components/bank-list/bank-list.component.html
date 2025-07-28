@@ -1,7 +1,7 @@
 @if (isLoading && !isError) {
 <app-loader></app-loader>
 } @else if (!isLoading && isError) {
-<app-error-message-label [errorMessage]="'Errore durante l\'aggiornamento del conto'">
+<app-error-message-label [errorMessage]="errorMessage">
 </app-error-message-label>
 } @else if(!isLoading && !isError){
 <section>
