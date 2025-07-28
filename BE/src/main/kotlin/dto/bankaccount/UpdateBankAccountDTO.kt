@@ -11,5 +11,7 @@ data class UpdateBankAccountDTO(
     @SerialName("name")
     val name: String?,
     @SerialName("type")
-    val type: BankAccountType?
+    val type: BankAccountType?,
+    @SerialName("amount")
+    val amount: Double?
 )

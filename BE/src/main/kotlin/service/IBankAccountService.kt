@@ -13,4 +13,6 @@ interface IBankAccountService {
     suspend fun delete(userUuid: UUID, uuid: UUID): Int?
 
     suspend fun update(userUuid: UUID, uuid: UUID, dto: UpdateBankAccountDTO): BankAccountDTO?
+
+    suspend fun updateMany(userUuid: UUID, dto: List<UpdateBankAccountDTO>): List<BankAccountDTO>?
 }

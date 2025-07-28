@@ -1,5 +1,6 @@
 package mft.dev.service.impl
 
+import io.ktor.server.plugins.*
 import kotlinx.coroutines.Dispatchers
 import mft.dev.dto.bankaccount.BankAccountDTO
 import mft.dev.dto.bankaccount.InsertBankAccountDTO
@@ -14,7 +15,6 @@ import mft.dev.table.BankAccountTable
 import mft.dev.table.OperationTable
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -97,6 +97,45 @@ class BankAccountService(private val userService: UserService) : IBankAccountSer
 
                     bankAccount.toBankAccountDTO(amount)
                 }
+            }
+        }
+
+    override suspend fun updateMany(userUuid: UUID, dto: List<UpdateBankAccountDTO>): List<BankAccountDTO>? =
+        dbQuery {
+            val user: UserEntity? = userService.getUserEntityByUuid(userUuid)
+
+            user?.let {
+                dto.forEach { i ->
+                    val bankAccount: BankAccountEntity?
+
+                    if (i.uuid != null) {
+                        val uuid: UUID = UUID.fromString(i.uuid) ?: throw BadRequestException("Invalid uuid")
+
+                        bankAccount = BankAccountEntity.findSingleByAndUpdate(op = BankAccountTable.uuid eq uuid) { bankAccountFound ->
+                            i.name?.let { bankAccountFound.name = it }
+                            i.type?.let { bankAccountFound.type = it }
+                            bankAccountFound.lastUpdate = LocalDateTime.now()
+                        }
+                    }
+                    else {
+                        bankAccount = BankAccountEntity.new {
+                            name = i.name!!
+                            type = i.type!!
+                            userEntity = user
+                        }
+
+                        //add initial operation
+                        OperationEntity.new {
+                            category = OperationCategory.INCOMING
+                            amount = i.amount!!
+                            description = "Versamento iniziale"
+                            date = LocalDate.now()
+                            bankAccountEntity = bankAccount
+                        }
+                    }
+                }
+
+                return@dbQuery this.getByUserUuid(userUuid)
             }
         }
 

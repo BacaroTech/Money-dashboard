@@ -4,7 +4,6 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.request.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import mft.dev.dto.bankaccount.BankAccountDTO
 import mft.dev.dto.bankaccount.InsertBankAccountDTO
@@ -19,7 +18,7 @@ fun Application.configureBankAccountRouting() {
     val bankAccountService: BankAccountService by inject()
 
     routing {
-        route("/bank-account") {
+        route("/bank-accounts") {
             post {
                 val authHeader = call.request.headers["uuid"] ?: throw BadRequestException("Missing uuid")
                 val userUuid = try {
@@ -76,28 +75,47 @@ fun Application.configureBankAccountRouting() {
                     }
                 } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
-        }
 
-        put("/{uuid}") {
-            val authHeader = call.request.headers["uuid"] ?: throw BadRequestException("Missing uuid")
-            val pathVariable = call.pathParameters["uuid"] ?: throw BadRequestException("Missing uuid")
-            val userUuid: UUID
-            val bankAccountUuid: UUID
+            put("/{uuid}") {
+                val authHeader = call.request.headers["uuid"] ?: throw BadRequestException("Missing uuid")
+                val pathVariable = call.pathParameters["uuid"] ?: throw BadRequestException("Missing uuid")
+                val userUuid: UUID
+                val bankAccountUuid: UUID
 
-            try {
-                userUuid = UUID.fromString(authHeader)
-                bankAccountUuid = UUID.fromString(pathVariable)
-            } catch (e: IllegalArgumentException) {
-                throw BadRequestException("Invalid uuid")
+                try {
+                    userUuid = UUID.fromString(authHeader)
+                    bankAccountUuid = UUID.fromString(pathVariable)
+                } catch (e: IllegalArgumentException) {
+                    throw BadRequestException("Invalid uuid")
+                }
+
+                val dto: UpdateBankAccountDTO = call.receive<UpdateBankAccountDTO>()
+
+                val response: BankAccountDTO? = bankAccountService.update(userUuid, bankAccountUuid, dto)
+
+                return@put response?.let {
+                    call.respondSuccess("Update bank account succeeded", it)
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
             }
 
-            val dto: UpdateBankAccountDTO = call.receive<UpdateBankAccountDTO>()
+            put("/many") {
+                val authHeader = call.request.headers["uuid"] ?: throw BadRequestException("Missing uuid")
 
-            val response: BankAccountDTO? = bankAccountService.update(userUuid, bankAccountUuid, dto)
+                val userUuid: UUID
+                try {
+                    userUuid = UUID.fromString(authHeader)
+                } catch (e: IllegalArgumentException) {
+                    throw BadRequestException("Invalid uuid")
+                }
 
-            return@put response?.let {
-                call.respondSuccess("Update bank account succeded", it)
-            } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
+                val dto: List<UpdateBankAccountDTO> = call.receive<List<UpdateBankAccountDTO>>()
+
+                val response: List<BankAccountDTO>? = bankAccountService.updateMany(userUuid, dto)
+
+                return@put response?.let {
+                    call.respondSuccess("Update bank accounts succeeded", it)
+                } ?: call.respondError(HttpStatusCode.Forbidden, "Access denied")
+            }
         }
     }
 }
