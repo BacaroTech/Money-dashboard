@@ -9,6 +9,7 @@ import { ErrorMessageLabelComponent } from "../error-message-label/error-message
 import { LoaderComponent } from "../loader/loader.component";
 import { BankAccountTypeService } from 'src/app/services/bank-account-type.service';
 import { Router } from '@angular/router';
+import { BackendResponce } from 'src/app/model/responce';
 
 @Component({
   selector: 'app-bank-list',
@@ -42,13 +43,13 @@ export class BankListComponent implements OnInit {
         this.isError = false;
         this.backAccountProviderService.deleteBankAccount(this.currentUser.bank_accounts[index].uuid).subscribe(
           {
-            next: ((uuidBankAccountDeleted: string) => {
-              console.log("Cancellazione del conto corrente avvenuta con successo", uuidBankAccountDeleted);
+            next: ((backendResponce: BackendResponce<string>) => {
+              console.log("Cancellazione del conto corrente avvenuta con successo", backendResponce.content);
               this.isError = false;
               this.isLoading = false;
             }),
-            error:((err) => {
-              this.errorMessage = "Errore durante l\'eliminazione del conto corrente";
+            error:((err: BackendResponce<string>) => {
+              this.errorMessage = err.message;
               console.error(this.errorMessage+":", err);
               this.isError = true;
               this.isLoading = false;

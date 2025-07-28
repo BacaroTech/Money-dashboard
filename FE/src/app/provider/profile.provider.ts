@@ -6,6 +6,7 @@ import { Register } from '../model/register';
 import { Login } from '../model/login';
 import { User } from '../model/user';
 import { UserLogService } from '../services/user-log.service';
+import { BackendResponce } from '../model/responce';
 
 @Injectable({
   providedIn: 'root'
@@ -18,57 +19,54 @@ export class ProfileProviderService {
 
   constructor() { }
 
-  registerUser(regUser: Register): Observable<any> {
-    return this.http.post(
+  registerUser(regUser: Register): Observable<BackendResponce<string>> {
+    return this.http.post<BackendResponce<string>>(
       this.readEnvFile.getKrakend() + '/users/register',
-      regUser,
-      { responseType: 'text' }
+      regUser
     );
   }
 
-  loginUser(loginUser: Login): Observable<string> {
-    return this.http.post(
+  loginUser(loginUser: Login): Observable<BackendResponce<string>> {
+    return this.http.post<BackendResponce<string>>(
       this.readEnvFile.getKrakend() + '/users/login',
-      loginUser,
-      { responseType: 'text' }
+      loginUser
     );
   }
 
-  getUser(): Observable<User> {
+  getUser(): Observable<BackendResponce<User>> {
     const headers = new HttpHeaders({
       'accept': 'application/json',
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.get<User>(
+    return this.http.get<BackendResponce<User>>(
       this.readEnvFile.getKrakend() + '/users',
       { headers: headers }
     );
   }
 
-  updateUser(user: User): Observable<User> {
+  updateUser(user: User): Observable<BackendResponce<User>> {
     const headers = new HttpHeaders({
       'accept': 'application/json',
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.put<User>(
+    return this.http.put<BackendResponce<User>>(
       this.readEnvFile.getKrakend() + '/users',
       user,
       { headers: headers }
     );
   }
 
-  deleteUser(): Observable<string> {
+  deleteUser(): Observable<BackendResponce<string>> {
     const headers = new HttpHeaders({
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.delete(
+    return this.http.delete<BackendResponce<string>>(
       this.readEnvFile.getKrakend() + '/users',
       {
-        headers: headers,
-        responseType: 'text' as 'text'
+        headers: headers
       }
     );
   }

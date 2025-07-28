@@ -15,6 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ButtonComponent } from "src/app/components/button/button.component";
 import { IconsSVGService } from 'src/app/services/icons-svg.service';
 import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
+import { BackendResponce } from 'src/app/model/responce';
 
 @Component({
   selector: 'app-profile',
@@ -67,13 +68,13 @@ export class ProfileComponent implements OnInit {
       last_name: this.currentUser.last_name
     }
     this.profileProviderService.updateUser(onlyBiografyUser).subscribe({
-      next: ((newUserRecovered: User) => {
-        console.log('Utente aggiornato con successo:', newUserRecovered);
+      next: ((backendResponce: BackendResponce<User>) => {
+        console.log('Utente aggiornato con successo:', backendResponce.content);
         this.isError = false;
         this.isLoading = false;
       }),
-      error: (err => {
-        this.errorMessage = "Si è verificato un errore durante l\'aggiornamento dell\'utente";
+      error: ((err: BackendResponce<User>) => {
+        this.errorMessage = err.message;
         console.error(this.errorMessage+':', err);
         this.isError = true;
         this.isLoading = false;
@@ -101,16 +102,16 @@ export class ProfileComponent implements OnInit {
     this.isError = false;
 
     this.profileProviderService.deleteUser().subscribe({
-      next: (uuidDelete: string) => {
-        console.log('Utente cancellato con successo:', uuidDelete);
+      next: (backendResponce: BackendResponce<string>) => {
+        console.log('Utente cancellato con successo:', backendResponce.content);
         this.isError = false;
         this.isLoading = false;
         this.isShowModal = false;
         this.userLog.clearUuidUser();
         window.location.reload();
       },
-      error: (err) => {
-        this.errorMessage = "Si è verificato un errore durante l\'eliminazione dell\'utente";
+      error: (err: BackendResponce<string>) => {
+        this.errorMessage = err.message;
         console.error(this.errorMessage+':', err);
         this.isError = true;
         this.isLoading = false;
@@ -124,13 +125,13 @@ export class ProfileComponent implements OnInit {
 
   private recoverUserInfo() {
     this.profileProviderService.getUser().subscribe({
-      next: (userRecovered: User) => {
-        console.log('Utente recuperato con successo:', userRecovered);
-        this.currentUser = userRecovered;
+      next: (backendResponce: BackendResponce<User>) => {
+        console.log('Utente recuperato con successo:', backendResponce.content);
+        this.currentUser = backendResponce.content!;
         this.recoverBankAccountsByUser();
       },
-      error: (err) => {
-        this.errorMessage = "Si è verificato un errore durante il recupero delle informazioni dell\'utente";
+      error: (err: BackendResponce<User>) => {
+        this.errorMessage = err.message;
         console.error(this.errorMessage+':', err);
         this.isLoading = false;
         this.isError = true;
@@ -140,14 +141,14 @@ export class ProfileComponent implements OnInit {
 
   private recoverBankAccountsByUser() {
     this.backAccountProviderService.getBankAccountByUser().subscribe({
-      next: (banksAccountRecovered: BankAccount[]) => {
-        console.log('Bank account recuperato:', banksAccountRecovered);
-        this.currentUser.bank_accounts = banksAccountRecovered;
+      next: (backendResponce: BackendResponce<BankAccount[]>) => {
+        console.log('Bank account recuperato:', backendResponce.content);
+        this.currentUser.bank_accounts = backendResponce.content;
         this.isLoading = false;
         this.isError = false;
       },
-      error: (err) => {
-        this.errorMessage = "Si è verificato un errore il recupero dei conti dell\'utente";
+      error: (err: BackendResponce<BankAccount[]>) => {
+        this.errorMessage = err.message;
         console.error(this.errorMessage+':', err);
         this.isLoading = false;
         this.isError = true;

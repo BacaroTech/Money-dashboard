@@ -8,6 +8,7 @@ import { ErrorMessageLabelComponent } from "src/app/components/error-message-lab
 import { LoaderComponent } from "src/app/components/loader/loader.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BackendResponce } from 'src/app/model/responce';
 
 @Component({
     selector: 'app-login',
@@ -38,15 +39,16 @@ export class LoginComponent {
     this.profileProvider.loginUser(this.loginCredenzial)
     .subscribe(
       {
-        next: (uuid) => {
+        next: (backendResponce: BackendResponce<string>) => {
+          const uuid:string = backendResponce.content!;
           this.userLogService.setUuidUser(uuid);
           console.log("Login avvenuto con successo");
           this.router.navigateByUrl('dashboard');
           this.isError = false;
           this.isLoading = false;
         }, 
-        error: (err) => {
-          this.errorMessage = "Si è verirficato un errore durante la login";
+        error: (err: BackendResponce<string>) => {
+          this.errorMessage = err.message;
           console.error(this.errorMessage+":", err);
           this.isError = true;
           this.isLoading = false;
