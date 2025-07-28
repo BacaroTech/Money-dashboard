@@ -5,6 +5,7 @@ import { ReadSettingService } from '../services/read-setting.service';
 import { UserLogService } from '../services/user-log.service';
 import { BankAccount } from '../model/bankAccount';
 import { Operation } from '../model/operation';
+import { BackendResponce } from '../model/responce';
 
 
 @Injectable({
@@ -18,29 +19,27 @@ export class OperationProviderService {
 
   constructor() { }
 
-  insertOperationByUser(uuidBankAccount: string, newOperation: Operation): Observable<string> {
+  insertOperationByUser(uuidBankAccount: string, newOperation: Operation): Observable<BackendResponce<string>> {
     const headers = new HttpHeaders({
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.post(
+    return this.http.post<BackendResponce<string>>(
       this.readEnvFile.getKrakend() + '/operations/bank-account/' + uuidBankAccount, 
       newOperation, 
       {
-        headers,
-        responseType: 'text'
+        headers
       }
     );
   }
 
 
-  getOperationByUser(uuidBankAccount: string): Observable<string> {
+  getOperationByUser(uuidBankAccount: string): Observable<BackendResponce<string>> {
     const headers = new HttpHeaders({
-      'accept': 'application/json',
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.get<string>(
+    return this.http.get<BackendResponce<string>>(
       this.readEnvFile.getKrakend() + '/operations/bank-account/' + uuidBankAccount,
       {
         headers: headers,

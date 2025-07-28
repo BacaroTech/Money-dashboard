@@ -4,6 +4,7 @@ import { ReadSettingService } from '../services/read-setting.service';
 import { BankAccount } from '../model/bankAccount';
 import { Observable } from 'rxjs';
 import { UserLogService } from '../services/user-log.service';
+import { BackendResponce } from '../model/responce';
 
 @Injectable({
   providedIn: 'root'
@@ -15,41 +16,38 @@ export class BackAccountProviderService {
 
   constructor() { }
 
-  getBankAccountByUser(): Observable<BankAccount[]> {
+  getBankAccountByUser(): Observable<BackendResponce<BankAccount[]>> {
     const headers = new HttpHeaders({
-      'accept': 'application/json',
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.get<BankAccount[]>(
+    return this.http.get<BackendResponce<BankAccount[]>>(
       this.readEnvFile.getKrakend() + '/bank-account',
       { headers: headers }
     );
   }
 
-  massiveUpdateBankAccountByUser(bank_accounts: BankAccount[]): Observable<BankAccount[]> {
+  massiveUpdateBankAccountByUser(bank_accounts: BankAccount[]): Observable<BackendResponce<BankAccount[]>> {
     const headers = new HttpHeaders({
-      'accept': 'application/json',
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.put<BankAccount[]>(
+    return this.http.put<BackendResponce<BankAccount[]>>(
       this.readEnvFile.getKrakend() + '/bank-account/',
       bank_accounts,
       { headers: headers }
     );
   }
 
-  deleteBankAccount(uuid_bankAccount: string): Observable<string> {
+  deleteBankAccount(uuid_bankAccount: string): Observable<BackendResponce<string>> {
     const headers = new HttpHeaders({
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.delete(
+    return this.http.delete<BackendResponce<string>>(
       this.readEnvFile.getKrakend() + '/bank-account/' + uuid_bankAccount,
       {
-        headers: headers,
-        responseType: 'text' as 'text' 
+        headers: headers
       }
     );
   }

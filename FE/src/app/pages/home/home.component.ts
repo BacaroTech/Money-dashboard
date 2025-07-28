@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ProfileProviderService } from 'src/app/provider/profile.provider';
 import { UserLogService } from 'src/app/services/user-log.service';
 import { User } from 'src/app/model/user';
+import { BackendResponce } from 'src/app/model/responce';
 
 @Component({
   selector: 'app-home',
@@ -32,21 +33,18 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.isError = false;
-    this.user.getUser().
-    subscribe(
-      {
-        next: (user: User) => {
-          this.currentUser = user;
-          this.isLoading = false;
-          this.isError = false;
-        }, 
-        error: (err) => {
-          this.errorMessage = "Si è verificato un errore durante il caricamento della home, riprovare";
-          console.error(this.errorMessage + ':', err);
-          this.isLoading = false;
-          this.isError = true;
-        }
+    this.user.getUser().subscribe({
+      next: (backendResponce: BackendResponce<User>) => {
+        this.currentUser = backendResponce.content!;
+        this.isLoading = false;
+        this.isError = false;
+      }, 
+      error: (err: BackendResponce<User>) => {
+        this.errorMessage = err.message;
+        console.error(this.errorMessage + ':', err);
+        this.isLoading = false;
+        this.isError = true;
       }
-    )
+    })
   }
 }

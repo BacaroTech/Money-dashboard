@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalComponent } from "src/app/components/modal/modal.component";
 import { BankListComponent } from "src/app/components/bank-list/bank-list.component";
 import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
+import { BackendResponce } from 'src/app/model/responce';
 
 @Component({
   selector: 'app-register',
@@ -134,17 +135,21 @@ export class RegisterComponent implements OnInit {
     ).length == 0;
   }
 
-  private goToRegisterUser(): any {
+  private goToRegisterUser(): void {
+    this.isError = false;
+    this.isLoading = true;
     this.profileProvider.registerUser(this.userToRegistry).subscribe(
       {
-        next: (uuid) => {
-          //this.userLogService.setUuidUser(uuid);
-          console.log("Registrazione avvenuta con successo");
+        next: (backendResponce: BackendResponce<string>) => {
+          console.log(backendResponce.message);
+          this.isError = false;
+          this.isLoading = false;
           this.router.navigateByUrl('/dashboard');
-          //this.userLog.setUuidUser(uuid);
         },
-        error: (err) => {
-          this.errorMessage = "Si è verirficato un errore durante la registrazione dell\'utente";
+        error: (err: BackendResponce<string>) => {
+          this.errorMessage = err.message;
+          this.isError = true;
+          this.isLoading = false;
           console.error(this.errorMessage + ':', err);
         }
       }
