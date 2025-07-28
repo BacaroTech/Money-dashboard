@@ -22,7 +22,7 @@ export class BackAccountProviderService {
     });
 
     return this.http.get<BackendResponce<BankAccount[]>>(
-      this.readEnvFile.getKrakend() + '/bank-account',
+      this.readEnvFile.getKrakend() + '/bank-accounts',
       { headers: headers }
     );
   }
@@ -33,7 +33,7 @@ export class BackAccountProviderService {
     });
 
     return this.http.put<BackendResponce<BankAccount[]>>(
-      this.readEnvFile.getKrakend() + '/bank-account/',
+      this.readEnvFile.getKrakend() + '/bank-accounts/',
       bank_accounts,
       { headers: headers }
     );
@@ -45,7 +45,7 @@ export class BackAccountProviderService {
     });
 
     return this.http.delete<BackendResponce<string>>(
-      this.readEnvFile.getKrakend() + '/bank-account/' + uuid_bankAccount,
+      this.readEnvFile.getKrakend() + '/bank-accounts/' + uuid_bankAccount,
       {
         headers: headers
       }
