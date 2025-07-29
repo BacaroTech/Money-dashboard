@@ -25,7 +25,7 @@
           <label for="startdate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Data di inizio
           </label>
-          <input type="date" id="startdate" name="startdate" [(ngModel)]="formData.startdate"
+          <input type="date" id="startdate" name="startdate" [(ngModel)]="filterForm.startDate"
             class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
                     dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
         </div>
@@ -34,7 +34,7 @@
           <label for="enddate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Data di fine
           </label>
-          <input type="date" id="enddate" name="enddate" [(ngModel)]="formData.enddate"
+          <input type="date" id="enddate" name="enddate" [(ngModel)]="filterForm.endDate"
             class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
                     dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
         </div>
@@ -43,7 +43,7 @@
           <label for="typeBankAccount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Tipo di conto
           </label>
-          <select id="type" [(ngModel)]="formData.typeBankAccount" name="type"
+          <select id="type" [(ngModel)]="filterForm.typeBankAccount" name="type"
             class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
                     dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
             @for (option of bankAccountTypeService.getTypes(); track $index) {

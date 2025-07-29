@@ -6,6 +6,7 @@ import { UserLogService } from '../services/user-log.service';
 import { BankAccount } from '../model/bankAccount';
 import { Operation } from '../model/operation';
 import { BackendResponce } from '../model/responce';
+import { MultipleOperations } from '../model/multipleOperations';
 
 
 @Injectable({
@@ -19,13 +20,13 @@ export class OperationProviderService {
 
   constructor() { }
 
-  insertOperationByUser(uuidBankAccount: string, newOperation: Operation): Observable<BackendResponce<string>> {
+  insertOperationByUser(bankAccountUuid: string, newOperation: Operation): Observable<BackendResponce<string>> {
     const headers = new HttpHeaders({
       'uuid': this.userLog.getUuidUser()
     });
 
     return this.http.post<BackendResponce<string>>(
-      this.readEnvFile.getKrakend() + '/operations/bank-account/' + uuidBankAccount, 
+      this.readEnvFile.getKrakend() + '/operations/bank-account/' + bankAccountUuid, 
       newOperation, 
       {
         headers
@@ -33,14 +34,55 @@ export class OperationProviderService {
     );
   }
 
-
-  getOperationByUser(uuidBankAccount: string): Observable<BackendResponce<string>> {
+  getOperationByUserPaginated(bankAccountUuid: string, pageNumber: number, pageSize: number): Observable<BackendResponce<MultipleOperations>> {
     const headers = new HttpHeaders({
       'uuid': this.userLog.getUuidUser()
     });
 
-    return this.http.get<BackendResponce<string>>(
-      this.readEnvFile.getKrakend() + '/operations/bank-account/' + uuidBankAccount,
+    return this.http.get<BackendResponce<MultipleOperations>>(
+      this.readEnvFile.getKrakend() + '/operations/bank-account/' + bankAccountUuid + 
+      '?pageNumber= '+ pageNumber +
+      '&pageSize=' + pageSize,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  getSingleOperation(operationUuid: string, bankAccountUuid: string): Observable<BackendResponce<Operation>> {
+    const headers = new HttpHeaders({
+      'uuid': this.userLog.getUuidUser()
+    });
+
+    return this.http.get<BackendResponce<Operation>>(
+      this.readEnvFile.getKrakend() + '/operations/' + operationUuid + '/bank-account/' + bankAccountUuid,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  updateSingleOperation(operationUuid: string, bankAccountUuid: string, operation: Operation): Observable<BackendResponce<Operation>> {
+    const headers = new HttpHeaders({
+      'uuid': this.userLog.getUuidUser()
+    });
+
+    return this.http.put<BackendResponce<Operation>>(
+      this.readEnvFile.getKrakend() + '/operations/' + operationUuid + '/bank-account/' + bankAccountUuid,
+      operation,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  deleteSingleOperation(operationUuid: string, bankAccountUuid: string): Observable<BackendResponce<string>> {
+    const headers = new HttpHeaders({
+      'uuid': this.userLog.getUuidUser()
+    });
+
+    return this.http.delete<BackendResponce<string>>(
+      this.readEnvFile.getKrakend() + '/operations/' + operationUuid + '/bank-account/' + bankAccountUuid,
       {
         headers: headers,
       }

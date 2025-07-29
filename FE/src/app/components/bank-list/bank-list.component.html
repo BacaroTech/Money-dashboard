@@ -52,14 +52,14 @@
                     }
                 </div>
                 <div>
-                    <span class="block text-sm text-gray-500 dark:text-gray-400">Ammontare attuale</span>
+                    <span class="block text-sm text-gray-500 dark:text-gray-400">Ammontare</span>
                     @if (!isEdit) {
                     <p class="text-base font-medium text-gray-900 dark:text-white">{{bankAccount.amount}}€</p>
                     }
                     @else {
-                    <input [(ngModel)]="bankAccount.amount" placeholder="inserisci l'ammontare iniziale del conto"
+                    <input [(ngModel)]="bankAccount.amount" placeholder="Ammontare"
                         type="number" min="0" class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid" 
-                        [disabled]="!isRegister">
+                        [disabled]="bankAccount.uuid != null">
                     }
                 </div>
             </div>

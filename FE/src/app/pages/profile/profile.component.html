@@ -32,8 +32,15 @@
         }
       </div>
       <div>
-        <span class="block text-sm text-gray-500 dark:text-gray-400">Email principale</span>
+        <span class="block text-sm text-gray-500 dark:text-gray-400">Email</span>
         <p class="text-lg text-gray-900 dark:text-white"></p>
+        @if (!isEdit) {
+        <p class="text-lg text-gray-900 dark:text-white">{{currentUser.email}}</p>
+        }
+        @else {
+        <input [(ngModel)]="currentUser.email"
+          class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid">
+        }
       </div>
     </div>
 

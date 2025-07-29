@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { BankAccountTypeService } from 'src/app/services/bank-account-type.service';
 import { IconsSVGService } from 'src/app/services/icons-svg.service';
 import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
+import { FilterOperations } from 'src/app/model/filterOperations';
+import { BankTypeEnum} from 'src/app/enum/bankEnum';
 
 @Component({
     selector: 'app-review',
@@ -17,10 +19,11 @@ import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
 export class ReviewComponent implements OnInit {
   isError: boolean = false;
   isLoading: boolean = false;
-  formData = {
-    startdate: '',
-    enddate: '',
-    typeBankAccount: '',
+  filterForm: FilterOperations = {
+    startDate: new Date(),
+    endDate: new Date(),
+    typeBankAccount: BankTypeEnum.CASH,
+    bankAccountUuid: ''
   };
 
   public bankAccountTypeService = inject(BankAccountTypeService);

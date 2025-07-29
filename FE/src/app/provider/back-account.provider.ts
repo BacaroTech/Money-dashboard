@@ -27,25 +27,49 @@ export class BackAccountProviderService {
     );
   }
 
+  createBankAccountByUser(bank_account: BankAccount): Observable<BackendResponce<string>> {
+    const headers = new HttpHeaders({
+      'uuid': this.userLog.getUuidUser()
+    });
+
+    return this.http.post<BackendResponce<string>>(
+      this.readEnvFile.getKrakend() + '/bank-accounts',
+      bank_account,
+      { headers: headers }
+    );
+  }
+
   massiveUpdateBankAccountByUser(bank_accounts: BankAccount[]): Observable<BackendResponce<BankAccount[]>> {
     const headers = new HttpHeaders({
       'uuid': this.userLog.getUuidUser()
     });
 
     return this.http.put<BackendResponce<BankAccount[]>>(
-      this.readEnvFile.getKrakend() + '/bank-accounts/',
+      this.readEnvFile.getKrakend() + '/bank-accounts/many',
       bank_accounts,
       { headers: headers }
     );
   }
 
-  deleteBankAccount(uuid_bankAccount: string): Observable<BackendResponce<string>> {
+  singleUpdateBankAccountByUser(bank_account: BankAccount, bankAccountUuid: string): Observable<BackendResponce<BankAccount>> {
+    const headers = new HttpHeaders({
+      'uuid': this.userLog.getUuidUser()
+    });
+
+    return this.http.put<BackendResponce<BankAccount>>(
+      this.readEnvFile.getKrakend() + '/bank-accounts/' + bankAccountUuid,
+      bank_account,
+      { headers: headers }
+    );
+  }
+
+  deleteBankAccount(bankAccountUuid: string): Observable<BackendResponce<string>> {
     const headers = new HttpHeaders({
       'uuid': this.userLog.getUuidUser()
     });
 
     return this.http.delete<BackendResponce<string>>(
-      this.readEnvFile.getKrakend() + '/bank-accounts/' + uuid_bankAccount,
+      this.readEnvFile.getKrakend() + '/bank-accounts/' + bankAccountUuid,
       {
         headers: headers
       }

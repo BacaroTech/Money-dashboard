@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { BankType } from 'src/app/enum/backEnum';
+import { BankTypeEnum} from 'src/app/enum/bankEnum';
 import { BankAccount } from 'src/app/model/bankAccount';
 import { Register } from 'src/app/model/register';
 import { ProfileProviderService } from 'src/app/provider/profile.provider';
@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
   addBankAccount() {
     this.userToRegistry.bank_accounts.push({
       name: '',
-      type: BankType.DIGITAL,
+      type: BankTypeEnum.DIGITAL,
       amount: 0
     })
   }
@@ -141,7 +141,7 @@ export class RegisterComponent implements OnInit {
     this.profileProvider.registerUser(this.userToRegistry).subscribe(
       {
         next: (backendResponce: BackendResponce<string>) => {
-          console.log(backendResponce.message);
+          console.log(backendResponce.message, backendResponce.content);
           this.isError = false;
           this.isLoading = false;
           this.router.navigateByUrl('/dashboard');

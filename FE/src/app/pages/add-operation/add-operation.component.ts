@@ -11,6 +11,11 @@ import { ButtonComponent } from "src/app/components/button/button.component";
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsSVGEnum } from 'src/app/enum/IconsSVGEnum';
 import { IconsSVGService } from 'src/app/services/icons-svg.service';
+import { BackendResponce } from 'src/app/model/responce';
+import { BankAccount } from 'src/app/model/bankAccount';
+import { BankAccountTypeService } from 'src/app/services/bank-account-type.service';
+import { BankTypeEnum } from 'src/app/enum/bankEnum';
+import { OperationTypeService } from 'src/app/services/operation-type.service';
 
 @Component({
     selector: 'app-add-operation',
@@ -23,7 +28,10 @@ export class AddOperationComponent implements OnInit {
   isLoading: boolean = false;
   isError: boolean = false;
   errorMessage: string = "";
-  
+  allBankAccounts!: BankAccount[];
+  bankAccountUuid!: string;
+
+
   newOperation: Operation = {
     amount: 0,
     description: '',
@@ -34,13 +42,31 @@ export class AddOperationComponent implements OnInit {
   private backAccountProviderService:BackAccountProviderService = inject(BackAccountProviderService);
   private operationProviderService:OperationProviderService = inject(OperationProviderService);
   private iconsSVGService: IconsSVGService = inject(IconsSVGService);
+  public operationTypeService: OperationTypeService = inject(OperationTypeService);
 
   checkIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.check);
   trashIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.trash);
 
+
   constructor() { }
 
   ngOnInit(): void {
+    this.isError = false;
+    this.isLoading = true;
+    this.backAccountProviderService.getBankAccountByUser()
+    .subscribe({
+      next: (backendResponce: BackendResponce<BankAccount[]>) => {
+        console.log(backendResponce.message, backendResponce.content);
+        this.allBankAccounts = backendResponce.content!;
+        this.isError = false;
+        this.isLoading = false;
+      },
+      error: (err: BackendResponce<BankAccount[]>) => {
+        console.log(err.message);
+        this.isError = true;
+        this.isLoading = false;
+      }
+    })
   }
 
   addNewOperation: Function = () => {

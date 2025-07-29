@@ -42,7 +42,7 @@ export class LoginComponent {
         next: (backendResponce: BackendResponce<string>) => {
           const uuid:string = backendResponce.content!;
           this.userLogService.setUuidUser(uuid);
-          console.log("Login avvenuto con successo");
+          console.log(backendResponce.message, backendResponce.content);
           this.router.navigateByUrl('dashboard');
           this.isError = false;
           this.isLoading = false;

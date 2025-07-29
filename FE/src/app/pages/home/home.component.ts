@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
     this.isError = false;
     this.user.getUser().subscribe({
       next: (backendResponce: BackendResponce<User>) => {
+        console.log(backendResponce.message, backendResponce.content)
         this.currentUser = backendResponce.content!;
         this.isLoading = false;
         this.isError = false;

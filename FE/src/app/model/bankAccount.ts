@@ -1,9 +1,9 @@
-import { BankType } from "../enum/backEnum"
+import { BankTypeEnum } from "../enum/bankEnum"
 
 export type BankAccount = {
     uuid?: string,
     name: string,
-    type: BankType,
+    type: BankTypeEnum,
     amount: number
 }
 

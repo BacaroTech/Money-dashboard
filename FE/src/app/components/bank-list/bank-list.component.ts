@@ -1,14 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BankType } from 'src/app/enum/backEnum';
+import { BankTypeEnum} from 'src/app/enum/bankEnum';
 import { User } from 'src/app/model/user';
 import { BackAccountProviderService } from 'src/app/provider/back-account.provider';
-import { UserLogService } from 'src/app/services/user-log.service';
 import { ErrorMessageLabelComponent } from "../error-message-label/error-message-label.component";
 import { LoaderComponent } from "../loader/loader.component";
 import { BankAccountTypeService } from 'src/app/services/bank-account-type.service';
-import { Router } from '@angular/router';
 import { BackendResponce } from 'src/app/model/responce';
 
 @Component({
@@ -23,18 +21,12 @@ export class BankListComponent implements OnInit {
   isEdit: boolean = false;
   isLoading: boolean = false;
   isError: boolean = false;
-  isRegister: boolean = false;
   errorMessage: string = "";
 
   private backAccountProviderService = inject(BackAccountProviderService);
   public bankAccountTypeService = inject(BankAccountTypeService);
-  private router = inject(Router);
 
-  ngOnInit(): void {
-    if(this.router.url.includes('register')){
-      this.isRegister = true;
-    }
-  }
+  ngOnInit(): void {  }
 
   removeBankAccount(index: number){
     if(this.currentUser?.bank_accounts){
@@ -44,7 +36,7 @@ export class BankListComponent implements OnInit {
         this.backAccountProviderService.deleteBankAccount(this.currentUser.bank_accounts[index].uuid).subscribe(
           {
             next: ((backendResponce: BackendResponce<string>) => {
-              console.log("Cancellazione del conto corrente avvenuta con successo", backendResponce.content);
+              console.log(backendResponce.message, backendResponce.content);
               this.isError = false;
               this.isLoading = false;
             }),
@@ -64,7 +56,7 @@ export class BankListComponent implements OnInit {
   addBankAccount(){
     this.currentUser?.bank_accounts?.push({
       name: '',
-      type: BankType.CASH,
+      type: BankTypeEnum.CASH,
       amount: 0
     })
   }

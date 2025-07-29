@@ -95,7 +95,7 @@
       ]
     },
     {
-      "endpoint": "/moneydashboard/api/v1/bank-account",
+      "endpoint": "/moneydashboard/api/v1/bank-accounts",
       "input_headers": [
         "uuid"
       ],
@@ -105,12 +105,12 @@
           "host": [
             "http://moneydashboard_backend:8080"
           ],
-          "url_pattern": "/bank-account"
+          "url_pattern": "/bank-accounts"
         }
       ]
     },
     {
-      "endpoint": "/moneydashboard/api/v1/bank-account",
+      "endpoint": "/moneydashboard/api/v1/bank-accounts",
       "input_headers": [
         "Content-Type",
         "uuid"
@@ -121,12 +121,12 @@
           "host": [
             "http://moneydashboard_backend:8080"
           ],
-          "url_pattern": "/bank-account"
+          "url_pattern": "/bank-accounts"
         }
       ]
     },
     {
-      "endpoint": "/moneydashboard/api/v1/bank-account/{uuid}",
+      "endpoint": "/moneydashboard/api/v1/bank-accounts/{uuid}",
       "input_headers": [
         "uuid"
       ],
@@ -136,12 +136,12 @@
           "host": [
             "http://moneydashboard_backend:8080"
           ],
-          "url_pattern": "/bank-account/{uuid}"
+          "url_pattern": "/bank-accounts/{uuid}"
         }
       ]
     },
     {
-      "endpoint": "/moneydashboard/api/v1/bank-account/{uuid}",
+      "endpoint": "/moneydashboard/api/v1/bank-accounts/{uuid}",
       "input_headers": [
         "Content-Type",
         "uuid"
@@ -152,12 +152,12 @@
           "host": [
             "http://moneydashboard_backend:8080"
           ],
-          "url_pattern": "/bank-account/{uuid}"
+          "url_pattern": "/bank-accounts/{uuid}"
         }
       ]
     },
     {
-      "endpoint": "/moneydashboard/api/v1/bank-account/many",
+      "endpoint": "/moneydashboard/api/v1/bank-accounts/many",
       "input_headers": [
         "Content-Type",
         "uuid"
@@ -168,12 +168,12 @@
           "host": [
             "http://moneydashboard_backend:8080"
           ],
-          "url_pattern": "/bank-account/many"
+          "url_pattern": "/bank-accounts/many"
         }
       ]
     },
     {
-      "endpoint": "/moneydashboard/api/v1/operations/bank-account/{bankAccountUuid}",
+      "endpoint": "/moneydashboard/api/v1/operations/bank-accounts/{bankAccountUuid}",
       "input_headers": [
         "uuid"
       ],

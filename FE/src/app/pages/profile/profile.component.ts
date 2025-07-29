@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ErrorMessageLabelComponent } from "src/app/components/error-message-label/error-message-label.component";
 import { LoaderComponent } from "src/app/components/loader/loader.component";
 import { ModalComponent } from 'src/app/components/modal/modal.component';
-import { BankType } from 'src/app/enum/backEnum';
+import { BankTypeEnum} from 'src/app/enum/bankEnum';
 import { BankAccount } from 'src/app/model/bankAccount';
 import { User } from 'src/app/model/user';
 import { BackAccountProviderService } from 'src/app/provider/back-account.provider';
@@ -62,16 +62,33 @@ export class ProfileComponent implements OnInit {
     this.isEdit = false;
     this.isError = false;
     this.isLoading = true;
+    
     console.log(this.currentUser)
+
     const onlyBiografyUser: User = {
       first_name: this.currentUser.first_name,
-      last_name: this.currentUser.last_name
+      last_name: this.currentUser.last_name,
     }
+
     this.profileProviderService.updateUser(onlyBiografyUser).subscribe({
       next: ((backendResponce: BackendResponce<User>) => {
-        console.log('Utente aggiornato con successo:', backendResponce.content);
+        console.log(backendResponce.message, backendResponce.content);
         this.isError = false;
         this.isLoading = false;
+
+        this.backAccountProviderService.massiveUpdateBankAccountByUser(this.currentUser.bank_accounts as BankAccount[]).subscribe({
+          next: ((newBankAccountRecovered: BackendResponce<BankAccount[]>) => {
+            console.log(backendResponce.message, newBankAccountRecovered.content);
+            this.isError = false;
+            this.isLoading = false;
+          }),
+          error: ((err: BackendResponce<BankAccount[]>) => {
+            console.error(err.message+':', err);
+            this.isError = true;
+            this.isLoading = false;
+          })
+        })
+
       }),
       error: ((err: BackendResponce<User>) => {
         this.errorMessage = err.message;
@@ -81,19 +98,7 @@ export class ProfileComponent implements OnInit {
       })
     })
 
-    //todo by backend
-    /*this.backAccountService.massiveUpdateBankAccountByUser(this.currentUser.bank_accounts as BankAccount[]).subscribe({
-      next: ((newBankAccountRecovered: BankAccount[]) => {
-        console.log('Conti bancari aggiornati con successo:', newBankAccountRecovered);
-        this.isError = false;
-        this.isLoading = false;
-      }),
-      error: (err => {
-        console.error('Si è verificato un errore durante l\'aggiornamento dei conti bancari dell\' utente:', err);
-        this.isError = true;
-        this.isLoading = false;
-      })
-    })*/
+    
   }
 
   // Arrow function - può essere usata come lambda
@@ -103,7 +108,7 @@ export class ProfileComponent implements OnInit {
 
     this.profileProviderService.deleteUser().subscribe({
       next: (backendResponce: BackendResponce<string>) => {
-        console.log('Utente cancellato con successo:', backendResponce.content);
+        console.log(backendResponce.message, backendResponce.content);
         this.isError = false;
         this.isLoading = false;
         this.isShowModal = false;
@@ -126,7 +131,7 @@ export class ProfileComponent implements OnInit {
   private recoverUserInfo() {
     this.profileProviderService.getUser().subscribe({
       next: (backendResponce: BackendResponce<User>) => {
-        console.log('Utente recuperato con successo:', backendResponce.content);
+        console.log(backendResponce.message, backendResponce.content);
         this.currentUser = backendResponce.content!;
         this.recoverBankAccountsByUser();
       },
@@ -142,7 +147,7 @@ export class ProfileComponent implements OnInit {
   private recoverBankAccountsByUser() {
     this.backAccountProviderService.getBankAccountByUser().subscribe({
       next: (backendResponce: BackendResponce<BankAccount[]>) => {
-        console.log('Bank account recuperato:', backendResponce.content);
+        console.log(backendResponce.message, backendResponce.content);
         this.currentUser.bank_accounts = backendResponce.content;
         this.isLoading = false;
         this.isError = false;
