@@ -28,9 +28,8 @@ export class OperationProviderService {
     return this.http.post<BackendResponce<string>>(
       this.readEnvFile.getKrakend() + '/operations/bank-account/' + bankAccountUuid, 
       newOperation, 
-      {
-        headers
-      }
+      {headers: headers}
+
     );
   }
 
@@ -41,11 +40,9 @@ export class OperationProviderService {
 
     return this.http.get<BackendResponce<MultipleOperations>>(
       this.readEnvFile.getKrakend() + '/operations/bank-account/' + bankAccountUuid + 
-      '?pageNumber= '+ pageNumber +
+      '?pageNumber='+ pageNumber +
       '&pageSize=' + pageSize,
-      {
-        headers: headers,
-      }
+      {headers: headers}
     );
   }
 
@@ -56,9 +53,7 @@ export class OperationProviderService {
 
     return this.http.get<BackendResponce<Operation>>(
       this.readEnvFile.getKrakend() + '/operations/' + operationUuid + '/bank-account/' + bankAccountUuid,
-      {
-        headers: headers,
-      }
+      {headers: headers}
     );
   }
 
@@ -70,9 +65,7 @@ export class OperationProviderService {
     return this.http.put<BackendResponce<Operation>>(
       this.readEnvFile.getKrakend() + '/operations/' + operationUuid + '/bank-account/' + bankAccountUuid,
       operation,
-      {
-        headers: headers,
-      }
+      {headers: headers}
     );
   }
 
@@ -83,9 +76,7 @@ export class OperationProviderService {
 
     return this.http.delete<BackendResponce<string>>(
       this.readEnvFile.getKrakend() + '/operations/' + operationUuid + '/bank-account/' + bankAccountUuid,
-      {
-        headers: headers,
-      }
+      {headers: headers}
     );
   }
 }

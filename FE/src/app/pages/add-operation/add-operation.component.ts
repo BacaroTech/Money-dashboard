@@ -31,7 +31,6 @@ export class AddOperationComponent implements OnInit {
   allBankAccounts!: BankAccount[];
   bankAccountUuid!: string;
 
-
   newOperation: Operation = {
     amount: 0,
     description: '',
@@ -46,7 +45,6 @@ export class AddOperationComponent implements OnInit {
 
   checkIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.check);
   trashIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.trash);
-
 
   constructor() { }
 
@@ -69,11 +67,30 @@ export class AddOperationComponent implements OnInit {
     })
   }
 
-  addNewOperation: Function = () => {
-
+  onBankAccountModelChange(selectedUuid: string) {
+    console.log('UUID selezionato:', selectedUuid);
+    this.bankAccountUuid = selectedUuid;
   }
 
   //da passare al componete bottone, deve essere una arrow function
+  addNewOperation: Function = () => {
+    this.isLoading = true;
+    this.isError = false;
+    this.operationProviderService.insertOperationByUser(this.bankAccountUuid, this.newOperation).subscribe({
+      next: (backendResponce: BackendResponce<string>) => {
+        console.log(backendResponce.message, backendResponce.content);
+        this.isLoading = false;
+        this.isError = false;
+      },
+      error: (err: BackendResponce<string>) => {
+        this.errorMessage = err.message;
+        console.error(this.errorMessage + ':', err);
+        this.isLoading = false;
+        this.isError = true;
+      }
+    })
+  }
+
   clearForm: Function = () => {
     this.newOperation = {
       amount: 0,

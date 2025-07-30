@@ -14,15 +14,15 @@
     </div>
     <div>
       <span class="block text-sm text-gray-500 dark:text-gray-400">Conto dell'operazione</span>
-      <select id="type" [(ngModel)]="bankAccountUuid" name="type"
-          class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
+      <select id="type" [(ngModel)]="bankAccountUuid" name="type" (ngModelChange)="onBankAccountModelChange($event)"
+        class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
 
-          @for(option of allBankAccounts; track $index){
-          <option [value]="option">
-              {{ option.name }} - {{ option.type }}
-          </option>
-          }
-      </select>  
+        @for(option of allBankAccounts; track $index){
+        <option [value]="option.uuid"> <!-- Binda solo l'UUID -->
+          {{ option.name }} - {{ option.type }}
+        </option>
+        }
+      </select>
     </div>
     <div>
       <span class="block text-sm text-gray-500 dark:text-gray-400">Ammontare dell'operazione</span>
@@ -37,26 +37,18 @@
     <div>
       <span class="block text-sm text-gray-500 dark:text-gray-400">Tipo di operazione</span>
       <select id="type" [(ngModel)]="newOperation.category" name="type"
-            class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid">
-            @for (type of operationTypeService.getTypes(); track $index) {
-              <option [value]="type">{{ type }}</option>
-            }
+        class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid">
+        @for (type of operationTypeService.getTypes(); track $index) {
+        <option [value]="type">{{ type }}</option>
+        }
       </select>
     </div>
   </div>
   <div class="mt-5 flex">
-    <app-button
-    [actionArrowFunction]="addNewOperation"
-    [buttonBackgroundColor]="'green'"
-    [buttonIconSVG]='checkIconSVG'
-    [buttonText]="'Salva'"
-    ></app-button>
+    <app-button [actionArrowFunction]="addNewOperation" [buttonBackgroundColor]="'green'" [buttonIconSVG]='checkIconSVG'
+      [buttonText]="'Salva'"></app-button>
 
-    <app-button
-    [actionArrowFunction]="clearForm"
-    [buttonBackgroundColor]="'yellow'"
-    [buttonIconSVG]='trashIconSVG'
-    [buttonText]="'Pulisci Form'"
-    ></app-button>
+    <app-button [actionArrowFunction]="clearForm" [buttonBackgroundColor]="'yellow'" [buttonIconSVG]='trashIconSVG'
+      [buttonText]="'Pulisci Form'"></app-button>
   </div>
 </section>

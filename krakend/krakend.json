@@ -173,7 +173,7 @@
       ]
     },
     {
-      "endpoint": "/moneydashboard/api/v1/operations/bank-accounts/{bankAccountUuid}",
+      "endpoint": "/moneydashboard/api/v1/operations/bank-account/{bankAccountUuid}",
       "input_headers": [
         "uuid"
       ],
