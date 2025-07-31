@@ -147,12 +147,16 @@ export class RegisterComponent implements OnInit {
           this.router.navigateByUrl('/dashboard');
         },
         error: (err: BackendResponce<string>) => {
-          this.errorMessage = err.message;
-          this.isError = true;
-          this.isLoading = false;
-          console.error(this.errorMessage + ':', err);
+          this.badApiCall(err);
         }
       }
     )
+  }
+
+  private badApiCall(err: BackendResponce<any>){
+    this.errorMessage = err.message;
+    console.error(this.errorMessage, err);
+    this.isError = true;
+    this.isLoading = false;
   }
 } 

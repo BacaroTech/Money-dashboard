@@ -13,6 +13,7 @@ import { BankAccount } from 'src/app/model/bankAccount';
 import { BackendResponce } from 'src/app/model/responce';
 import { OperationProviderService } from 'src/app/provider/operation.provider';
 import { MultipleOperations } from 'src/app/model/multipleOperations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-review',
@@ -22,6 +23,11 @@ import { MultipleOperations } from 'src/app/model/multipleOperations';
   imports: [LoaderComponent, ErrorMessageLabelComponent, CommonModule, FormsModule]
 })
 export class ReviewComponent implements OnInit {
+  public bankAccountTypeService: BankAccountTypeService = inject(BankAccountTypeService);
+  public operationProviderService: OperationProviderService = inject(OperationProviderService);
+  private iconsSVGService: IconsSVGService = inject(IconsSVGService);
+  private router: Router = inject(Router);
+
   isFiltersOpen: boolean = false;
   isError: boolean = false;
   isLoading: boolean = false;
@@ -31,36 +37,39 @@ export class ReviewComponent implements OnInit {
     typeBankAccount: BankTypeEnum.CASH,
     bankAccountUuid: ''
   };
-  bankAccountUuid: string = "80b98809-b9c9-4f36-870a-efef3cf0bb15" //to change!!!
+  bankAccountUuid: string = this.router.url.split('/')[2];
   pageSize: number = 10; //default
   pageNumber: number = 0; //default
-
-  public bankAccountTypeService: BankAccountTypeService = inject(BankAccountTypeService);
-  public OperationProviderService: OperationProviderService = inject(OperationProviderService);
-  private iconsSVGService: IconsSVGService = inject(IconsSVGService);
+  errorMessage: string = "";
 
   arrowIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.arrow);
 
   constructor() { }
 
   ngOnInit(): void {
+    
     this.isError = false;
     this.isLoading = true;
-    this.OperationProviderService.getOperationByUserPaginated(this.bankAccountUuid, this.pageNumber, this.pageSize).subscribe({
+    this.operationProviderService.getOperationByUserPaginated(this.bankAccountUuid, this.pageNumber, this.pageSize).subscribe({
       next: (backendResponse: BackendResponce<MultipleOperations>) => {
-        console.log('Dati ricevuti:', backendResponse);
+        console.log(backendResponse.message, backendResponse.content);
         this.isError = false;
         this.isLoading = false;
       },
       error: (err: BackendResponce<MultipleOperations>) => {
-        console.error('Errore nel caricamento:', err);
-        this.isError = true;
-        this.isLoading = false;
+        this.badApiCall(err);
       }
     });
   }
 
   toggleFilters(): void {
     this.isFiltersOpen = !this.isFiltersOpen;
+  }
+
+  private badApiCall(err: BackendResponce<any>){
+    this.errorMessage = err.message;
+    console.error(this.errorMessage, err);
+    this.isError = true;
+    this.isLoading = false;
   }
 }

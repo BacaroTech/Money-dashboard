@@ -41,11 +41,15 @@ export class HomeComponent implements OnInit {
         this.isError = false;
       }, 
       error: (err: BackendResponce<User>) => {
-        this.errorMessage = err.message;
-        console.error(this.errorMessage + ':', err);
-        this.isLoading = false;
-        this.isError = true;
+        this.badApiCall(err);
       }
     })
+  }
+
+  private badApiCall(err: BackendResponce<any>){
+    this.errorMessage = err.message;
+    console.error(this.errorMessage, err);
+    this.isError = true;
+    this.isLoading = false;
   }
 }

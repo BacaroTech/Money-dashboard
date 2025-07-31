@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   imports: [CommonModule],
   templateUrl: './button.component.html',
   styleUrl: './button.component.css',
-  inputs: ['buttonText', 'actionArrowFunction', 'buttonBackgroundColor', 'buttonIconSVG']
+  inputs: ['buttonText', 'actionArrowFunction', 'buttonBackgroundColor', 'buttonIconSVG', 'parameters']
 })
 export class ButtonComponent {
 
@@ -14,6 +14,7 @@ export class ButtonComponent {
   actionArrowFunction!: Function;
   buttonBackgroundColor: 'green' | 'blue' | 'yellow' | 'red' = 'blue';
   buttonIconSVG !: string;
+  parameters: any[] = [];
 
   private colorClasses = {
     blue: {
@@ -36,6 +37,9 @@ export class ButtonComponent {
   }
 
   onClickFoo(){
-    this.actionArrowFunction();
+    if(this.parameters.length != 0)
+      this.actionArrowFunction(this.parameters);
+    else
+      this.actionArrowFunction();
   }
 }

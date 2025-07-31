@@ -60,9 +60,7 @@ export class AddOperationComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err: BackendResponce<BankAccount[]>) => {
-        console.log(err.message);
-        this.isError = true;
-        this.isLoading = false;
+        this.badApiCall(err);
       }
     })
   }
@@ -83,10 +81,7 @@ export class AddOperationComponent implements OnInit {
         this.isError = false;
       },
       error: (err: BackendResponce<string>) => {
-        this.errorMessage = err.message;
-        console.error(this.errorMessage + ':', err);
-        this.isLoading = false;
-        this.isError = true;
+        this.badApiCall(err);
       }
     })
   }
@@ -100,4 +95,10 @@ export class AddOperationComponent implements OnInit {
     }
   }
 
+  private badApiCall(err: BackendResponce<any>){
+    this.errorMessage = err.message;
+    console.error(this.errorMessage, err);
+    this.isError = true;
+    this.isLoading = false;
+  }
 }

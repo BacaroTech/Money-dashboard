@@ -1,6 +1,9 @@
 <button type="button" 
         (click)="onClickFoo()"
         [ngClass]="getButtonColorClasses()">
-    <div [innerHTML]="buttonIconSVG" class="mr-2" style="width: 1.5rem; height: 1.5rem;"></div>
+
+    @if (buttonIconSVG) {
+        <div [innerHTML]="buttonIconSVG" class="mr-2" style="width: 1.5rem; height: 1.5rem;"></div>
+    }
     {{buttonText}}
 </button>

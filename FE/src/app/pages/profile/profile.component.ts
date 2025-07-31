@@ -25,7 +25,6 @@ import { BackendResponce } from 'src/app/model/responce';
   imports: [ErrorMessageLabelComponent, LoaderComponent, CommonModule, ModalComponent, FormsModule, BankListComponent, ButtonComponent]
 })
 export class ProfileComponent implements OnInit {
-  constructor() { }
 
   isEdit: boolean = false;
   isLoading: boolean = false;
@@ -43,6 +42,8 @@ export class ProfileComponent implements OnInit {
   trashIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.trash);
   editIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.edit);
   IconsSVGEnum = IconsSVGEnum;
+
+  constructor() { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -62,8 +63,6 @@ export class ProfileComponent implements OnInit {
     this.isEdit = false;
     this.isError = false;
     this.isLoading = true;
-    
-    console.log(this.currentUser)
 
     const onlyBiografyUser: User = {
       first_name: this.currentUser.first_name,
@@ -83,18 +82,13 @@ export class ProfileComponent implements OnInit {
             this.isLoading = false;
           }),
           error: ((err: BackendResponce<BankAccount[]>) => {
-            console.error(err.message+':', err);
-            this.isError = true;
-            this.isLoading = false;
+            this.badApiCall(err);
           })
         })
 
       }),
       error: ((err: BackendResponce<User>) => {
-        this.errorMessage = err.message;
-        console.error(this.errorMessage+':', err);
-        this.isError = true;
-        this.isLoading = false;
+        this.badApiCall(err);
       })
     })
 
@@ -116,10 +110,7 @@ export class ProfileComponent implements OnInit {
         window.location.reload();
       },
       error: (err: BackendResponce<string>) => {
-        this.errorMessage = err.message;
-        console.error(this.errorMessage+':', err);
-        this.isError = true;
-        this.isLoading = false;
+        this.badApiCall(err);
       }
     });
   }
@@ -136,10 +127,7 @@ export class ProfileComponent implements OnInit {
         this.recoverBankAccountsByUser();
       },
       error: (err: BackendResponce<User>) => {
-        this.errorMessage = err.message;
-        console.error(this.errorMessage+':', err);
-        this.isLoading = false;
-        this.isError = true;
+        this.badApiCall(err);
       }
     });
   }
@@ -153,11 +141,15 @@ export class ProfileComponent implements OnInit {
         this.isError = false;
       },
       error: (err: BackendResponce<BankAccount[]>) => {
-        this.errorMessage = err.message;
-        console.error(this.errorMessage+':', err);
-        this.isLoading = false;
-        this.isError = true;
+        this.badApiCall(err);
       }
     });
+  }
+
+  private badApiCall(err: BackendResponce<any>){
+    this.errorMessage = err.message;
+    console.error(this.errorMessage, err);
+    this.isError = true;
+    this.isLoading = false;
   }
 }

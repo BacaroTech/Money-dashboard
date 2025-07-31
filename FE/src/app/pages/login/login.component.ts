@@ -48,10 +48,7 @@ export class LoginComponent {
           this.isLoading = false;
         }, 
         error: (err: BackendResponce<string>) => {
-          this.errorMessage = err.message;
-          console.error(this.errorMessage+":", err);
-          this.isError = true;
-          this.isLoading = false;
+          this.badApiCall(err);
         }
       }
     )
@@ -68,5 +65,12 @@ export class LoginComponent {
       && this.loginCredenzial.email !== ''
       && this.loginCredenzial.password !== ''
     )
+  }
+
+  private badApiCall(err: BackendResponce<any>){
+    this.errorMessage = err.message;
+    console.error(this.errorMessage, err);
+    this.isError = true;
+    this.isLoading = false;
   }
 }

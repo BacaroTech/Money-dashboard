@@ -9,6 +9,7 @@ import { ReviewComponent } from './pages/review/review.component';
 import { loginGuard } from './guard/login.guard';
 import { unknowUserGuard } from './guard/unknow-user.guard';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { SelectBankAccountComponent } from './pages/select-bank-account/select-bank-account.component';
 
 export const appRoutes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
@@ -17,7 +18,8 @@ export const appRoutes: Routes = [
   { path: "profile", component: ProfileComponent, canActivate: [unknowUserGuard] },
   { path: "dashboard", component: HomeComponent, canActivate: [unknowUserGuard] },
   { path: "addOperation", component: AddOperationComponent, canActivate: [unknowUserGuard] },
-  { path: "review", component: ReviewComponent, canActivate: [unknowUserGuard] },
+  { path: "review", component: SelectBankAccountComponent, canActivate: [unknowUserGuard] },
+  { path: "review/:uuidBankAccount", component: ReviewComponent, canActivate: [unknowUserGuard] },
   { path: "logout", component: LogoutComponent, canActivate: [unknowUserGuard] },
   { path: "404", component: Error404Component },
   { path: "**", redirectTo: "404" }

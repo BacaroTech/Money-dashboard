@@ -41,10 +41,7 @@ export class BankListComponent implements OnInit {
               this.isLoading = false;
             }),
             error:((err: BackendResponce<string>) => {
-              this.errorMessage = err.message;
-              console.error(this.errorMessage+":", err);
-              this.isError = true;
-              this.isLoading = false;
+              this.badApiCall(err);
             })
           }
         )
@@ -59,5 +56,12 @@ export class BankListComponent implements OnInit {
       type: BankTypeEnum.CASH,
       amount: 0
     })
+  }
+
+  private badApiCall(err: BackendResponce<any>){
+    this.errorMessage = err.message;
+    console.error(this.errorMessage, err);
+    this.isError = true;
+    this.isLoading = false;
   }
 }

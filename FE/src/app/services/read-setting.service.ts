@@ -22,7 +22,7 @@ export class ReadSettingService {
       this.krakend = config.krakend;
     } catch (err) {
       this.errorMessage = "Errore durante la lettura del file di configurazione";
-      console.error(this.errorMessage + ':', err);
+      console.error(this.errorMessage, err);
     }
     console.groupEnd();
   }
