@@ -49,9 +49,7 @@ class OperationService(private val bankAccountService: BankAccountService) : IOp
                 }.limit(pageSize).offset(offset.toLong()).map { it.toOperationDTO() }
 
                 val totalPages = (totalCount + pageSize - 1) / pageSize
-
-                if (pageNumber > totalPages || pageSize > totalCount) throw BadRequestException("Invalid page number / page size")
-
+                
 
                 PaginationDTO(
                     items = items,
