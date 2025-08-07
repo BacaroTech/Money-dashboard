@@ -74,6 +74,12 @@ export class AddOperationComponent implements OnInit {
   addNewOperation: Function = () => {
     this.isLoading = true;
     this.isError = false;
+    
+    debugger;
+    if(this.newOperation.category == OperationEnum.OUTCOMING){
+      this.newOperation.amount *= -1;
+    }
+
     this.operationProviderService.insertOperationByUser(this.bankAccountUuid, this.newOperation).subscribe({
       next: (backendResponce: BackendResponce<string>) => {
         console.log(backendResponce.message, backendResponce.content);

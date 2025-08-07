@@ -128,7 +128,7 @@ export class RegisterComponent implements OnInit {
           return (
             singleBankAccount.amount == 0
             || singleBankAccount.name == ''
-            || (singleBankAccount.type == 0)
+            || (singleBankAccount.type == BankTypeEnum.DIGITAL)
           )
         })
       )

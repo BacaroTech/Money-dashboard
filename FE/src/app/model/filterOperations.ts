@@ -1,8 +1,7 @@
-import { BankTypeEnum } from "../enum/bankEnum"
+import { OperationEnum } from "../enum/operationEnum"
 
 export type FilterOperations = {
     startDate?: Date,
     endDate?: Date,
-    typeBankAccount?: BankTypeEnum
-    bankAccountUuid?: string
+    typeOperation?: OperationEnum
 }

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class OperationTypeService {
-  private types: string[] = ['INCOMING','  OUTCOMING'];
+  private types: string[] = ['INCOMING','OUTCOMING'];
 
   getTypes(){
     return this.types;

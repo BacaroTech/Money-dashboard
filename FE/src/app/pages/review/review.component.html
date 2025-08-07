@@ -5,7 +5,7 @@
 }
 
 <section class="min-h-screen dark:bg-gray-900 mx-5">
-  <h1 class="text-5xl font-bold mb-6 dark:text-white mt-16 md:mt-5">Revisione dei conti</h1>
+  <h1 class="text-5xl font-bold mb-6 dark:text-white mt-16 md:mt-5">Revisione del conto</h1>
 
   <!-- Filter Toggle Button -->
   <button (click)="toggleFilters()" 
@@ -40,13 +40,13 @@
         </div>
 
         <div>
-          <label for="typeBankAccount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Tipo di conto
+          <label for="typeOperation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Tipo dell'operazione
           </label>
-          <select id="type" [(ngModel)]="filterForm.typeBankAccount" name="type"
+          <select id="type" [(ngModel)]="filterForm.typeOperation" name="type"
             class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 
                     dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            @for (option of bankAccountTypeService.getTypes(); track $index) {
+            @for (option of operationTypeService.getTypes(); track $index) {
               <option [value]="option">{{ option }}</option>
             }
           </select>
@@ -54,7 +54,12 @@
       </div>
 
       <!-- Button per applicare filtri -->
-      <div class="flex justify-end">
+      <div class="flex justify-end gap-2">
+        <button type="button"
+                (click)="clearForm()" 
+                class="px-6 py-2 border border-yellow-600 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors duration-200">
+          Pulisci
+        </button>
         <button type="button" 
                 class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
           Applica Filtri
@@ -69,32 +74,28 @@
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-6 py-3">Id</th>
           <th scope="col" class="px-6 py-3">Categoria</th>
           <th scope="col" class="px-6 py-3">Ammontare</th>
           <th scope="col" class="px-6 py-3">Descrizione</th>
-          <th scope="col" class="px-6 py-3">Conto di prelievo</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <!-- ID -->
-          </th>
-          <td class="px-6 py-4">
-            <!-- Categoria -->
-          </td>
-          <td class="px-6 py-4">
-            <!-- Ammontare -->
-          </td>
-          <td class="px-6 py-4">
-            <!-- Descrizione -->
-          </td>
-          <td class="px-6 py-4">
-            <!-- Conto -->
-          </td>
-        </tr>
+        @for (operationToShow of operationsToShow?.items; track $index) {
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+            <td class="px-6 py-4">
+              {{operationToShow.category}}
+            </td>
+            <td class="px-6 py-4">
+              {{operationToShow.amount}}
+            </td>
+            <td class="px-6 py-4">
+              {{operationToShow.description}}
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
+
+    <app-paginator></app-paginator>
   </div>
 </section>

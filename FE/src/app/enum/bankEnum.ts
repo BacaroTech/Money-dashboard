@@ -1,4 +1,4 @@
 export enum BankTypeEnum {
-  DIGITAL,
-  CASH
+  DIGITAL="DIGITAL",
+  CASH="CASH"
 }

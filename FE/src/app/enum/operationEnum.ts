@@ -1,4 +1,4 @@
 export enum OperationEnum {
-  INCOMING,
-  OUTCOMING
+  INCOMING = "INCOMING",
+  OUTCOMING = "OUTCOMING"
 }
