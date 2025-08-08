@@ -1,0 +1,13 @@
+canvas {
+  width: 100% !important;
+  max-width: 400px;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+  canvas {
+    height: 400px !important; /* altezza esplicita su desktop */
+  }
+}

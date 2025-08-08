@@ -51,7 +51,7 @@ export class AddOperationComponent implements OnInit {
   ngOnInit(): void {
     this.isError = false;
     this.isLoading = true;
-    this.backAccountProviderService.getBankAccountByUser()
+    this.backAccountProviderService.getBankAccountsByUser()
     .subscribe({
       next: (backendResponce: BackendResponce<BankAccount[]>) => {
         console.log(backendResponce.message, backendResponce.content);

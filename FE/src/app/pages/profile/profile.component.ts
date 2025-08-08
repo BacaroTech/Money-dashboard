@@ -133,7 +133,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private recoverBankAccountsByUser() {
-    this.backAccountProviderService.getBankAccountByUser().subscribe({
+    this.backAccountProviderService.getBankAccountsByUser().subscribe({
       next: (backendResponce: BackendResponce<BankAccount[]>) => {
         console.log(backendResponce.message, backendResponce.content);
         this.currentUser.bank_accounts = backendResponce.content;

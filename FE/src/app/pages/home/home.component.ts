@@ -7,6 +7,9 @@ import { ProfileProviderService } from 'src/app/provider/profile.provider';
 import { UserLogService } from 'src/app/services/user-log.service';
 import { User } from 'src/app/model/user';
 import { BackendResponce } from 'src/app/model/responce';
+import { OperationProviderService } from 'src/app/provider/operation.provider';
+import { BackAccountProviderService } from 'src/app/provider/back-account.provider';
+import { BankAccount } from 'src/app/model/bankAccount';
 
 @Component({
   selector: 'app-home',
@@ -23,23 +26,40 @@ export class HomeComponent implements OnInit {
   datasFlowLabelX: String[] = [];
   isLoading: boolean = false;
   isError: boolean = false;
-  currentUser!: User;
+  currentUser?: User;
   errorMessage: string = "";
 
-  private user: ProfileProviderService = inject(ProfileProviderService);
+  private profileProviderService: ProfileProviderService = inject(ProfileProviderService);
+  private operationProviderService: OperationProviderService = inject(OperationProviderService);
+  private backAccountProviderService: BackAccountProviderService = inject(BackAccountProviderService);
 
   constructor() { }
 
   ngOnInit(): void {
     this.isLoading = true;
     this.isError = false;
-    this.user.getUser().subscribe({
+    this.profileProviderService.getUser().subscribe({
       next: (backendResponce: BackendResponce<User>) => {
         console.log(backendResponce.message, backendResponce.content)
         this.currentUser = backendResponce.content!;
+        this.loadBankAccounts();
         this.isLoading = false;
         this.isError = false;
       }, 
+      error: (err: BackendResponce<User>) => {
+        this.badApiCall(err);
+      }
+    })
+  }
+
+  private loadBankAccounts(){
+    this.backAccountProviderService.getBankAccountsByUser().subscribe({
+      next: (backendResponce: BackendResponce<BankAccount[]>) => {
+        console.log(backendResponce.message, backendResponce.content);
+        const accounts = backendResponce.content!;
+        this.datasBilancioLabelX = accounts.map(account => account.name);
+        this.datasBilancioValue = accounts.map(account => account.amount);
+      },
       error: (err: BackendResponce<User>) => {
         this.badApiCall(err);
       }

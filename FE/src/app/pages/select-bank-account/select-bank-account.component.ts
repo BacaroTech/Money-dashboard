@@ -24,7 +24,7 @@ export class SelectBankAccountComponent implements OnInit{
   allBankAccounts: BankAccount[] = [];
 
   ngOnInit(): void {
-    this.backAccountProviderService.getBankAccountByUser().subscribe({
+    this.backAccountProviderService.getBankAccountsByUser().subscribe({
       next: (backendResponce: BackendResponce<BankAccount[]>) => {
         console.log(backendResponce.message, backendResponce.content);
         this.allBankAccounts = backendResponce.content!;

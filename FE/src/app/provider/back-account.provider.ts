@@ -16,7 +16,7 @@ export class BackAccountProviderService {
 
   constructor() { }
 
-  getBankAccountByUser(): Observable<BackendResponce<BankAccount[]>> {
+  getBankAccountsByUser(): Observable<BackendResponce<BankAccount[]>> {
     const headers = new HttpHeaders({
       'uuid': this.userLog.getUuidUser()
     });
