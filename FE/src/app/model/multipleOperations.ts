@@ -2,6 +2,8 @@ import { Operation } from "./operation"
 
 export type MultipleOperations = {
     items: Operation[],
-    totalPages: number,
-    totalElements: number,
+    total_pages: number,
+    total_count: number,
+    page_size: number,
+    page_number: number
 }

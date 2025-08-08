@@ -13,14 +13,16 @@
   <div class="mt-10">
     <h2 class="text-3xl font-bold mb-4 dark:text-white">Dai un’occhiata ai tuoi grafici</h2>
     <div id="mydashboard" class="w-full gap-8 mt-4">
-      <section>
+      <section
+        class="mt-4">
         <h3 class="text-2xl font-semibold mb-2 dark:text-white">Andamento del tuo patrimonio</h3>
         <app-dashboard type="patrimonio" [datas]="datasBilancioValue" [label]="datasBilancioLabelX"
           description="Patrimonio mensile">
         </app-dashboard>
       </section>
 
-      <section>
+      <section
+        class="mt-4">
         <h3 class="text-2xl font-semibold mb-2 dark:text-white">Rapporto entrate e uscite</h3>
         <app-dashboard type="rapporto" [datas]="datasFlowValue" [label]="datasFlowLabelX" description="Rapporto">
         </app-dashboard>

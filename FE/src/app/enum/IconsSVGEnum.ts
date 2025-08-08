@@ -12,5 +12,7 @@ export enum IconsSVGEnum {
   'error',
   'success',
   'info',
-  'warning'
+  'warning',
+  'arrowLeft',
+  'arrowRight'
 }

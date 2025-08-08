@@ -75,7 +75,6 @@ export class AddOperationComponent implements OnInit {
     this.isLoading = true;
     this.isError = false;
     
-    debugger;
     if(this.newOperation.category == OperationEnum.OUTCOMING){
       this.newOperation.amount *= -1;
     }

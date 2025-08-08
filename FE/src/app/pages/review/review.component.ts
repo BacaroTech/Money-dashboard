@@ -41,10 +41,36 @@ export class ReviewComponent implements OnInit {
   errorMessage: string = "";
   operationsToShow?: MultipleOperations;
   arrowIconSVG: string = this.iconsSVGService.getMapIcons(IconsSVGEnum.arrow);
-  
+
   constructor() { }
 
   ngOnInit(): void {
+    this.loadOperation();
+  }
+
+  public intercepLoadNewElements(event: any) {
+    this.pageNumber = event;
+    this.loadOperation();
+  }
+
+  toggleFilters(): void {
+    this.isFiltersOpen = !this.isFiltersOpen;
+  }
+
+  private badApiCall(err: BackendResponce<any>) {
+    this.errorMessage = err.message;
+    console.error(this.errorMessage, err);
+    this.isError = true;
+    this.isLoading = false;
+  }
+
+  public clearForm() {
+    this.filterForm.startDate = new Date();
+    this.filterForm.endDate = new Date();
+    this.filterForm.typeOperation = OperationEnum.INCOMING;
+  }
+
+  private loadOperation() {
     this.isError = false;
     this.isLoading = true;
     this.operationProviderService.getOperationByUserPaginated(this.bankAccountUuid, this.pageNumber, this.pageSize).subscribe({
@@ -58,22 +84,5 @@ export class ReviewComponent implements OnInit {
         this.badApiCall(err);
       }
     });
-  }
-
-  toggleFilters(): void {
-    this.isFiltersOpen = !this.isFiltersOpen;
-  }
-
-  private badApiCall(err: BackendResponce<any>){
-    this.errorMessage = err.message;
-    console.error(this.errorMessage, err);
-    this.isError = true;
-    this.isLoading = false;
-  }
-
-  public clearForm(){
-    this.filterForm.startDate = new Date();
-    this.filterForm.endDate = new Date();
-    this.filterForm.typeOperation = OperationEnum.INCOMING;
   }
 }
