@@ -1,6 +1,7 @@
 @if (errorMessage !== "") {
     <app-error-message-label [errorMessage]="errorMessage"></app-error-message-label>
 }
-<canvas #dynamicElement [id]="type"></canvas>
-
+<div class="dashboard-container">
+    <canvas #dynamicElement [id]="type"></canvas>
+</div>
 

@@ -11,22 +11,18 @@
   </h1>
   }
   <div class="mt-10">
-    <h2 class="text-3xl font-bold mb-4 dark:text-white">Dai un’occhiata ai tuoi grafici</h2>
     <div id="mydashboard" class="w-full gap-8 mt-4">
-      <section
-        class="mt-4">
-        <h3 class="text-2xl font-semibold mb-2 dark:text-white">Andamento del tuo patrimonio</h3>
-        <app-dashboard type="patrimonio" [datas]="datasBilancioValue" [label]="datasBilancioLabelX"
-          description="Patrimonio mensile">
+      <section class="mt-4">
+        <h2 class="text-3xl font-bold mb-4 dark:text-white">Patrimonio totale: {{totalMoney}} €</h2>
+        <h3 class="text-2xl font-semibold mb-2 dark:text-white">Composizione del tuo patrimonio in tempo reale</h3>
+        @if(datasBilancioValue.length == 0){
+          <app-error-message-label [errorMessage]="'Devi inserire almeno un conto, per farlo dal menu recati nella voce <u>revione conti</u> e poi <u>aggiungi conto<u/>'"></app-error-message-label>
+        }
+        @else {
+        <app-dashboard type="patrimonio" [datas]="datasBilancioValue" [labels]="datasBilancioLabelX">
         </app-dashboard>
+        }
       </section>
-
-      <!--section
-        class="mt-4">
-        <h3 class="text-2xl font-semibold mb-2 dark:text-white">Rapporto entrate e uscite</h3>
-        <app-dashboard type="rapporto" [datas]="datasFlowValue" [label]="datasFlowLabelX" description="Rapporto">
-        </app-dashboard>
-      </section-->
     </div>
   </div>
 </section>

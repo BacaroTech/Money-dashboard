@@ -6,36 +6,87 @@
 
 <section class="min-h-screen dark:bg-gray-900 mx-5">
     <h1 class="text-5xl font-bold mb-6 dark:text-white mt-16 md:mt-5">Seleziona il conto</h1>
-    <div class="container mx-auto px-4 py-8">
+    <div class="container py-8">
+        @if (isShowErrorMessage) {
+        <app-error-message-label 
+            [errorMessage]="'Hai raggiunto il limite massimo di conti che puoi avere'"></app-error-message-label>
+        }
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            @for (item of allBankAccounts; track $index) {
+            @for (bankAccount of allBankAccounts; track $index) {
             <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                 <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
-                        {{ item.name }}
-                    </h3>
 
-                    <div class="mb-4">
-                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-1">
-                            {{item.type}}
-                        </span>
-                    </div>
+                    @if(!isChangeBankAccount){
+                    <p class="text-xl font-bold text-gray-800 mb-2 line-clamp-2">{{bankAccount.name}}</p>
+                    }
+                    @else {
+                    <input [(ngModel)]="bankAccount.name" placeholder="inserisci nome del conto" type="text"
+                        class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out ng-untouched ng-pristine ng-valid">
+                    }
 
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div [ngClass]="item.amount > 0 ? 'text-green-600' : 'text-red-600'" class="text-lg font-bold ">
-                            {{ item.amount }} €
+                    @if (!isChangeBankAccount) {
+                    <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-1">
+                        {{bankAccount.type}}
+                    </span>
+                    }
+                    @else {
+                    <select id="type" [(ngModel)]="bankAccount.type" name="type"
+                        class="w-full mt-2 appearance-none px-4 py-3 pr-10 rounded-lg text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
+
+                        @for(option of bankAccountTypeService.getTypes(); track $index){
+                        <option [value]="option">
+                            {{ option }}
+                        </option>
+                        }
+                    </select>
+                    }
+
+                    <div class="flex items-center justify-between mt-5">
+                        <div [ngClass]="bankAccount.amount > 0 ? 'text-green-600' : 'text-red-600'"
+                            class="text-lg font-bold ">
+                            {{ bankAccount.amount }} €
                         </div>
                         <div class="flex space-x-2">
-                            <app-button [actionArrowFunction]="onViewDetails" [parameters]="[item.uuid]"
+                            <app-button [actionArrowFunction]="onViewDetails" [parameters]="[bankAccount.uuid]"
                                 [buttonText]="'Revisione'" [buttonBackgroundColor]="'blue'"></app-button>
                         </div>
-
-
                     </div>
                 </div>
             </div>
             }
+            <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-100 transition-all duration-300 overflow-hidden cursor-pointer group"
+                (click)="openModalAddAccount()">
+                <div class="p-6 text-center">
+                    <!-- Icona Plus -->
+                    <div class="mb-4">
+                        <svg class="w-12 h-12 text-gray-400 group-hover:text-gray-500 mx-auto transition-colors duration-300"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                            </path>
+                        </svg>
+                    </div>
+
+                    <!-- Titolo -->
+                    <h3
+                        class="text-xl font-bold text-gray-600 group-hover:text-gray-700 mb-2 transition-colors duration-300">
+                        Aggiungi Conto
+                    </h3>
+
+                    <!-- Descrizione -->
+                    <p class="text-gray-500 text-sm mb-4">
+                        Crea un nuovo conto per gestire le tue finanze
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <app-button [actionArrowFunction]="onChangeBankAccount"
+                [buttonBackgroundColor]="!isChangeBankAccount ? 'blue' : 'green'"
+                [buttonIconSVG]='!isChangeBankAccount ? editIconSVG : checkIconSVG'
+                [buttonText]="!isChangeBankAccount ? 'Modifica' :'Salva'">
+            </app-button>
         </div>
 
         @if (!allBankAccounts || allBankAccounts.length == 0) {
@@ -50,3 +101,8 @@
     </div>
 
 </section>
+
+@if (isShowModal) {
+<app-modal [title]="'Aggiungi conto'" [action]="onAddAccount" [back]="closeModalAddAccount" [type]="IconsSVGEnum.info"
+    [text]="'Inserisci nuovo conto digitale o cartaceo'"></app-modal>
+}

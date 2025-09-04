@@ -12,7 +12,7 @@ export class ButtonComponent {
 
   buttonText!: string;
   actionArrowFunction!: Function;
-  buttonBackgroundColor: 'green' | 'blue' | 'yellow' | 'red' = 'blue';
+  buttonBackgroundColor: 'green' | 'blue' | 'yellow' | 'red' | 'gray'= 'blue';
   buttonIconSVG !: string;
   parameters: any[] = [];
 
@@ -28,6 +28,9 @@ export class ButtonComponent {
     },
     yellow: {
       base: 'text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800',
+    },
+    gray: {
+      base: 'text-white bg-gray-700 hover:bg-gray-800 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800',
     }
   };
 

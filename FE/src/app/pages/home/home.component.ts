@@ -20,17 +20,17 @@ import { BankAccount } from 'src/app/model/bankAccount';
 })
 export class HomeComponent implements OnInit {
 
-  datasBilancioValue: Number[] = [];
-  datasBilancioLabelX: String[] = [];
+  datasBilancioValue: number[] = [];
+  datasBilancioLabelX: string[] = [];
   datasFlowValue: number[] = [];
-  datasFlowLabelX: String[] = [];
+  datasFlowLabelX: string[] = [];
   isLoading: boolean = false;
   isError: boolean = false;
   currentUser?: User;
   errorMessage: string = "";
+  totalMoney: number = 0;
 
   private profileProviderService: ProfileProviderService = inject(ProfileProviderService);
-  private operationProviderService: OperationProviderService = inject(OperationProviderService);
   private backAccountProviderService: BackAccountProviderService = inject(BackAccountProviderService);
 
   constructor() { }
@@ -40,25 +40,11 @@ export class HomeComponent implements OnInit {
     this.isError = false;
     this.profileProviderService.getUser().subscribe({
       next: (backendResponce: BackendResponce<User>) => {
-        console.log(backendResponce.message, backendResponce.content)
+        console.log(backendResponce.message, backendResponce.content);
         this.currentUser = backendResponce.content!;
         this.loadBankAccounts();
         this.isLoading = false;
         this.isError = false;
-      }, 
-      error: (err: BackendResponce<User>) => {
-        this.badApiCall(err);
-      }
-    })
-  }
-
-  private loadBankAccounts(){
-    this.backAccountProviderService.getBankAccountsByUser().subscribe({
-      next: (backendResponce: BackendResponce<BankAccount[]>) => {
-        console.log(backendResponce.message, backendResponce.content);
-        const accounts = backendResponce.content!;
-        this.datasBilancioLabelX = accounts.map(account => account.name);
-        this.datasBilancioValue = accounts.map(account => account.amount);
       },
       error: (err: BackendResponce<User>) => {
         this.badApiCall(err);
@@ -66,7 +52,23 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  private badApiCall(err: BackendResponce<any>){
+  private loadBankAccounts() {
+    this.backAccountProviderService.getBankAccountsByUser().subscribe({
+      next: (backendResponce: BackendResponce<BankAccount[]>) => {
+        console.log(backendResponce.message, backendResponce.content);
+        const bankAccounts = backendResponce.content!;
+
+        this.datasBilancioLabelX = bankAccounts.map(bankAccount => bankAccount.name);
+        this.datasBilancioValue = bankAccounts.map(bankAccount => bankAccount.amount);
+        bankAccounts.forEach((bankAccount) => this.totalMoney += bankAccount.amount);
+      },
+      error: (err: BackendResponce<User>) => {
+        this.badApiCall(err);
+      }
+    })
+  }
+
+  private badApiCall(err: BackendResponce<any>) {
     this.errorMessage = err.message;
     console.error(this.errorMessage, err);
     this.isError = true;
